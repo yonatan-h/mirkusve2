@@ -1,0 +1,13 @@
+{
+	"manifest_version": 3,
+	"version": "1.0",
+	"name": "Timer",
+	"description": "measure how much you lose",
+	"content_scripts": [
+		{
+			"matches": ["https://leetcode.com/problems/*/description/"],
+			"js": ["timer.js"],
+			"css": ["style.css"]
+		}
+	]
+}
