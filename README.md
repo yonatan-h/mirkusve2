@@ -1,5 +1,5 @@
 # mirkusve2
-Mirkuz + silicon valley == mirkusve
+Mirkuz + silicon valley == mirkuSVe
 
 This is a project to help a2svians submit thier leetcode answers to github and a2sv google sheet.
 1. It should help them time themselves.
