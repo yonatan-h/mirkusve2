@@ -1,4 +1,7 @@
 # mirkusve2
+
+<img width="512" alt="image_2023-04-10_19-22-48" src="https://user-images.githubusercontent.com/109980176/231097678-99408c11-3fbb-4124-8313-6db68fcacc9b.png">
+
 Mirkuz + silicon valley == mirkuSVe
 
 This is a project to help a2svians submit thier leetcode answers to github and a2sv google sheet.
