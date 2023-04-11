@@ -1,0 +1,20 @@
+{
+	"manifest_version": 3,
+	"version": "1.0",
+	"name": "Mirkusve2",
+	"description": "measure how much you lose",
+	"content_scripts": [
+		{
+			"matches": ["https://leetcode.com/problems/*/submissions/*/"],
+			"js": ["scripts/submitter.js"]
+		},
+		{
+			"matches": [
+				"https://leetcode.com/problems/*/description/",
+				"https://leetcode.com/problems/*/"
+			],
+			"js": ["scripts/timer.js"],
+			"css": ["css/timer.css"]
+		}
+	]
+}
