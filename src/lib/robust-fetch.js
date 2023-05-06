@@ -25,13 +25,3 @@ async function robustFetch(url, options) {
 }
 
 export default robustFetch;
-
-function test() {
-	// should work
-	robustFetch("https://api.github.com", { method: "GET" }).then(console.log);
-	//should network error
-	robustFetch("https://exampl.com").then(console.log);
-	//should bad status
-	robustFetch("https://api.github.com/asdf").then(console.log);
-}
-// test();

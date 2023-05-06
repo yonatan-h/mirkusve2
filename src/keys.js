@@ -1,3 +1,5 @@
+//could not use json. json type could not be imported.
+
 const sheetsWebappUrl =
 	"https://script.google.com/macros/s/AKfycbyCGaLrifSlvIeD1tOvc9soFfAbYYcS2cJ1q7VuETVxoTcnBJGMzLLdlpd5MkTOguRq/exec";
 

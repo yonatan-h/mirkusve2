@@ -8,10 +8,10 @@
 		{
 			"matches": ["https://leetcode.com/problems/*"],
 			"js": [
-				"prompt-setup/tag-adder.js",
-				"timer/tag-adder.js",
-				"answer-submit/tag-adder.js",
-				"view-selector/tag-adder.js"
+				"prompt-setup/prompt-setup.js",
+				"timer/timer.js",
+				"answer-submit/answer-submit.js",
+				"view-selector/view-selector.js"
 			],
 			"css": [
 				"prompt-setup/prompt-setup.css",

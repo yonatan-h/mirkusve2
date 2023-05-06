@@ -6,6 +6,7 @@ import sendAnswer from "./send-answer.js";
 function createUi() {
 	const html = `
     <form id="mirkusve-submit">
+    <!--Easy to disable all inputs by disabling fieldset-->
     <fieldset>
 
         <div id="error-box">

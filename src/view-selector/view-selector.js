@@ -15,7 +15,6 @@ let [showPromptSetup, hideSetupPrompt] = getPromptSetupControls();
 let [showAnswerSubmit, hideAnswerSubmit] = getAnswerSubmitControls();
 
 window.addEventListener("popstate", chooseView);
-console.log(chrome.storage);
 async function chooseView() {
 	alert("choosing view");
 	const link = window.location.href;
