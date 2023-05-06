@@ -38,6 +38,7 @@ function getAuthURL(name) {
 	authUrl += `?client_id=${clientId}`;
 	authUrl += `&scope=repo`;
 	authUrl += `&login=${name}`;
+	console.log("authUrl", authUrl);
 	return authUrl;
 }
 

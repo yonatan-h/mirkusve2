@@ -8,7 +8,7 @@ const handleCustomError = makeHandler(errorParagraph, errorCode);
 
 function showSection(sectionId) {
 	const sections = [...document.querySelectorAll(".form-section")];
-	sections.forEach((sec) => sec.classList.add("hidden"));
+	// sections.forEach((sec) => sec.classList.add("hidden"));
 	document.getElementById(sectionId).classList.remove("hidden");
 
 	errorParagraph.textContent = "";
