@@ -4,7 +4,7 @@ import getAnswerSubmitControls from "../answer-submit/answer-submit.js";
 
 /*
 Navigating from the leetcode questions page to the submissions page does not really reload the page.
-Content scripts are not reloaded when pages(urls) change. 
+The content scripts are not reloaded when pages(urls) change. 
 This allows the content script for the questions page to appear on the submissions page and vice versa.
 So, view selector is meant to manually detect a url change, and show/hide content scripts correspondingly.
 
