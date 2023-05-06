@@ -3,7 +3,7 @@ import robustFetch from "../lib/robust-fetch.js";
 async function showTreeView(viewDiv, folderPathInput, handleError) {
 	try {
 		const fetchOptions = await getFetchOptions();
-		const sha = await getSha(getFetchOptions);
+		const sha = await getSha(fetchOptions);
 		const folderPaths = await getFolderPaths(sha, fetchOptions);
 
 		showFolderLabels(folderPaths, viewDiv, folderPathInput);
