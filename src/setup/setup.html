@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Mirkusve Setup</title>
+
+		<style>
+			.hidden {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="error-box">
+			<p></p>
+			<code></code>
+		</div>
+		<form>
+			<div class="form-section" id="name">
+				<h2>What your name?</h2>
+				<p>Write it exactly as in the google sheets</p>
+				<input type="text" name="name" placeholder="eg) Abebe Kebede Lemma" />
+				<input type="text" name="group" placeholder="eg) 43" />
+				<button class="next" type="button">next</button>
+			</div>
+
+			<div class="form-section" id="repo">
+				<h2>What is your submission repo?</h2>
+				<p>Copy and paste the link</p>
+				<input
+					type="text"
+					name="repoLink"
+					size="100"
+					placeholder="eg) https://github.com/abebeKebede/submissionRepo"
+				/>
+				<input
+					type="text"
+					name="repoName"
+					placeholder="eg) competitive-programming"
+				/>
+				<input type="text" name="userName" placeholder="eg) abebe-kebede" />
+				<button class="next" type="button">next</button>
+			</div>
+
+			<div class="form-section" id="token">
+				<h2>Sign in to Github</h2>
+				<p>
+					By signing in, you give us access your repo. We can then automatically
+					upload your leetcode answers to your repo.
+				</p>
+				<input type="text" name="token" placeholder="akdshfkluc" />
+				<button id="sign-in" type="button">Sign In</button>
+				<button class="next" type="button">next</button>
+			</div>
+
+			<div class="form-section" id="finish">
+				<h2>Setup is done!</h2>
+				<p>
+					Do leetcode questions as you wish! We will handle submitting your
+					answers to
+				</p>
+				<ul>
+					<li>A2SV google sheets</li>
+					<li>Your Github repo</li>
+				</ul>
+				<p>+= a leetcode timer to time yourself</p>
+				<input class="next" type="submit" value="Finish" />
+			</div>
+
+			<button id="cancel" type="button">Cancel</button>
+		</form>
+
+		<script src="setup.js" type="module"></script>
+	</body>
+</html>

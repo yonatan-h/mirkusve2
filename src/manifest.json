@@ -1,0 +1,45 @@
+{
+	"manifest_version": 3,
+	"version": "1.0",
+	"name": "Mirkusve2",
+	"description": "Submit Leetcode answers to Github and GoogleSheets",
+
+	"content_scripts": [
+		{
+			"matches": ["https://leetcode.com/problems/*"],
+			"js": [
+				"prompt-setup/tag-adder.js",
+				"timer/tag-adder.js",
+				"answer-submit/tag-adder.js",
+				"view-selector/tag-adder.js"
+			],
+			"css": [
+				"prompt-setup/prompt-setup.css",
+				"timer/timer.css",
+				"answer-submit/answer-submit.css"
+			]
+		}
+	],
+	"background": {
+		"service_worker": "background/background.js",
+		"type": "module"
+	},
+	"action": {},
+
+	"permissions": ["management", "tabs", "storage", "identity"],
+
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"prompt-setup/*",
+				"timer/*",
+				"answer-submit/*",
+				"view-selector/*",
+				"lib/*",
+				"keys.js"
+			],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"key": "jgcbcknahneghfjgknaaepecdenjpdeh"
+}

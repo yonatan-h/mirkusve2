@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Mirkusve Setup</title>
+
+		<style>
+			.hidden {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="suggest-box">
+			<p></p>
+			<code></code>
+		</div>
+		<form>
+			<div class="form-section" id="name">
+				<h2>What your name?</h2>
+				<p>Write it exactly as in the google sheets</p>
+				<input type="text" name="name" placeholder="eg) Abebe Kebede Lemma" />
+				<input type="text" name="group" placeholder="eg) 43" />
+				<button class="next" type="button" onclick="handleNameSubmit()">
+					next
+				</button>
+			</div>
+
+			<div class="form-section" id="repo">
+				<h2>What is your submission repo?</h2>
+				<p>Copy paste the repo link</p>
+				<input
+					type="text"
+					name="repoLink"
+					placeholder="eg) https://github.com/abebeKebede/submissionRepo"
+				/>
+				<input
+					type="text"
+					name="repoName"
+					placeholder="eg) competitive-programming"
+				/>
+				<input type="text" name="userName" placeholder="eg) abebe-kebede" />
+				<button class="next" type="button" onclick="handleRepoSubmit()">
+					next
+				</button>
+			</div>
+
+			<div class="form-section" id="token">
+				<h2>Sign in to Github</h2>
+				<p>We need to access your repo on your behalf</p>
+				<p>
+					So that we can automatically upload your leetcode answers to your
+					repo.
+				</p>
+				<input type="text" name="token" placeholder="akdshfkluc" />
+				<button>Sign In</button>
+				<button class="next" type="button" onclick="handleTokenSubmit()">
+					next
+				</button>
+			</div>
+
+			<div class="form-section" id="finish">
+				<h2>Setup is done!</h2>
+				<p>
+					Do leetcode questions as you wish! We will handle submitting your
+					answers to
+				</p>
+				<ul>
+					<li>A2SV google sheets</li>
+					<li>Your Github repo</li>
+				</ul>
+				<p>+= a leetcode timer to time yourself</p>
+				<input
+					onclick="handleFinish(event)"
+					class="next"
+					type="submit"
+					value="Finish"
+				/>
+			</div>
+		</form>
+
+		<script>
+			class SkipperError extends Error {
+				constructor() {
+					super("I am a skipper error");
+				}
+			}
+			showSection("name");
+
+			//error handlers and stuff -> done
+			function suggest(paragraph = "", code = "") {
+				const suggestP = document.querySelector("#suggest-box p");
+				const suggestC = document.querySelector("#suggest-box code");
+
+				suggestP.textContent = "";
+				suggestC.textContent = "";
+
+				setTimeout(() => {
+					suggestP.textContent = paragraph;
+					suggestC.textContent = code;
+				}, 500);
+			}
+
+			function handleIfBadUrl(url) {
+				try {
+					new URL(url);
+				} catch (error) {
+					suggest(`'${url}' is not a valid URL!`);
+					throw new SkipperError();
+				}
+			}
+
+			function handleIfWrongOrigin(url, correctOrigin) {
+				const origin = new URL(url).origin;
+				if (origin !== correctOrigin) {
+					suggest(`'${url}' should begin with '${correctOrigin}'`);
+					throw new SkipperError();
+				}
+			}
+
+			function handleIfNetworkError(error) {
+				if (!(error instanceof TypeError)) throw error;
+				const { name, message } = error;
+				suggest(
+					"Weak connection? Please try again later.",
+					JSON.stringify({ name, message })
+				);
+				throw new SkipperError();
+			}
+
+			function handleIfBadStatus(response) {
+				if (response.ok) return;
+
+				const { ok, status, statusText, url } = response;
+				suggest(
+					"Http response not ok. Try avoiding vpn or try again later.",
+					JSON.stringify({ ok, status, statusText, url })
+				);
+				throw new SkipperError();
+			}
+
+			function handleIfAppscriptError(json) {
+				if (!json.error) return;
+				suggest("Message from Sheets: " + json.error);
+				throw new SkipperError();
+			}
+
+			function handleIfEmpty(name, value) {
+				if (value !== "" && value != "undefined") return;
+				suggest(`Please fill out '${name}'`);
+				throw new SkipperError();
+			}
+
+			function swallowSkipperError(error) {
+				if (!(error instanceof SkipperError)) throw error;
+			}
+
+			// next handlers
+
+			async function handleNameSubmit() {
+				const name = document.querySelector(`[name="name"]`).value;
+				const groupInput = document.querySelector(`[name="group"]`);
+
+				try {
+					handleIfEmpty("Name", name);
+					handleIfEmpty("Group (A Hidden Input)", groupInput.value);
+					const url = "https://api.github.com";
+					const data = await handledFetch(url);
+					groupInput.value = data["group"];
+					showSection("repo");
+				} catch (error) {
+					swallowSkipperError(error);
+				}
+			}
+
+			async function handleRepoSubmit() {
+				const repoLinkI = document.querySelector(`[name="repoLink"]`);
+				const repoNameI = document.querySelector(`[name="repoName"]`);
+				const userNameI = document.querySelector(`[name="userName"]`);
+				const repoLink = repoLinkI.value;
+
+				try {
+					handleIfEmpty("Git Repository", repoLink);
+					handleIfNotRepo(repoLink);
+					await handleIfRepoMissing(repoLink);
+
+					const { userName, repoName } = getUserAndRepoName(repoLink);
+					userNameI.value = userName;
+					repoNameI.value = repoName;
+				} catch (error) {
+					swallowSkipperError(error);
+				}
+			}
+
+			function handleTokenSubmit() {
+				try {
+					const token = document.querySelector(`[name="token"]`).value;
+					handleIfEmpty("Signing in to Github", token);
+				} catch (error) {
+					swallowSkipperError(error);
+				}
+			}
+
+			function handleFinish(event) {
+				event.preventDefault();
+				const form = document.querySelector("form");
+				const formData = new FormData(form);
+				const keyValues = {};
+				for (const [key, value] of formData) {
+					keyValues[key] = value;
+				}
+
+				const button = event.target;
+				button.textContent = "Saved!";
+				disableNexts();
+				console.log(keyValues);
+			}
+
+			// UI functions
+			function showSection(sectionId) {
+				const sections = [...document.querySelectorAll(".form-section")];
+				// sections.forEach((sec) => sec.classList.add("hidden"));
+				document.getElementById(sectionId).classList.remove("hidden");
+				suggest("", "");
+			}
+
+			function disableNexts() {
+				const buttons = [...document.querySelectorAll(".next")];
+				buttons.forEach((btn) => btn.setAttribute("disabled", "disabled"));
+			}
+
+			function enableNexts() {
+				const buttons = [...document.querySelectorAll(".next")];
+				buttons.forEach((btn) => btn.removeAttribute("disabled"));
+			}
+
+			//Fetch
+			async function handledFetch(url, options) {
+				try {
+					const fetchPromise = options ? fetch(url, options) : fetch(url);
+					const response = await fetchPromise;
+					handleIfBadStatus(response);
+
+					const data = await response.json();
+					handleIfAppscriptError(data);
+
+					return data;
+				} catch (error) {
+					handleIfNetworkError(error);
+				}
+			}
+
+			//util functions
+
+			async function getOAuthToken() {
+				const tokenI = document.querySelector(`[name="token"]`);
+				const userName = document.querySelector(`[name="userName"]`).value;
+
+				try {
+					const code = await new Promise((s) => s("adf"));
+
+					const codeForTokenUrl = "";
+					const tokenData = await handledFetch(codeForTokenUrl);
+					const token = tokenData["auth_token"];
+
+					tokenI.value = token;
+				} catch (error) {
+					swallowSkipperError(error);
+				}
+			}
+
+			function handleIfNotRepo(repoLink) {
+				handleIfBadUrl(repoLink);
+				handleIfWrongOrigin(repoLink, "https://github.com");
+
+				const path = new URL(repoLink).pathname;
+				const pathNodes = path.split("/").filter((node) => node !== "");
+
+				if (pathNodes.length !== 2) {
+					suggest(
+						`'${repoLink}' should've been like \r\n 'https://github.com/USER_NAME/REPO_NAME'`
+					);
+					throw new SkipperError();
+				}
+			}
+
+			function getUserAndRepoName(repoLink) {
+				const path = new URL(repoLink).pathname;
+				const nonEmpty = (node) => node !== "";
+				const [userName, repoName] = path.split("/").filter(nonEmpty);
+				return { userName, repoName };
+			}
+
+			async function handleIfRepoMissing(repoLink) {
+				const { userName, repoName } = getUserAndRepoName(repoLink);
+				const repoUrl = `https://api.github.com/repos/${userName}/${repoName}`;
+
+				const response = await fetch(repoUrl).catch(handleIfNetworkError);
+				if (response.status === 200) return repoLink;
+
+				const { ok, status, statusText, url } = response;
+				const message = `Mistyped the link? We could'nt find the repo in github (${repoLink})`;
+				const code = JSON.stringify({ ok, status, statusText, url });
+				suggest(message, code);
+
+				throw new SkipperError();
+			}
+		</script>
+	</body>
+</html>

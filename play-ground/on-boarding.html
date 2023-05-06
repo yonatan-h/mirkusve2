@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<style>
+			form > * {
+				border: 1px solid rgb(205, 197, 197);
+				padding: 5px;
+				margin: 10px 2px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form>
+			<div>
+				<p>Your Name in The Sheets</p>
+				<input type="text" name="name" required />
+			</div>
+
+			<div>
+				<p>Your Github Repo Link</p>
+				<input type="text" name="repo-link" required />
+			</div>
+
+			<div>
+				<p>Your Github Personal Token</p>
+				<input type="password" name="token" required />
+				<p>
+					A Personal Token is like a password to your github repo. It allows me
+					to upload your leetcode answers on your behalf.
+
+					<a href="https://github.com/settings/personal-access-tokens/new">
+						Create Token Here.
+					</a>
+					<br />
+					Please allow repo access
+				</p>
+			</div>
+			<input type="submit" value="Save" />
+		</form>
+	</body>
+</html>
+
+<script>
+	const form = document.querySelector("form");
+	function extractValues(formElement) {
+		const formData = new FormData(formElement);
+		const object = {};
+		for (const [key, value] of formData) {
+			object[key] = value;
+		}
+		return object;
+	}
+	form.onsubmit = (event) => {
+		event.preventDefault();
+		const formElement = event.target;
+		const json = extractValues(formElement);
+		console.log(json);
+	};
+</script>

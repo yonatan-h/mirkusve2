@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			.folder {
+				background-color: hsl(141, 85%, 85%);
+				font-family: monospace;
+			}
+			.folder:hover {
+				text-decoration: underline;
+				cursor: pointer;
+			}
+			.folder__selected {
+				background-color: blue;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		
+
+		<script>
+			function setSelectedPath(path) {
+				const selectedPathInput = document.getElementById("selected-path");
+				selectedPathInput.value = path;
+			}
+
+			function addFolderLabel(name, path, depth) {
+				const labelContainer = document.createElement("div");
+				const label = document.createElement("span");
+				const treeViewDiv = document.getElementById("tree-view");
+				labelContainer.appendChild(label);
+				treeViewDiv.appendChild(labelContainer);
+
+				const indentationUnit = 20;
+				label.style.marginLeft = `${depth * indentationUnit}px`;
+				label.textContent = name;
+				label.classList.add("folder");
+
+				label.addEventListener("click", () => {
+					const selectedClass = "folder__selected";
+					const labels = [...treeViewDiv.querySelectorAll("." + selectedClass)];
+
+					labels.forEach((label) => label.classList.remove(selectedClass));
+					label.classList.add(selectedClass);
+
+					setSelectedPath(path);
+				});
+			}
+
+			function showTreeView(folderPaths) {
+				folderPaths.sort(); // same parents together
+				for (const path of folderPaths) {
+					if (path == "/") {
+						addFolderLabel("root", "/", 0);
+					} else {
+						const nodes = path.split("/");
+						const name = nodes[nodes.length - 1];
+						const depth = nodes.length;
+						addFolderLabel(name, path, depth);
+					}
+				}
+			}
+
+			showTreeView(["/", "hi", "hi/abebe", "hi/abebe/beso", "li"]);
+		</script>
+	</body>
+</html>

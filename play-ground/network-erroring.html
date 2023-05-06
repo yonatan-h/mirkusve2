@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<button onclick="valid()">try valid</button>
+		<button onclick="fourOfour()">404</button>
+		<button onclick="noNetwork()">no network</button>
+
+		<p>No network and cors errors are Network erros</p>
+		<p>404 is not an error</p>
+
+		<script>
+			async function valid() {
+				try {
+					const res = await fetch(
+						"https://jsonplaceholder.typicode.com/todos/1"
+					);
+					console.log(res);
+				} catch (error) {
+					console.log("in catch");
+					console.log(error);
+				}
+			}
+
+			async function fourOfour() {
+				try {
+					const res = await fetch(
+						"'https://jsonplaceholder.typicode.com/todos/sf"
+					);
+					console.log(res);
+					console.log("status", res.status);
+					console.log("ok", res.ok);
+				} catch (error) {
+					console.log("in catch");
+					console.log(error);
+				}
+			}
+			async function noNetwork() {
+				try {
+					const res = await fetch(
+						"https://jsonplaceholder.typicode.com/todos/lala"
+					);
+					console.log(res);
+				} catch (error) {
+					console.log("in catch");
+					console.log(error instanceof TypeError);
+					console.log(error);
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -5,16 +5,16 @@
 	"description": "measure how much you lose",
 	"content_scripts": [
 		{
-			"matches": ["https://leetcode.com/problems/*/submissions/*/"],
-			"js": ["scripts/submitter.js"]
-		},
+			"matches": ["https://leetcode.com/problems/*/description/"],
+			"js": ["timer/timer.js"]
+		}
+	],
+	"permissions": ["storage"],
+
+	"web_accessible_resources": [
 		{
-			"matches": [
-				"https://leetcode.com/problems/*/description/",
-				"https://leetcode.com/problems/*/"
-			],
-			"js": ["scripts/timer.js"],
-			"css": ["css/timer.css"]
+			"resources": ["timer/timer.html"],
+			"matches": ["<all_urls>"]
 		}
 	]
 }
