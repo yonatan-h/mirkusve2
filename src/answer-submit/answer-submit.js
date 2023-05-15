@@ -92,6 +92,8 @@ function errorIfPageNotLoaded() {
 }
 
 function showSuccessfulSubmit() {
+	errorParagraph.textContent = "";
+	errorCode.textContent = "";
 	submitButton.setAttribute("disabled", "disabled");
 	submitButton.classList.add("m-success-button");
 	submitButton.value = "Submitted!";
@@ -105,11 +107,13 @@ function disableForm() {
 
 function showLoading() {
 	submitButton.setAttribute("disabled", "disabled");
+	submitButton.classList.add("m-grey-button");
 	form.classList.add("m-loading");
 }
 
 function stopShowingLoading() {
 	submitButton.removeAttribute("disabled");
+	submitButton.classList.remove("m-grey-button");
 	form.classList.remove("m-loading");
 }
 

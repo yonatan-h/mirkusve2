@@ -68,7 +68,7 @@ function updateTime() {
 	lastSnapshot = curTime;
 	storeDuration();
 
-	const minutes = Math.floor(duration / 1000);
+	const minutes = Math.floor(duration / (60 * 1000));
 	minutesSpan.textContent = minutes;
 
 	animateDots();

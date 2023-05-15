@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n\tposition: fixed;\n\tbottom: 10%;\n\tright: 5%;\n\tmax-width: 400px;\n\tpadding: 0.5rem;\n\n\tbox-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n\tbackground-color: rgba(235, 234, 234, 0.8);\n\tbackdrop-filter: blur(10px);\n\n\t/* border: 5px solid rgb(248, 159, 27); */\n\tborder-left: 5px solid rgb(248, 159, 27);\n\tfont-family: monospace, sans-serif;\n}\n\n.m-scroll {\n\twidth: 100%;\n\tmax-height: 50vh;\n\n\toverflow: auto;\n}\n\n.m-submit h2 {\n\tfont-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n\tcolor: black;\n}\n.m-submit input {\n\tbackground: none;\n\tborder-bottom: 3px solid grey;\n\tborder-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n\tmax-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n\tbackground: rgb(248, 159, 27);\n\tborder: none;\n\tpadding: 5px;\n\tcolor: black;\n}\n\n.m-submit .m-submit-button:hover {\n\tbox-shadow: 2px 2px rgb(0, 100, 0);\n\tcursor: pointer;\n}\n\n.m-submit .m-success-button {\n\tbackground: darkgreen;\n\tcolor: white;\n}\n\n.m-submit .error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n\tcolor: brown;\n}\n\n/*loading*/\n.m-loading {\n\tpointer-events: none;\n\tbackground-image: linear-gradient(\n\t\tto right,\n\t\trgba(255, 255, 255, 0.1),\n\t\trgb(189, 239, 189),\n\t\trgba(255, 255, 255, 0.1)\n\t);\n\tbackground-size: 200% 100%;\n\tanimation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n\t0% {\n\t\tbackground-position-x: 0%;\n\t}\n\t40% {\n\t\tbackground-position-x: 100%;\n\t}\n\t100% {\n\t\tbackground-position-x: 0%;\n\t}\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n\tpointer-events: none;\n\topacity: 0.9;\n}\n.m-submit.m-disabled {\n\tborder-color: grey;\n\tpointer-events: none;\n}\n\n.m-submit.m-disabled * {\n\tbackground: none;\n}\n\n.m-submit .m-grey-button {\n\tbackground: grey;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n\tposition: fixed;\n\tbottom: 10%;\n\tright: 5%;\n\tmax-width: 400px;\n\tpadding: 0.5rem;\n\n\tbox-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n\tbackground-color: rgba(235, 234, 234, 0.8);\n\tbackdrop-filter: blur(10px);\n\n\t/* border: 5px solid rgb(248, 159, 27); */\n\tborder-left: 5px solid rgb(248, 159, 27);\n\tfont-family: monospace, sans-serif;\n}\n\n.m-scroll {\n\twidth: 100%;\n\tmax-height: 50vh;\n\n\toverflow: auto;\n}\n\n.m-submit h2 {\n\tfont-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n\tcolor: black;\n}\n.m-submit input {\n\tbackground: none;\n\tborder-bottom: 3px solid grey;\n\tborder-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n\tmax-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n\tbackground: rgb(248, 159, 27);\n\tborder: none;\n\tpadding: 5px;\n\tcolor: black;\n}\n\n.m-submit .m-submit-button:hover {\n\tbox-shadow: 2px 2px rgb(0, 100, 0);\n\tcursor: pointer;\n}\n\n.m-submit .m-success-button {\n\tbackground: darkgreen;\n\tcolor: white;\n}\n\n.m-submit .error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n\tcolor: brown;\n}\n\n/*loading*/\n.m-loading {\n\tpointer-events: none;\n\tbackground-image: linear-gradient(\n\t\tto right,\n\t\trgba(255, 255, 255, 0.1),\n\t\trgb(189, 239, 189),\n\t\trgba(255, 255, 255, 0.1)\n\t);\n\tbackground-size: 200% 100%;\n\tanimation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n\t0% {\n\t\tbackground-position-x: 0%;\n\t}\n\t40% {\n\t\tbackground-position-x: 100%;\n\t}\n\t100% {\n\t\tbackground-position-x: 0%;\n\t}\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n\tpointer-events: none;\n\topacity: 0.9;\n}\n.m-submit.m-disabled {\n\tborder-color: grey;\n\tpointer-events: none;\n}\n\n.m-submit.m-disabled * {\n\tbackground: none;\n}\n\n.m-submit .m-grey-button {\n\tbackground: grey;\n\topacity: 0.5;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -225,7 +225,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // Module
-var code = "<form class=\"m-submit\">\n\t<div id=\"error-box\" class=\"error-box\">\n\t\t<p></p>\n\t\t<code></code>\n\t</div>\n\t<h2>Submit To A2SV</h2>\n\n\t<p>\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"submissions\"\n\t\t\tplaceholder=\"?\"\n\t\t\tclass=\"m-thin-input\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t\tsubmissions |\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"minutes\"\n\t\t\tplaceholder=\"?\"\n\t\t\tclass=\"m-thin-input\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t\tminutes\n\t</p>\n\t<p>\n\t\tSelect a folder in your repo to upload\n\t\t<input type=\"text\" name=\"questionName\" placeholder=\"question-name\" hidden />\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"fileName\"\n\t\t\tplaceholder=\"file-name\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>.<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"fileExtension\"\n\t\t\tplaceholder=\"file extension\"\n\t\t\tclass=\"m-thin-input\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t\t<br />\n\t\t<textarea\n\t\t\ttype=\"text\"\n\t\t\tname=\"file\"\n\t\t\tplaceholder=\"file content\"\n\t\t\thidden\n\t\t></textarea>\n\t</p>\n\n\t<div>\n\t\t<div id=\"tree-view\" class=\"m-scroll\"></div>\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"folderPath\"\n\t\t\tplaceholder=\"something/something\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t</div>\n\n\t<input type=\"submit\" value=\"Submit\" class=\"m-submit-button\" />\n</form>\n";
+var code = "<form class=\"m-submit\">\n\t<div id=\"error-box\" class=\"error-box\">\n\t\t<p></p>\n\t\t<code></code>\n\t</div>\n\t<h2>Submit To A2SV</h2>\n\n\t<p>\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"submissions\"\n\t\t\tplaceholder=\"?\"\n\t\t\tclass=\"m-thin-input\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t\tsubmissions &\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"minutes\"\n\t\t\tplaceholder=\"?\"\n\t\t\tclass=\"m-thin-input\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t\tminutes\n\t</p>\n\t<p>\n\t\tSelect a folder in your repo to upload\n\t\t<input type=\"text\" name=\"questionName\" placeholder=\"question-name\" hidden />\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"fileName\"\n\t\t\tplaceholder=\"file-name\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>.<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"fileExtension\"\n\t\t\tplaceholder=\"file extension\"\n\t\t\tclass=\"m-thin-input\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t\t<br />\n\t\t<textarea\n\t\t\ttype=\"text\"\n\t\t\tname=\"file\"\n\t\t\tplaceholder=\"file content\"\n\t\t\thidden\n\t\t></textarea>\n\t</p>\n\n\t<div>\n\t\t<div id=\"tree-view\" class=\"m-scroll\"></div>\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"folderPath\"\n\t\t\tplaceholder=\"something/something\"\n\t\t\tclass=\"m-visible-only\"\n\t\t/>\n\t</div>\n\n\t<input type=\"submit\" value=\"Submit\" class=\"m-submit-button\" />\n</form>\n";
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
@@ -860,6 +860,8 @@ function errorIfPageNotLoaded() {
 }
 
 function showSuccessfulSubmit() {
+	errorParagraph.textContent = "";
+	errorCode.textContent = "";
 	submitButton.setAttribute("disabled", "disabled");
 	submitButton.classList.add("m-success-button");
 	submitButton.value = "Submitted!";
@@ -873,11 +875,13 @@ function disableForm() {
 
 function showLoading() {
 	submitButton.setAttribute("disabled", "disabled");
+	submitButton.classList.add("m-grey-button");
 	form.classList.add("m-loading");
 }
 
 function stopShowingLoading() {
 	submitButton.removeAttribute("disabled");
+	submitButton.classList.remove("m-grey-button");
 	form.classList.remove("m-loading");
 }
 
@@ -952,7 +956,8 @@ function setFileExtension(form) {
 async function setMinutes(form) {
 	const { durations } = await chrome.storage.local.get("durations");
 	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_1__["default"])(window.location.href);
-	const minutes = Math.round(durations[questionName] / (1000 * 60)); //ms to minutes
+	const milliseconds = durations[questionName];
+	const minutes = Math.floor(milliseconds / (1000 * 60)); //ms to minutes
 
 	if (minutes === undefined) throw new NoTimerError();
 
@@ -1628,7 +1633,7 @@ function updateTime() {
 	lastSnapshot = curTime;
 	storeDuration();
 
-	const minutes = Math.floor(duration / 1000);
+	const minutes = Math.floor(duration / (60 * 1000));
 	minutesSpan.textContent = minutes;
 
 	animateDots();
