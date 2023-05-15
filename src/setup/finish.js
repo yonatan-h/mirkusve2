@@ -8,6 +8,7 @@ async function handleFinish(event) {
 		event.preventDefault();
 
 		const form = document.querySelector("form");
+		alert(form);
 		const formData = new FormData(form);
 
 		const keyValues = { durations: {} }; //for timer
@@ -27,7 +28,8 @@ async function handleFinish(event) {
 
 async function save(keyValueObject) {
 	try {
-		const things = await chrome.storage.local.get();
+		await chrome.storage.local.set(keyValueObject);
+		const things = await chrome.storage.local.get(keyValueObject);
 		alert(JSON.stringify(things));
 	} catch (error) {
 		throw new CustomError("Could not save setup", error.message);

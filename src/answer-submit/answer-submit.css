@@ -1,0 +1,109 @@
+.m-submit {
+	position: fixed;
+	bottom: 10%;
+	right: 5%;
+	max-width: 400px;
+	padding: 0.5rem;
+
+	box-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);
+	background-color: rgba(235, 234, 234, 0.8);
+	backdrop-filter: blur(10px);
+
+	/* border: 5px solid rgb(248, 159, 27); */
+	border-left: 5px solid rgb(248, 159, 27);
+	font-family: monospace, sans-serif;
+}
+
+.m-scroll {
+	width: 100%;
+	max-height: 50vh;
+
+	overflow: auto;
+}
+
+.m-submit h2 {
+	font-size: 1.5rem;
+}
+
+.m-submit h2,
+.m-submit p,
+.m-submit code,
+.m-submit input {
+	color: black;
+}
+.m-submit input {
+	background: none;
+	border-bottom: 3px solid grey;
+	border-radius: 3px;
+}
+
+.m-submit .m-thin-input {
+	max-width: 5ch;
+}
+
+.m-submit .m-submit-button {
+	background: rgb(248, 159, 27);
+	border: none;
+	padding: 5px;
+	color: black;
+}
+
+.m-submit .m-submit-button:hover {
+	box-shadow: 2px 2px rgb(0, 100, 0);
+	cursor: pointer;
+}
+
+.m-submit .m-success-button {
+	background: darkgreen;
+	color: white;
+}
+
+.m-submit .error-box p {
+	color: rgb(98, 25, 25);
+}
+.m-submit .error-box code {
+	color: brown;
+}
+
+/*loading*/
+.m-loading {
+	pointer-events: none;
+	background-image: linear-gradient(
+		to right,
+		rgba(255, 255, 255, 0.1),
+		rgb(189, 239, 189),
+		rgba(255, 255, 255, 0.1)
+	);
+	background-size: 200% 100%;
+	animation: loading-wave 2s infinite;
+}
+
+@keyframes loading-wave {
+	0% {
+		background-position-x: 0%;
+	}
+	40% {
+		background-position-x: 100%;
+	}
+	100% {
+		background-position-x: 0%;
+	}
+}
+/*disabled*/
+
+.m-submit .m-visible-only {
+	pointer-events: none;
+	opacity: 0.9;
+}
+.m-submit.m-disabled {
+	border-color: grey;
+	pointer-events: none;
+}
+
+.m-submit.m-disabled * {
+	background: none;
+}
+
+.m-submit .m-grey-button {
+	background: grey;
+}

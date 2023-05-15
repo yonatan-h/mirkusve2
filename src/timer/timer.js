@@ -1,4 +1,6 @@
 import getQuestionName from "../lib/get-question-name.js";
+import html from "./timer.html";
+import "./timer.css";
 
 const container = createTimerUI();
 document.body.appendChild(container);
@@ -15,23 +17,16 @@ const dotDotSpan = container.querySelector("#dotdot");
 playBtn.addEventListener("click", play);
 pauseBtn.addEventListener("click", pause);
 
-function getTimerControls() {
-	function show() {
-		play();
-		container.classList.remove("hidden");
-	}
+function createTimerUI() {
+	const container = document.createElement("div");
 
-	function hide() {
-		pause();
-		container.classList.add("hidden");
-	}
-
-	return [show, hide];
+	container.innerHTML = html;
+	return container;
 }
 
 async function getStoredDuration() {
 	const questionName = getQuestionName(window.location.href);
-	const durations = await chrome.storage.local.get("durations");
+	const { durations } = await chrome.storage.local.get("durations");
 	return durations[questionName];
 }
 
@@ -43,43 +38,29 @@ async function storeDuration() {
 	await chrome.storage.local.set({ durations });
 }
 
-function createTimerUI() {
-	const container = document.createElement("div");
-	const html = `
-	<p>
-		<button id="play">▶️</button>
-		<button id="pause">⏸</button>
-		<span>You spent</span>
-		<span id="minutes">---</span>
-		<span>minutes</span>
-		<span id="dotdot">---</span>
-	</p>
-	`;
-
-	container.innerHTML = html;
-	return container;
-}
-
 async function play() {
 	if (duration === undefined) {
-		duration = (await getStoredDuration()) || 0;
+		const prevDuration = await getStoredDuration();
+		duration = prevDuration || 0;
 	}
 
 	lastSnapshot = new Date().getTime();
 	updateTime(); //immidiately then continue
-	setIntervalId = setInterval(updateTime, 1000);
-	playBtn.classList.add("hidden");
-	pauseBtn.classList.remove("hidden");
+	setIntervalId = setInterval(updateTime, 2000);
+	playBtn.classList.add("m-hidden");
+	pauseBtn.classList.remove("m-hidden");
 }
 
 function pause() {
 	clearInterval(setIntervalId); //no errors if undefined btw
-	playBtn.classList.remove("hidden");
-	pauseBtn.classList.add("hidden");
+	playBtn.classList.remove("m-hidden");
+	pauseBtn.classList.add("m-hidden");
 }
 
 function updateTime() {
-	if (!lastSnapshot) lastSnapshot = new Date().getTime();
+	if (!lastSnapshot) {
+		lastSnapshot = new Date().getTime();
+	}
 	const curTime = new Date().getTime();
 	const gap = curTime - lastSnapshot;
 
@@ -103,4 +84,14 @@ function animateDots() {
 	dotDotSpan.textContent = ".".repeat(length);
 }
 
-export default getTimerControls;
+function show() {
+	play();
+	container.classList.remove("m-hidden");
+}
+
+function hide() {
+	pause();
+	container.classList.add("m-hidden");
+}
+
+export { show, hide };

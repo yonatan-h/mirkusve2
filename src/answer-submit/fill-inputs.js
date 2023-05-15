@@ -1,27 +1,17 @@
 import { CustomError } from "../lib/custom-errors.js";
 import getQuestionName from "../lib/get-question-name.js";
 
-function fillInputs(form, handleCustomError) {
-	try {
-		setSubmissions();
-		setMinutes();
+async function fillInputs(form) {
+	setSubmissions(form);
+	await setMinutes(form);
 
-		setFileName();
-		setFileExtension();
-		setFile();
-	} catch (error) {
-		if (error instanceof NotAcceptedError) {
-			disableForm();
-		} else if (error instanceof NoTimerError) {
-			const minutesInput = form.querySelector(`[name="minutes"]`);
-			minutesInput.removeAttribute("disabled"); //allow user to enter manually
-		}
-
-		handleCustomError(error);
-	}
+	setFileName(form);
+	setQuestionName(form);
+	setFileExtension(form);
+	setFile(form);
 }
 
-function setSubmissions() {
+function setSubmissions(form) {
 	if (!recentWasAccepted()) {
 		throw new NotAcceptedError();
 	}
@@ -32,32 +22,42 @@ function setSubmissions() {
 	submissionsInput.value = totalSubmissionCount;
 }
 
-function setFile() {
+function setFile(form) {
 	const fileInput = form.querySelector(`[name="file"]`);
 	const fileContent = document.querySelector("code").innerText;
+
 	fileInput.value = fileContent;
 }
 
-function setFileName() {
-	const questionNameInput = form.querySelector(`[name="fileName"]`);
-	questionNameInput.value = getQuestionName();
+function setFileName(form) {
+	const fileNameInput = form.querySelector(`[name="fileName"]`);
+	fileNameInput.value = getQuestionName(window.location.href);
 }
 
-function setFileExtension() {
+function setQuestionName(form) {
+	const questionNameInput = form.querySelector(`[name="questionName"]`);
+	questionNameInput.value = getQuestionName(window.location.href);
+}
+
+function setFileExtension(form) {
 	const fileExtensionInput = form.querySelector('[name="fileExtension"]');
-	const extension = document.querySelector("code").className;
-	fileExtensionInput.value = extension;
+	const className = document.querySelector("code").className;
+	const map = {
+		"language-python": "py",
+	};
+
+	fileExtensionInput.value = map[className] || "txt";
 }
 
-async function setMinutes() {
-	const durations = await chrome.storage.local.set("durations");
-	const questionName = getQuestionName();
-	const minutes = durations[questionName];
+async function setMinutes(form) {
+	const { durations } = await chrome.storage.local.get("durations");
+	const questionName = getQuestionName(window.location.href);
+	const minutes = Math.round(durations[questionName] / (1000 * 60)); //ms to minutes
 
 	if (minutes === undefined) throw new NoTimerError();
 
-	const timeInput = form.querySelector(`[name="time"]`);
-	timeInput.value = durations;
+	const minutesInput = form.querySelector(`[name="minutes"]`);
+	minutesInput.value = minutes;
 }
 
 function getSubmissionSpans() {
@@ -67,11 +67,7 @@ function getSubmissionSpans() {
 }
 function recentWasAccepted() {
 	const submissionSpans = getSubmissionSpans();
-	return submissionSpans[0]?.innerText === "Accepted";
-}
-
-function disableForm(form) {
-	form.querySelector("fieldset").setAttribute("disabled", "disabled");
+	return submissionSpans[0]?.classList.contains("text-green-s");
 }
 
 class NotAcceptedError extends CustomError {

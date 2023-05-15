@@ -1,39 +1,36 @@
+import { encode } from "js-base64";
 import robustFetch from "../lib/robust-fetch.js";
+import removeExcessSlash from "../lib/excess-slash.js";
+import { submitAnswerUrl } from "../keys.js";
 import {
 	BadStatusError,
 	CustomError,
 	EmptyInputError,
 } from "../lib/custom-errors.js";
-import removeExcessSlash from "../lib/excess-slash.js";
-import { submitAnswerUrl } from "../keys.js";
 
-async function sendAnswer(form, handleCustomError) {
-	try {
-		const {
-			questionName,
-			folderPath,
-			fileName,
-			fileExtension,
-			file,
-			submissions,
-			minutes,
-		} = extractKeyValues(form);
+async function sendAnswer(form) {
+	const {
+		folderPath,
+		questionName,
+		fileName,
+		fileExtension,
+		file,
+		submissions,
+		minutes,
+	} = extractKeyValues(form);
 
-		await errorIfAlreadyAnswered(questionName);
-		const filePath = getFilePath(folderPath, fileName, fileExtension);
-		const uploadResponse = await uploadFileResponse(filePath, file);
+	await errorIfAlreadyAnswered(questionName);
+	const filePath = getFilePath(folderPath, fileName, fileExtension);
+	const uploadResponse = await uploadFileResponse(filePath, file);
 
-		errorIfFileExists(uploadResponse);
-		errorIfBadStatus(uploadResponse);
+	errorIfFileExists(uploadResponse, filePath);
+	errorIfBadStatus(uploadResponse);
 
-		const fileLink = await getFileLink(uploadFileResponse);
-		await submitToSheets(submissions, minutes, fileLink);
-	} catch (error) {
-		handleCustomError(error);
-	}
+	const fileLink = await getFileLink(uploadResponse);
+	await submitToSheets({ submissions, minutes, questionName, fileLink });
 }
 
-async function extractKeyValues(form) {
+function extractKeyValues(form) {
 	const keyValues = {};
 	const formData = new FormData(form);
 	for (const [key, value] of formData) {
@@ -46,22 +43,20 @@ async function extractKeyValues(form) {
 	}
 
 	for (const key in keyValues) {
-		if (!keyValues[key]) {
-			throw new EmptyInputError(key);
-		}
+		if (!keyValues[key]) throw new EmptyInputError(key);
 	}
 	return keyValues;
 }
 
 async function errorIfAlreadyAnswered(questionName) {
-	const { name, group } = await chrome.storate.local.get(["name", "group"]);
+	const { name, group } = await chrome.storage.local.get(["name", "group"]);
 
 	let url = submitAnswerUrl;
 	url += `&name=${name}&question=${questionName}&group=${group}`;
 	url = removeExcessSlash(url);
 
-	const { isEmpty } = await robustFetch(url);
-	if (!isEmpty) {
+	const { isAnswered } = await robustFetch(url);
+	if (isAnswered) {
 		let message = "You've already answered in sheets.";
 		message += "You can't submit twice.";
 		throw new CustomError(message);
@@ -69,7 +64,7 @@ async function errorIfAlreadyAnswered(questionName) {
 }
 
 function getFilePath(folderPath, fileName, fileExtension) {
-	return `${folderPath}/${fileName}/${fileExtension}`;
+	return `${folderPath}/${fileName}.${fileExtension}`;
 }
 
 async function uploadFileResponse(filePath, file) {
@@ -79,15 +74,15 @@ async function uploadFileResponse(filePath, file) {
 		"token",
 	]);
 
-	let fileUrl = `https://api.github.com/repos/${userName}/${repoName}/${filePath}`;
+	let fileUrl = `https://api.github.com/repos/${userName}/${repoName}/contents/${filePath}`;
 	fileUrl = removeExcessSlash(fileUrl);
 
-	const response = await fetch(url, {
+	const response = await fetch(fileUrl, {
 		method: "PUT",
 		headers: { Authorization: `Bearer ${token}` },
 		body: JSON.stringify({
 			message: "Uploaded By Mirkusve",
-			content: btoa(file), //binary to ascii
+			content: encode(file), //binary to ascii
 		}),
 	});
 
@@ -95,7 +90,8 @@ async function uploadFileResponse(filePath, file) {
 }
 
 function errorIfFileExists(response, filePath) {
-	if (response.status === 442) {
+	if (response.status === 422) {
+		//discovered 422 from trail and error
 		const message = `${filePath} already exists in your repo. You can't submit twice`;
 		throw new CustomError(message);
 	}
@@ -112,11 +108,18 @@ async function getFileLink(response) {
 	return data["content"]["html_url"];
 }
 
-async function submitToSheets(submissions, minutes, fileLink) {
+async function submitToSheets({
+	submissions,
+	minutes,
+	questionName,
+	fileLink,
+}) {
+	const { name, group } = await chrome.storage.local.get(["name", "group"]);
+
 	let url = submitAnswerUrl;
-	url += `&name=${storageObject.name}`;
+	url += `&name=${name}`;
 	url += `&question=${questionName}`;
-	url += `&group=${storageObject.group}`;
+	url += `&group=${group}`;
 
 	url += `&submissions=${submissions}`;
 	url += `&time=${minutes}`;
@@ -124,7 +127,16 @@ async function submitToSheets(submissions, minutes, fileLink) {
 
 	url = removeExcessSlash(url);
 
-	await robustFetch(url, { method: "POST" });
+	const data = await robustFetch(url, { method: "POST" });
+
+	if (data.error) {
+		const { descriptionAndSolution, errorAsString = "" } = data;
+		if (errorAsString) {
+			throw new CustomError(descriptionAndSolution, errorAsString);
+		} else {
+			throw new CustomError(descriptionAndSolution);
+		}
+	}
 }
 
 export default sendAnswer;

@@ -1,17 +1,21 @@
-.hidden {
+.m-hidden {
 	display: none;
 }
 .m-timer button {
-	padding: 0;
+	padding: 0rem;
 	font-size: 1.2rem;
 }
 .m-timer {
 	margin: 0;
 	position: fixed;
-	left: 5%;
-	top: 5%;
+	left: 20%;
+	top: 2%;
 	z-index: 99;
 
-	background: rgba(50, 50, 50, 0.8);
-	color: white;
+	backdrop-filter: blur(10px);
+	border-right: 5px solid rgb(248, 159, 27);
+	background-color: rgba(235, 234, 234, 0.8);
+
+	color: black;
+	min-width: 13rem;
 }

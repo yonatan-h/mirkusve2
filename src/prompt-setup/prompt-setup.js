@@ -1,9 +1,7 @@
-function createUi() {
-	const html = `
-    <p> <button id="setup">Setup Mirkusve</button> to send leetcode answers to A2sv!</p>
-    <p>Once you are done, refresh this page!</p>
-    `;
+import html from "./prompt-setup.html";
+import "./prompt-setup.css";
 
+function createUi() {
 	const container = document.createElement("div");
 	container.classList.add("prompt-setup");
 	container.innerHTML = html;
@@ -14,18 +12,14 @@ function createUi() {
 	return container;
 }
 
-function getPromptSetupControls() {
-	const promptSetupUi = createUi();
-	document.body.appendChild(promptSetupUi);
+const promptSetupUi = createUi();
+document.body.appendChild(promptSetupUi);
 
-	function show() {
-		promptSetupUi.classList.remove("hidden");
-	}
-	function hide() {
-		promptSetupUi.classList.add("hidden");
-	}
-
-	return [show, hide];
+function show() {
+	promptSetupUi.classList.remove("hidden");
+}
+function hide() {
+	promptSetupUi.classList.add("hidden");
 }
 
-export default getPromptSetupControls;
+export { show, hide };
