@@ -1,0 +1,24 @@
+{
+	"manifest_version": 3,
+	"version": "0.0.1",
+	"name": "Mirkusve2",
+	"description": "Submit Leetcode answers to Github and GoogleSheets",
+
+	"content_scripts": [
+		{
+			"matches": ["https://leetcode.com/problems/*"],
+			"js": ["view-selector.bundle.js"]
+		}
+	],
+	"background": {
+		"service_worker": "background.bundle.js",
+		"type": "module"
+	},
+	"action": {
+		"default_popup": "popup.html"
+	},
+
+	"permissions": ["management", "tabs", "storage", "identity"],
+
+	"key": "jgcbcknahneghfjgknaaepecdenjpdeh"
+}

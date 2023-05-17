@@ -1,0 +1,61 @@
+<form class="m-submit">
+	<div id="error-box" class="error-box">
+		<p></p>
+		<code></code>
+	</div>
+	<h2>Submit To A2SV</h2>
+
+	<p>
+		<input
+			type="text"
+			name="submissions"
+			placeholder="?"
+			class="m-thin-input"
+			class="m-visible-only"
+		/>
+		submissions &
+		<input
+			type="text"
+			name="minutes"
+			placeholder="?"
+			class="m-thin-input"
+			class="m-visible-only"
+		/>
+		minutes
+	</p>
+	<p>
+		Select a folder in your repo to upload
+		<input type="text" name="questionName" placeholder="question-name" hidden />
+		<input
+			type="text"
+			name="fileName"
+			placeholder="file-name"
+			class="m-visible-only"
+		/>.<input
+			type="text"
+			name="fileExtension"
+			placeholder="file extension"
+			class="m-thin-input"
+			class="m-visible-only"
+		/>
+		<br />
+		<textarea
+			type="text"
+			name="file"
+			placeholder="file content"
+			hidden
+		></textarea>
+	</p>
+
+	<div>
+		<div id="tree-view" class="m-scroll"></div>
+		<input
+			type="text"
+			name="folderPath"
+			placeholder="something/something"
+			class="m-visible-only"
+		/>
+	</div>
+
+	<input type="submit" value="Submit" class="m-submit-button" />
+</form>

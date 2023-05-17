@@ -1,0 +1,30 @@
+* {
+	box-sizing: border-box;
+	font-family: monospace;
+	font-size: 1rem;
+}
+
+body {
+	min-width: 500px;
+}
+
+h1 {
+	border-bottom: 5px solid rgb(248, 159, 27);
+	text-align: center;
+}
+
+button {
+	background: none;
+	border: none;
+	background: darkgreen;
+	padding: 5px;
+	color: white;
+}
+
+button:hover {
+	transform: scale(1.05);
+}
+
+.hiddden {
+	display: none;
+}
