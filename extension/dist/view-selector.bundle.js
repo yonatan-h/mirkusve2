@@ -1757,18 +1757,13 @@ So, view selector is meant to manually detect a url change, and show/hide conten
 
 */
 
-function hideEveryView() {
-	(0,_timer_timer_js__WEBPACK_IMPORTED_MODULE_0__.hide)();
-	(0,_prompt_setup_prompt_setup_js__WEBPACK_IMPORTED_MODULE_1__.hide)();
-	(0,_answer_submit_answer_submit_js__WEBPACK_IMPORTED_MODULE_2__.hide)();
-}
-
 const nameViewPairs = {
 	"prompt-setup": _prompt_setup_prompt_setup_js__WEBPACK_IMPORTED_MODULE_1__.show,
 	timer: _timer_timer_js__WEBPACK_IMPORTED_MODULE_0__.show,
 	"answer-submit": _answer_submit_answer_submit_js__WEBPACK_IMPORTED_MODULE_2__.show,
 };
 
+hideEveryView();
 chrome.runtime.onMessage.addListener((req, sender, next) => {
 	const { message, viewName } = req;
 	if (message === "change-view") {
@@ -1778,6 +1773,12 @@ chrome.runtime.onMessage.addListener((req, sender, next) => {
 		}
 	}
 });
+
+function hideEveryView() {
+	(0,_timer_timer_js__WEBPACK_IMPORTED_MODULE_0__.hide)();
+	(0,_prompt_setup_prompt_setup_js__WEBPACK_IMPORTED_MODULE_1__.hide)();
+	(0,_answer_submit_answer_submit_js__WEBPACK_IMPORTED_MODULE_2__.hide)();
+}
 
 })();
 

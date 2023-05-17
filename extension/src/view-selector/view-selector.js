@@ -18,18 +18,13 @@ So, view selector is meant to manually detect a url change, and show/hide conten
 
 */
 
-function hideEveryView() {
-	hideTimer();
-	hidePromptSetup();
-	hideAnswerSubmit();
-}
-
 const nameViewPairs = {
 	"prompt-setup": showPromptSetup,
 	timer: showTimer,
 	"answer-submit": showAnswerSubmit,
 };
 
+hideEveryView();
 chrome.runtime.onMessage.addListener((req, sender, next) => {
 	const { message, viewName } = req;
 	if (message === "change-view") {
@@ -39,3 +34,9 @@ chrome.runtime.onMessage.addListener((req, sender, next) => {
 		}
 	}
 });
+
+function hideEveryView() {
+	hideTimer();
+	hidePromptSetup();
+	hideAnswerSubmit();
+}
