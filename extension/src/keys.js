@@ -1,7 +1,5 @@
-//could not use json. json type could not be imported.
-
 const sheetsWebappUrl =
-	"https://script.google.com/macros/s/AKfycbwqWb7m4z7osZtcQLW5wu61Of6G6rBbGUkr-8OprrahzlkUtk5wZm43xUrLQD7qBCqH/exec";
+	"https://script.google.com/macros/s/AKfycbzla4uMy7Dan5631pEB9DA_wrnClhJq9CiRXGjv_MLE9ZwXO7wdgBrgOeIhbYTHa-gUIw/exec";
 
 const groupFinderUrl = sheetsWebappUrl + "?path=groups";
 const codeForTokenUrl = sheetsWebappUrl + "?path=tokens";
