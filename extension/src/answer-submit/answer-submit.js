@@ -1,5 +1,6 @@
 import makeHandler from "../lib/handle-custom-error.js";
 import { CustomError } from "../lib/custom-errors.js";
+import { getSubmissionSpans } from "./submitssion-spans.js";
 import fillInputs from "./fill-inputs.js";
 import showTreeView from "./tree-view.js";
 import sendAnswer from "./send-answer.js";
@@ -44,12 +45,12 @@ async function show() {
 
 	for (let i = 0; i < numPolls; i++) {
 		if (pageHasLoaded()) break;
-		await sleep(1000);
+		await sleep(500);
 	}
 
 	try {
 		errorIfPageNotLoaded();
-		await fillInputs(form, handleCustomError);
+		await fillInputs(form);
 		await showTreeView(treeViewDiv, folderPathInput, handleCustomError);
 		stopShowingLoading();
 	} catch (error) {
@@ -78,10 +79,10 @@ async function sleep(duration) {
 function pageHasLoaded() {
 	//one of the code elements is ours
 	const hasCode = document.querySelectorAll("code").length >= 2;
-	const hasAcceptedSpan = document.querySelectorAll(".text-green-s").length > 0;
-	const hasRejectedSpan = document.querySelectorAll(".text-red-s").length > 0;
+	const submissionSpans = getSubmissionSpans();
+	const hasSubmissions = submissionSpans.length > 0;
 
-	return hasCode && (hasAcceptedSpan || hasRejectedSpan);
+	return hasCode && hasSubmissions;
 }
 
 function errorIfPageNotLoaded() {

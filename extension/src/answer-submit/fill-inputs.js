@@ -1,4 +1,5 @@
 import { CustomError } from "../lib/custom-errors.js";
+import { getSubmissionSpans, recentWasAccepted } from "./submitssion-spans.js";
 import getQuestionName from "../lib/get-question-name.js";
 
 async function fillInputs(form) {
@@ -59,16 +60,6 @@ async function setMinutes(form) {
 
 	const minutesInput = form.querySelector(`[name="minutes"]`);
 	minutesInput.value = minutes;
-}
-
-function getSubmissionSpans() {
-	const selector = "span.text-green-s, span.text-red-s";
-	//[...] because truthy falsey values are not as predicted
-	return [...document.querySelectorAll(selector)];
-}
-function recentWasAccepted() {
-	const submissionSpans = getSubmissionSpans();
-	return submissionSpans[0]?.classList.contains("text-green-s");
 }
 
 class NotAcceptedError extends CustomError {
