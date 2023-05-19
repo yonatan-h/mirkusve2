@@ -214,16 +214,6 @@ class EmptyInputError extends CustomError {
 
 
 
-function test() {
-	console.log(new CustomError("one", "two"));
-	console.log(new NetworkError(new TypeError()));
-	console.log(new BadStatusError({ ok: false, status: 404 }));
-	console.log(new AppScriptError({ error: "api is busy" }));
-	console.log(new EmptyInputError("Empty thing"));
-}
-
-// test();
-
 
 /***/ })
 

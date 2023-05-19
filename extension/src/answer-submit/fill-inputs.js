@@ -1,5 +1,5 @@
 import { CustomError } from "../lib/custom-errors.js";
-import { getSubmissionSpans, recentWasAccepted } from "./submitssion-spans.js";
+import { getSubmissionSpans, recentWasAccepted } from "./submission-spans.js";
 import getQuestionName from "../lib/get-question-name.js";
 
 async function fillInputs(form) {

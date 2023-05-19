@@ -748,6 +748,31 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/answer-submit/after-submit.js":
+/*!*******************************************!*\
+  !*** ./src/answer-submit/after-submit.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_duration__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/duration */ "./src/lib/duration.js");
+/* harmony import */ var _lib_get_question_name__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/get-question-name */ "./src/lib/get-question-name.js");
+
+
+
+async function afterSubmit() {
+	const questionName = (0,_lib_get_question_name__WEBPACK_IMPORTED_MODULE_1__["default"])(window.location.href);
+	await (0,_lib_duration__WEBPACK_IMPORTED_MODULE_0__.forgetDuration)(questionName);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (afterSubmit);
+
+
+/***/ }),
+
 /***/ "./src/answer-submit/answer-submit.js":
 /*!********************************************!*\
   !*** ./src/answer-submit/answer-submit.js ***!
@@ -761,12 +786,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _lib_handle_custom_error_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/handle-custom-error.js */ "./src/lib/handle-custom-error.js");
 /* harmony import */ var _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/custom-errors.js */ "./src/lib/custom-errors.js");
-/* harmony import */ var _submitssion_spans_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./submitssion-spans.js */ "./src/answer-submit/submitssion-spans.js");
+/* harmony import */ var _submission_spans_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./submission-spans.js */ "./src/answer-submit/submission-spans.js");
 /* harmony import */ var _fill_inputs_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fill-inputs.js */ "./src/answer-submit/fill-inputs.js");
 /* harmony import */ var _tree_view_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tree-view.js */ "./src/answer-submit/tree-view.js");
 /* harmony import */ var _send_answer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./send-answer.js */ "./src/answer-submit/send-answer.js");
-/* harmony import */ var _answer_submit_html__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./answer-submit.html */ "./src/answer-submit/answer-submit.html");
-/* harmony import */ var _answer_submit_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./answer-submit.css */ "./src/answer-submit/answer-submit.css");
+/* harmony import */ var _after_submit_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./after-submit.js */ "./src/answer-submit/after-submit.js");
+/* harmony import */ var _answer_submit_html__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./answer-submit.html */ "./src/answer-submit/answer-submit.html");
+/* harmony import */ var _answer_submit_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./answer-submit.css */ "./src/answer-submit/answer-submit.css");
+
 
 
 
@@ -791,11 +818,14 @@ const form = container.querySelector("form");
 const submitButton = form.querySelector('[type="submit"]');
 
 form.onsubmit = async (event) => {
+	event.preventDefault();
+	await (0,_after_submit_js__WEBPACK_IMPORTED_MODULE_6__["default"])();
+
 	try {
 		showLoading();
-		event.preventDefault();
 		await (0,_send_answer_js__WEBPACK_IMPORTED_MODULE_5__["default"])(form);
 		stopShowingLoading();
+
 		showSuccessfulSubmit();
 	} catch (error) {
 		stopShowingLoading();
@@ -835,7 +865,7 @@ function hide() {
 
 function createUi() {
 	const container = document.createElement("div");
-	container.innerHTML = _answer_submit_html__WEBPACK_IMPORTED_MODULE_6__["default"];
+	container.innerHTML = _answer_submit_html__WEBPACK_IMPORTED_MODULE_7__["default"];
 	return container;
 }
 
@@ -848,7 +878,7 @@ async function sleep(duration) {
 function pageHasLoaded() {
 	//one of the code elements is ours
 	const hasCode = document.querySelectorAll("code").length >= 2;
-	const submissionSpans = (0,_submitssion_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)();
+	const submissionSpans = (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)();
 	const hasSubmissions = submissionSpans.length > 0;
 
 	return hasCode && hasSubmissions;
@@ -903,7 +933,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/custom-errors.js */ "./src/lib/custom-errors.js");
-/* harmony import */ var _submitssion_spans_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./submitssion-spans.js */ "./src/answer-submit/submitssion-spans.js");
+/* harmony import */ var _submission_spans_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./submission-spans.js */ "./src/answer-submit/submission-spans.js");
 /* harmony import */ var _lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/get-question-name.js */ "./src/lib/get-question-name.js");
 
 
@@ -920,13 +950,13 @@ async function fillInputs(form) {
 }
 
 function setSubmissions(form) {
-	if (!(0,_submitssion_spans_js__WEBPACK_IMPORTED_MODULE_1__.recentWasAccepted)()) {
+	if (!(0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_1__.recentWasAccepted)()) {
 		throw new NotAcceptedError();
 	}
 
 	const submissionsInput = form.querySelector(`[name="submissions"]`);
 
-	const totalSubmissionCount = (0,_submitssion_spans_js__WEBPACK_IMPORTED_MODULE_1__.getSubmissionSpans)().length;
+	const totalSubmissionCount = (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_1__.getSubmissionSpans)().length;
 	submissionsInput.value = totalSubmissionCount;
 }
 
@@ -1143,10 +1173,10 @@ async function submitToSheets({
 
 /***/ }),
 
-/***/ "./src/answer-submit/submitssion-spans.js":
-/*!************************************************!*\
-  !*** ./src/answer-submit/submitssion-spans.js ***!
-  \************************************************/
+/***/ "./src/answer-submit/submission-spans.js":
+/*!***********************************************!*\
+  !*** ./src/answer-submit/submission-spans.js ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1364,16 +1394,6 @@ class EmptyInputError extends CustomError {
 
 
 
-function test() {
-	console.log(new CustomError("one", "two"));
-	console.log(new NetworkError(new TypeError()));
-	console.log(new BadStatusError({ ok: false, status: 404 }));
-	console.log(new AppScriptError({ error: "api is busy" }));
-	console.log(new EmptyInputError("Empty thing"));
-}
-
-// test();
-
 
 /***/ }),
 
@@ -1402,7 +1422,7 @@ async function setDuration(questionName, duration) {
 }
 
 async function forgetDuration(questionName) {
-	const { durations } = await chrome.storage.local.get("durations");
+	let { durations } = await chrome.storage.local.get("durations");
 	delete durations[questionName];
 	await chrome.storage.local.set({ durations: durations });
 }
@@ -1678,6 +1698,7 @@ async function pause() {
 	const duration = timer.calculateDuration();
 	await saveDuration(duration); //accurate pause
 	timer.stop();
+	timer = undefined;
 
 	playBtn.classList.remove("m-hidden");
 	pauseBtn.classList.add("m-hidden");

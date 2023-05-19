@@ -57,6 +57,7 @@ async function pause() {
 	const duration = timer.calculateDuration();
 	await saveDuration(duration); //accurate pause
 	timer.stop();
+	timer = undefined;
 
 	playBtn.classList.remove("m-hidden");
 	pauseBtn.classList.add("m-hidden");

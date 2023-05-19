@@ -1,9 +1,10 @@
 import makeHandler from "../lib/handle-custom-error.js";
 import { CustomError } from "../lib/custom-errors.js";
-import { getSubmissionSpans } from "./submitssion-spans.js";
+import { getSubmissionSpans } from "./submission-spans.js";
 import fillInputs from "./fill-inputs.js";
 import showTreeView from "./tree-view.js";
 import sendAnswer from "./send-answer.js";
+import afterSubmit from "./after-submit.js";
 import html from "./answer-submit.html";
 import "./answer-submit.css";
 
@@ -22,11 +23,14 @@ const form = container.querySelector("form");
 const submitButton = form.querySelector('[type="submit"]');
 
 form.onsubmit = async (event) => {
+	event.preventDefault();
+	await afterSubmit();
+
 	try {
 		showLoading();
-		event.preventDefault();
 		await sendAnswer(form);
 		stopShowingLoading();
+
 		showSuccessfulSubmit();
 	} catch (error) {
 		stopShowingLoading();

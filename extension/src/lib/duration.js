@@ -10,7 +10,7 @@ async function setDuration(questionName, duration) {
 }
 
 async function forgetDuration(questionName) {
-	const { durations } = await chrome.storage.local.get("durations");
+	let { durations } = await chrome.storage.local.get("durations");
 	delete durations[questionName];
 	await chrome.storage.local.set({ durations: durations });
 }
