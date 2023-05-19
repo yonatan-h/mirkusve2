@@ -16,7 +16,7 @@ async function forgetDuration(questionName) {
 }
 
 function calculateMinutes(duration) {
-	const minutes = Math.floor(duration / (60 + 1000));
+	const minutes = Math.floor(duration / (60 * 1000));
 	return minutes;
 }
 
