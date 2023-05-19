@@ -761,11 +761,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _lib_handle_custom_error_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/handle-custom-error.js */ "./src/lib/handle-custom-error.js");
 /* harmony import */ var _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/custom-errors.js */ "./src/lib/custom-errors.js");
-/* harmony import */ var _fill_inputs_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./fill-inputs.js */ "./src/answer-submit/fill-inputs.js");
-/* harmony import */ var _tree_view_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tree-view.js */ "./src/answer-submit/tree-view.js");
-/* harmony import */ var _send_answer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./send-answer.js */ "./src/answer-submit/send-answer.js");
-/* harmony import */ var _answer_submit_html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./answer-submit.html */ "./src/answer-submit/answer-submit.html");
-/* harmony import */ var _answer_submit_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./answer-submit.css */ "./src/answer-submit/answer-submit.css");
+/* harmony import */ var _submitssion_spans_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./submitssion-spans.js */ "./src/answer-submit/submitssion-spans.js");
+/* harmony import */ var _fill_inputs_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fill-inputs.js */ "./src/answer-submit/fill-inputs.js");
+/* harmony import */ var _tree_view_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tree-view.js */ "./src/answer-submit/tree-view.js");
+/* harmony import */ var _send_answer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./send-answer.js */ "./src/answer-submit/send-answer.js");
+/* harmony import */ var _answer_submit_html__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./answer-submit.html */ "./src/answer-submit/answer-submit.html");
+/* harmony import */ var _answer_submit_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./answer-submit.css */ "./src/answer-submit/answer-submit.css");
+
 
 
 
@@ -792,7 +794,7 @@ form.onsubmit = async (event) => {
 	try {
 		showLoading();
 		event.preventDefault();
-		await (0,_send_answer_js__WEBPACK_IMPORTED_MODULE_4__["default"])(form);
+		await (0,_send_answer_js__WEBPACK_IMPORTED_MODULE_5__["default"])(form);
 		stopShowingLoading();
 		showSuccessfulSubmit();
 	} catch (error) {
@@ -812,13 +814,13 @@ async function show() {
 
 	for (let i = 0; i < numPolls; i++) {
 		if (pageHasLoaded()) break;
-		await sleep(1000);
+		await sleep(500);
 	}
 
 	try {
 		errorIfPageNotLoaded();
-		await (0,_fill_inputs_js__WEBPACK_IMPORTED_MODULE_2__["default"])(form, handleCustomError);
-		await (0,_tree_view_js__WEBPACK_IMPORTED_MODULE_3__["default"])(treeViewDiv, folderPathInput, handleCustomError);
+		await (0,_fill_inputs_js__WEBPACK_IMPORTED_MODULE_3__["default"])(form);
+		await (0,_tree_view_js__WEBPACK_IMPORTED_MODULE_4__["default"])(treeViewDiv, folderPathInput, handleCustomError);
 		stopShowingLoading();
 	} catch (error) {
 		stopShowingLoading();
@@ -833,7 +835,7 @@ function hide() {
 
 function createUi() {
 	const container = document.createElement("div");
-	container.innerHTML = _answer_submit_html__WEBPACK_IMPORTED_MODULE_5__["default"];
+	container.innerHTML = _answer_submit_html__WEBPACK_IMPORTED_MODULE_6__["default"];
 	return container;
 }
 
@@ -846,10 +848,10 @@ async function sleep(duration) {
 function pageHasLoaded() {
 	//one of the code elements is ours
 	const hasCode = document.querySelectorAll("code").length >= 2;
-	const hasAcceptedSpan = document.querySelectorAll(".text-green-s").length > 0;
-	const hasRejectedSpan = document.querySelectorAll(".text-red-s").length > 0;
+	const submissionSpans = (0,_submitssion_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)();
+	const hasSubmissions = submissionSpans.length > 0;
 
-	return hasCode && (hasAcceptedSpan || hasRejectedSpan);
+	return hasCode && hasSubmissions;
 }
 
 function errorIfPageNotLoaded() {
@@ -901,7 +903,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/custom-errors.js */ "./src/lib/custom-errors.js");
-/* harmony import */ var _lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/get-question-name.js */ "./src/lib/get-question-name.js");
+/* harmony import */ var _submitssion_spans_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./submitssion-spans.js */ "./src/answer-submit/submitssion-spans.js");
+/* harmony import */ var _lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../lib/get-question-name.js */ "./src/lib/get-question-name.js");
+
 
 
 
@@ -916,13 +920,13 @@ async function fillInputs(form) {
 }
 
 function setSubmissions(form) {
-	if (!recentWasAccepted()) {
+	if (!(0,_submitssion_spans_js__WEBPACK_IMPORTED_MODULE_1__.recentWasAccepted)()) {
 		throw new NotAcceptedError();
 	}
 
 	const submissionsInput = form.querySelector(`[name="submissions"]`);
 
-	const totalSubmissionCount = getSubmissionSpans().length;
+	const totalSubmissionCount = (0,_submitssion_spans_js__WEBPACK_IMPORTED_MODULE_1__.getSubmissionSpans)().length;
 	submissionsInput.value = totalSubmissionCount;
 }
 
@@ -935,12 +939,12 @@ function setFile(form) {
 
 function setFileName(form) {
 	const fileNameInput = form.querySelector(`[name="fileName"]`);
-	fileNameInput.value = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_1__["default"])(window.location.href);
+	fileNameInput.value = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href);
 }
 
 function setQuestionName(form) {
 	const questionNameInput = form.querySelector(`[name="questionName"]`);
-	questionNameInput.value = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_1__["default"])(window.location.href);
+	questionNameInput.value = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href);
 }
 
 function setFileExtension(form) {
@@ -955,7 +959,7 @@ function setFileExtension(form) {
 
 async function setMinutes(form) {
 	const { durations } = await chrome.storage.local.get("durations");
-	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_1__["default"])(window.location.href);
+	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href);
 	const milliseconds = durations[questionName];
 	const minutes = Math.floor(milliseconds / (1000 * 60)); //ms to minutes
 
@@ -963,16 +967,6 @@ async function setMinutes(form) {
 
 	const minutesInput = form.querySelector(`[name="minutes"]`);
 	minutesInput.value = minutes;
-}
-
-function getSubmissionSpans() {
-	const selector = "span.text-green-s, span.text-red-s";
-	//[...] because truthy falsey values are not as predicted
-	return [...document.querySelectorAll(selector)];
-}
-function recentWasAccepted() {
-	const submissionSpans = getSubmissionSpans();
-	return submissionSpans[0]?.classList.contains("text-green-s");
 }
 
 class NotAcceptedError extends _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError {
@@ -1145,6 +1139,31 @@ async function submitToSheets({
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (sendAnswer);
+
+
+/***/ }),
+
+/***/ "./src/answer-submit/submitssion-spans.js":
+/*!************************************************!*\
+  !*** ./src/answer-submit/submitssion-spans.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSubmissionSpans": () => (/* binding */ getSubmissionSpans),
+/* harmony export */   "recentWasAccepted": () => (/* binding */ recentWasAccepted)
+/* harmony export */ });
+function getSubmissionSpans() {
+	return document.querySelectorAll("span.text-green-s, span.text-red-s");
+}
+
+function recentWasAccepted() {
+	const submissionSpans = getSubmissionSpans();
+
+	return submissionSpans[0].classList.contains("text-green-s");
+}
+
 
 
 /***/ }),
@@ -1358,6 +1377,40 @@ function test() {
 
 /***/ }),
 
+/***/ "./src/lib/duration.js":
+/*!*****************************!*\
+  !*** ./src/lib/duration.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "forgetDuration": () => (/* binding */ forgetDuration),
+/* harmony export */   "getDuration": () => (/* binding */ getDuration),
+/* harmony export */   "setDuration": () => (/* binding */ setDuration)
+/* harmony export */ });
+async function getDuration(questionName) {
+	const { durations } = await chrome.storage.local.get("durations");
+	return durations[questionName];
+}
+
+async function setDuration(questionName, duration) {
+	const { durations } = await chrome.storage.local.get("durations");
+	durations[questionName] = duration;
+	await chrome.storage.local.set({ durations: durations });
+}
+
+async function forgetDuration(questionName) {
+	const { durations } = await chrome.storage.local.get("durations");
+	delete durations[questionName];
+	await chrome.storage.local.set({ durations: durations });
+}
+
+
+
+
+/***/ }),
+
 /***/ "./src/lib/excess-slash.js":
 /*!*********************************!*\
   !*** ./src/lib/excess-slash.js ***!
@@ -1557,8 +1610,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "show": () => (/* binding */ show)
 /* harmony export */ });
 /* harmony import */ var _lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/get-question-name.js */ "./src/lib/get-question-name.js");
-/* harmony import */ var _timer_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./timer.html */ "./src/timer/timer.html");
-/* harmony import */ var _timer_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./timer.css */ "./src/timer/timer.css");
+/* harmony import */ var _lib_duration_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/duration.js */ "./src/lib/duration.js");
+/* harmony import */ var _timer_html__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./timer.html */ "./src/timer/timer.html");
+/* harmony import */ var _timer_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./timer.css */ "./src/timer/timer.css");
+
 
 
 
@@ -1581,33 +1636,20 @@ pauseBtn.addEventListener("click", pause);
 function createTimerUI() {
 	const container = document.createElement("div");
 
-	container.innerHTML = _timer_html__WEBPACK_IMPORTED_MODULE_1__["default"];
+	container.innerHTML = _timer_html__WEBPACK_IMPORTED_MODULE_2__["default"];
 	return container;
-}
-
-async function getStoredDuration() {
-	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
-	const { durations } = await chrome.storage.local.get("durations");
-	return durations[questionName];
-}
-
-async function storeDuration() {
-	const durations = {};
-	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
-	durations[questionName] = duration;
-
-	await chrome.storage.local.set({ durations });
 }
 
 async function play() {
 	if (duration === undefined) {
-		const prevDuration = await getStoredDuration();
+		const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
+		const prevDuration = await (0,_lib_duration_js__WEBPACK_IMPORTED_MODULE_1__.getDuration)(questionName);
 		duration = prevDuration || 0;
 	}
 
 	lastSnapshot = new Date().getTime();
 	updateTime(); //immidiately then continue
-	setIntervalId = setInterval(updateTime, 2000);
+	setIntervalId = setInterval(updateTime, 1000);
 	playBtn.classList.add("m-hidden");
 	pauseBtn.classList.remove("m-hidden");
 }
@@ -1622,14 +1664,15 @@ function updateTime() {
 	if (!lastSnapshot) {
 		lastSnapshot = new Date().getTime();
 	}
+	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
 	const curTime = new Date().getTime();
 	const gap = curTime - lastSnapshot;
 
 	duration += gap;
 	lastSnapshot = curTime;
-	storeDuration();
+	(0,_lib_duration_js__WEBPACK_IMPORTED_MODULE_1__.setDuration)(questionName, duration);
 
-	const minutes = Math.floor(duration / (60 * 1000));
+	const minutes = Math.floor(duration / (60 + 1000));
 	minutesSpan.textContent = minutes;
 
 	animateDots();
