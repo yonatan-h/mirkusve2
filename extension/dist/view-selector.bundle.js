@@ -259,7 +259,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // Module
-var code = "<p class=\"m-timer\">\n\t<button id=\"play\">▶️</button>\n\t<button id=\"pause\">⏸</button>\n\t<span>You spent</span>\n\t<span id=\"minutes\">---</span>\n\t<span>minutes</span>\n\t<span id=\"dotdot\">---</span>\n</p>\n";
+var code = "<p class=\"m-timer\">\n\t<button id=\"play\">▶️</button>\n\t<button id=\"pause\">⏸</button>\n\t<span>You spent</span>\n\t<span id=\"minutes\">---</span>\n\t<span>minutes</span>\n\n\t<span>.</span><span id=\"dotdot\">---</span>\n</p>\n";
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
@@ -1385,6 +1385,7 @@ function test() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "calculateMinutes": () => (/* binding */ calculateMinutes),
 /* harmony export */   "forgetDuration": () => (/* binding */ forgetDuration),
 /* harmony export */   "getDuration": () => (/* binding */ getDuration),
 /* harmony export */   "setDuration": () => (/* binding */ setDuration)
@@ -1404,6 +1405,11 @@ async function forgetDuration(questionName) {
 	const { durations } = await chrome.storage.local.get("durations");
 	delete durations[questionName];
 	await chrome.storage.local.set({ durations: durations });
+}
+
+function calculateMinutes(duration) {
+	const minutes = Math.floor(duration / (60 + 1000));
+	return minutes;
 }
 
 
@@ -1618,13 +1624,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+class Timer {
+	constructor(offsetDuration, getDurationCallBack) {
+		this.offsetDuration = offsetDuration;
+		this.startTime = new Date().getTime();
+
+		getDurationCallBack(offsetDuration);
+		this.setIntervalId = setInterval(() => {
+			const duration = this.calculateDuration();
+			getDurationCallBack(duration);
+		}, 1000);
+	}
+
+	stop = () => {
+		clearInterval(this.setIntervalId); //no errors if undefined btw
+	};
+
+	calculateDuration = () => {
+		const currentTime = new Date().getTime();
+		const gap = currentTime - this.startTime;
+		return gap + this.offsetDuration;
+	};
+}
+
+let timer;
 const container = createTimerUI();
-document.body.appendChild(container);
-
-let duration; //in millisecods
-let lastSnapshot; //milliseconds from 1970
-let setIntervalId;
-
 const playBtn = container.querySelector("#play");
 const pauseBtn = container.querySelector("#pause");
 const minutesSpan = container.querySelector("#minutes");
@@ -1632,59 +1656,49 @@ const dotDotSpan = container.querySelector("#dotdot");
 
 playBtn.addEventListener("click", play);
 pauseBtn.addEventListener("click", pause);
+document.body.appendChild(container);
 
 function createTimerUI() {
 	const container = document.createElement("div");
-
 	container.innerHTML = _timer_html__WEBPACK_IMPORTED_MODULE_2__["default"];
 	return container;
 }
 
 async function play() {
-	if (duration === undefined) {
-		const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
-		const prevDuration = await (0,_lib_duration_js__WEBPACK_IMPORTED_MODULE_1__.getDuration)(questionName);
-		duration = prevDuration || 0;
-	}
+	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
+	const prevDuration = (await (0,_lib_duration_js__WEBPACK_IMPORTED_MODULE_1__.getDuration)(questionName)) || 0;
 
-	lastSnapshot = new Date().getTime();
-	updateTime(); //immidiately then continue
-	setIntervalId = setInterval(updateTime, 1000);
+	timer = new Timer(prevDuration, handleDurationUpdate);
 	playBtn.classList.add("m-hidden");
 	pauseBtn.classList.remove("m-hidden");
 }
 
-function pause() {
-	clearInterval(setIntervalId); //no errors if undefined btw
+async function pause() {
+	if (!timer) return;
+	const duration = timer.calculateDuration();
+	await saveDuration(duration); //accurate pause
+	timer.stop();
+
 	playBtn.classList.remove("m-hidden");
 	pauseBtn.classList.add("m-hidden");
 }
 
-function updateTime() {
-	if (!lastSnapshot) {
-		lastSnapshot = new Date().getTime();
-	}
-	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
-	const curTime = new Date().getTime();
-	const gap = curTime - lastSnapshot;
-
-	duration += gap;
-	lastSnapshot = curTime;
-	(0,_lib_duration_js__WEBPACK_IMPORTED_MODULE_1__.setDuration)(questionName, duration);
-
-	const minutes = Math.floor(duration / (60 + 1000));
-	minutesSpan.textContent = minutes;
-
+async function handleDurationUpdate(duration) {
+	await saveDuration(duration);
+	minutesSpan.textContent = (0,_lib_duration_js__WEBPACK_IMPORTED_MODULE_1__.calculateMinutes)(duration);
 	animateDots();
 }
 
+async function saveDuration(duration) {
+	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_0__["default"])(window.location.href);
+	await (0,_lib_duration_js__WEBPACK_IMPORTED_MODULE_1__.setDuration)(questionName, duration);
+}
+
 function animateDots() {
-	const maxLength = 3;
+	const changingLength = 3; //not actual length, but length of changing dots
+
 	const prevLength = dotDotSpan.textContent.length;
-
-	let length = (prevLength + 1) % (maxLength + 1);
-	if (length == 0) length = 1; //always dots visible
-
+	const length = (prevLength + 1) % changingLength;
 	dotDotSpan.textContent = ".".repeat(length);
 }
 

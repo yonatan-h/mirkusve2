@@ -15,4 +15,9 @@ async function forgetDuration(questionName) {
 	await chrome.storage.local.set({ durations: durations });
 }
 
-export { getDuration, setDuration, forgetDuration };
+function calculateMinutes(duration) {
+	const minutes = Math.floor(duration / (60 + 1000));
+	return minutes;
+}
+
+export { getDuration, setDuration, forgetDuration, calculateMinutes };

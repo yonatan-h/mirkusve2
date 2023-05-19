@@ -1,15 +1,33 @@
 import getQuestionName from "../lib/get-question-name.js";
-import { getDuration, setDuration } from "../lib/duration.js";
+import { getDuration, setDuration, calculateMinutes } from "../lib/duration.js";
 import html from "./timer.html";
 import "./timer.css";
 
+class Timer {
+	constructor(offsetDuration, getDurationCallBack) {
+		this.offsetDuration = offsetDuration;
+		this.startTime = new Date().getTime();
+
+		getDurationCallBack(offsetDuration);
+		this.setIntervalId = setInterval(() => {
+			const duration = this.calculateDuration();
+			getDurationCallBack(duration);
+		}, 1000);
+	}
+
+	stop = () => {
+		clearInterval(this.setIntervalId); //no errors if undefined btw
+	};
+
+	calculateDuration = () => {
+		const currentTime = new Date().getTime();
+		const gap = currentTime - this.startTime;
+		return gap + this.offsetDuration;
+	};
+}
+
+let timer;
 const container = createTimerUI();
-document.body.appendChild(container);
-
-let duration; //in millisecods
-let lastSnapshot; //milliseconds from 1970
-let setIntervalId;
-
 const playBtn = container.querySelector("#play");
 const pauseBtn = container.querySelector("#pause");
 const minutesSpan = container.querySelector("#minutes");
@@ -17,59 +35,49 @@ const dotDotSpan = container.querySelector("#dotdot");
 
 playBtn.addEventListener("click", play);
 pauseBtn.addEventListener("click", pause);
+document.body.appendChild(container);
 
 function createTimerUI() {
 	const container = document.createElement("div");
-
 	container.innerHTML = html;
 	return container;
 }
 
 async function play() {
-	if (duration === undefined) {
-		const questionName = getQuestionName(window.location.href);
-		const prevDuration = await getDuration(questionName);
-		duration = prevDuration || 0;
-	}
+	const questionName = getQuestionName(window.location.href);
+	const prevDuration = (await getDuration(questionName)) || 0;
 
-	lastSnapshot = new Date().getTime();
-	updateTime(); //immidiately then continue
-	setIntervalId = setInterval(updateTime, 1000);
+	timer = new Timer(prevDuration, handleDurationUpdate);
 	playBtn.classList.add("m-hidden");
 	pauseBtn.classList.remove("m-hidden");
 }
 
-function pause() {
-	clearInterval(setIntervalId); //no errors if undefined btw
+async function pause() {
+	if (!timer) return;
+	const duration = timer.calculateDuration();
+	await saveDuration(duration); //accurate pause
+	timer.stop();
+
 	playBtn.classList.remove("m-hidden");
 	pauseBtn.classList.add("m-hidden");
 }
 
-function updateTime() {
-	if (!lastSnapshot) {
-		lastSnapshot = new Date().getTime();
-	}
-	const questionName = getQuestionName(window.location.href);
-	const curTime = new Date().getTime();
-	const gap = curTime - lastSnapshot;
-
-	duration += gap;
-	lastSnapshot = curTime;
-	setDuration(questionName, duration);
-
-	const minutes = Math.floor(duration / (60 + 1000));
-	minutesSpan.textContent = minutes;
-
+async function handleDurationUpdate(duration) {
+	await saveDuration(duration);
+	minutesSpan.textContent = calculateMinutes(duration);
 	animateDots();
 }
 
+async function saveDuration(duration) {
+	const questionName = getQuestionName(window.location.href);
+	await setDuration(questionName, duration);
+}
+
 function animateDots() {
-	const maxLength = 3;
+	const changingLength = 3; //not actual length, but length of changing dots
+
 	const prevLength = dotDotSpan.textContent.length;
-
-	let length = (prevLength + 1) % (maxLength + 1);
-	if (length == 0) length = 1; //always dots visible
-
+	const length = (prevLength + 1) % changingLength;
 	dotDotSpan.textContent = ".".repeat(length);
 }
 
