@@ -1,22 +1,28 @@
+import hasSetup from "../lib/has-setup";
 import "./popup.css";
 
-document.getElementById("setup").onclick = () => {
+document.getElementById("setup-button").onclick = () => {
 	chrome.runtime.sendMessage({ message: "set-up" });
 };
 
-async function chooseView() {
-	const storageObject = await chrome.storage.local.get();
-	if (storageObject) {
-		const { name, group, userName, repoName } = storageObject;
+const infoView = document.querySelector(".info-view");
+const promptSetupView = document.querySelector(".prompt-setup-view");
+chooseView();
 
-		document.querySelector(".info-view").classList.remove("hidden");
+async function chooseView() {
+	if (await hasSetup()) {
+		console.log("has setup");
+		const storageObject = await chrome.storage.local.get();
+		const { name, group, userName, repoName, durations } = storageObject;
+		infoView.classList.remove("hidden");
+		promptSetupView.classList.add("hidden");
+
 		document.querySelector("#name").textContent = name;
 		document.querySelector("#group").textContent = group;
 		document.querySelector("#userName").textContent = userName;
 		document.querySelector("#repoName").textContent = repoName;
 	} else {
-		document.querySelector("prompt-setup-view").classList.remove("hidden");
+		infoView.classList.add("hidden");
+		promptSetupView.classList.remove("hidden");
 	}
 }
-
-chooseView();

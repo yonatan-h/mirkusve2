@@ -8,17 +8,9 @@ async function requestViewChange(tabId, url) {
 }
 
 async function getViewName(link) {
-	if (!(await hasSetup())) return "prompt-setup";
-	else if (matchesQuestionPage(link)) return "timer";
+	if (matchesQuestionPage(link)) return "timer";
 	else if (matchesSubmissionPage(link)) return "answer-submit";
 	else return undefined;
-}
-
-async function hasSetup() {
-	const storageObject = await chrome.storage.local.get();
-	console.log(storageObject);
-	if (storageObject) return true;
-	else return false;
 }
 
 function inSlashProblems(url) {

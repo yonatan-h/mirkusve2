@@ -13,5 +13,9 @@ document.querySelector("#token .next").onclick = handleTokenSubmit;
 document.querySelector("#finish .next").onclick = handleFinish;
 
 document.getElementById("cancel").onclick = () => {
-	window.location = window.location;
+	// Get the current tab
+	chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+		// Close the current tab
+		chrome.tabs.remove(tabs[0].id);
+	});
 };

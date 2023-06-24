@@ -74,17 +74,9 @@ async function requestViewChange(tabId, url) {
 }
 
 async function getViewName(link) {
-	if (!(await hasSetup())) return "prompt-setup";
-	else if (matchesQuestionPage(link)) return "timer";
+	if (matchesQuestionPage(link)) return "timer";
 	else if (matchesSubmissionPage(link)) return "answer-submit";
 	else return undefined;
-}
-
-async function hasSetup() {
-	const storageObject = await chrome.storage.local.get();
-	console.log(storageObject);
-	if (storageObject) return true;
-	else return false;
 }
 
 function inSlashProblems(url) {
@@ -286,9 +278,6 @@ __webpack_require__.r(__webpack_exports__);
 
 //All listeners should be exposed, not nested in functions (from the documentation)
 
-chrome.management.onInstalled.addListener(({ id }) => {
-	if (id === chrome.runtime.id) (0,_setup_js__WEBPACK_IMPORTED_MODULE_0__.openSetupTab)();
-});
 
 chrome.runtime.onMessage.addListener((req, sender, next) => {
 	if (req.message === "set-up") (0,_setup_js__WEBPACK_IMPORTED_MODULE_0__.openSetupTab)();
@@ -308,7 +297,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	}
 });
 
-// chrome.action.onClicked.addListener(openSetupTab);
 
 })();
 

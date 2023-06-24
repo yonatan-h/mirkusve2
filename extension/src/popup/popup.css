@@ -13,7 +13,7 @@ h1 {
 	text-align: center;
 }
 
-button {
+#setup-button {
 	background: none;
 	border: none;
 	background: darkgreen;
@@ -21,10 +21,20 @@ button {
 	color: white;
 }
 
-button:hover {
+#setup-button:hover {
 	transform: scale(1.05);
 }
 
-.hiddden {
+.hidden {
 	display: none;
+}
+
+#options-button{
+	background: none;
+	border: none;
+	border-bottom: 3px solid grey;
+}
+
+.options{
+	padding: 1rem;
 }

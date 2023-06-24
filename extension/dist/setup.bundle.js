@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmargin: 0;\n}\n\n.container {\n\tmin-height: 100vh;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\tjustify-content: center;\n}\n\nbutton {\n\tbox-shadow: 2px 2px black;\n\tpadding: 5px;\n\tborder-radius: 2.5px;\n}\n\n.next {\n\tmargin-left: auto;\n\tbackground: none;\n\tborder: none;\n\tbackground-color: darkgreen;\n\tcolor: white;\n}\n\n.cancel {\n\tbackground: none;\n\tborder: none;\n\tcolor: white;\n\tbackground-color: rgb(188, 50, 0);\n}\n\n.flex {\n\tdisplay: flex;\n\tjustify-content: space-around;\n}\n\n.hidden {\n\tdisplay: none;\n}\n\n.next__disabled {\n\tbackground: darkslategray;\n}\n\n.error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.error-box code {\n\tcolor: brown;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmargin: 0;\n}\n\n.container {\n\tmin-height: 100vh;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\tjustify-content: center;\n\tpadding: 2rem;\n}\n\n.slide {\n\tmax-width: 1000px;\n}\n\nbutton {\n\tbox-shadow: 2px 2px black;\n\tpadding: 5px;\n\tborder-radius: 2.5px;\n}\n\n.form-section{\n\tposition: relative;\n}\n\n.next {\n\tposition: absolute;\n\tright: 0;\n\tbottom: -20px;\n\n\tbackground: none;\n\tborder: none;\n\tbackground-color: darkgreen;\n\tcolor: white;\n}\n\n.cancel {\n\tbackground: none;\n\tborder: none;\n\tcolor: white;\n\tbackground-color: rgb(188, 50, 0);\n\n\tposition: fixed;\n\tright: 2rem;\n\tbottom: 2rem;\n}\n\n.flex {\n\tdisplay: flex;\n\tjustify-content: space-around;\n}\n\n.hidden {\n\tdisplay: none;\n}\n\n.next__disabled {\n\tbackground: darkslategray;\n}\n\n.error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.error-box code {\n\tcolor: brown;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1107,7 +1107,11 @@ document.querySelector("#token .next").onclick = _token_js__WEBPACK_IMPORTED_MOD
 document.querySelector("#finish .next").onclick = _finish_js__WEBPACK_IMPORTED_MODULE_3__["default"];
 
 document.getElementById("cancel").onclick = () => {
-	window.location = window.location;
+	// Get the current tab
+	chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+		// Close the current tab
+		chrome.tabs.remove(tabs[0].id);
+	});
 };
 
 })();

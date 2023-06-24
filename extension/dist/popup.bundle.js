@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmin-width: 500px;\n}\n\nh1 {\n\tborder-bottom: 5px solid rgb(248, 159, 27);\n\ttext-align: center;\n}\n\nbutton {\n\tbackground: none;\n\tborder: none;\n\tbackground: darkgreen;\n\tpadding: 5px;\n\tcolor: white;\n}\n\nbutton:hover {\n\ttransform: scale(1.05);\n}\n\n.hiddden {\n\tdisplay: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmin-width: 500px;\n}\n\nh1 {\n\tborder-bottom: 5px solid rgb(248, 159, 27);\n\ttext-align: center;\n}\n\n#setup-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: darkgreen;\n\tpadding: 5px;\n\tcolor: white;\n}\n\n#setup-button:hover {\n\ttransform: scale(1.05);\n}\n\n.hidden {\n\tdisplay: none;\n}\n\n#options-button{\n\tbackground: none;\n\tborder: none;\n\tborder-bottom: 3px solid grey;\n}\n\n.options{\n\tpadding: 1rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -455,6 +455,31 @@ function styleTagTransform(css, styleElement) {
 }
 module.exports = styleTagTransform;
 
+/***/ }),
+
+/***/ "./src/lib/has-setup.js":
+/*!******************************!*\
+  !*** ./src/lib/has-setup.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+async function hasSetup() {
+	const storageObject = await chrome.storage.local.get();
+    if (!storageObject) return false;
+
+    const keys = Object.keys(storageObject)
+    if(keys.length == 0) return false;
+
+	return true;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hasSetup);
+
+
 /***/ })
 
 /******/ 	});
@@ -537,29 +562,36 @@ var __webpack_exports__ = {};
   !*** ./src/popup/popup.js ***!
   \****************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./popup.css */ "./src/popup/popup.css");
+/* harmony import */ var _lib_has_setup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/has-setup */ "./src/lib/has-setup.js");
+/* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./popup.css */ "./src/popup/popup.css");
 
 
-document.getElementById("setup").onclick = () => {
+
+document.getElementById("setup-button").onclick = () => {
 	chrome.runtime.sendMessage({ message: "set-up" });
 };
 
-async function chooseView() {
-	const storageObject = await chrome.storage.local.get();
-	if (storageObject) {
-		const { name, group, userName, repoName } = storageObject;
+const infoView = document.querySelector(".info-view");
+const promptSetupView = document.querySelector(".prompt-setup-view");
+chooseView();
 
-		document.querySelector(".info-view").classList.remove("hidden");
+async function chooseView() {
+	if (await (0,_lib_has_setup__WEBPACK_IMPORTED_MODULE_0__["default"])()) {
+		console.log("has setup");
+		const storageObject = await chrome.storage.local.get();
+		const { name, group, userName, repoName, durations } = storageObject;
+		infoView.classList.remove("hidden");
+		promptSetupView.classList.add("hidden");
+
 		document.querySelector("#name").textContent = name;
 		document.querySelector("#group").textContent = group;
 		document.querySelector("#userName").textContent = userName;
 		document.querySelector("#repoName").textContent = repoName;
 	} else {
-		document.querySelector("prompt-setup-view").classList.remove("hidden");
+		infoView.classList.add("hidden");
+		promptSetupView.classList.remove("hidden");
 	}
 }
-
-chooseView();
 
 })();
 

@@ -54,32 +54,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".m-folder {\n\tcolor: black;\n\tbackgr
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/prompt-setup/prompt-setup.css":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/prompt-setup/prompt-setup.css ***!
-  \*********************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "./node_modules/css-loader/dist/runtime/noSourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".prompt-setup {\n\tposition: fixed;\n\ttop: 20%;\n\tright: 5%;\n\n\tbackground-color: white;\n\tcolor: black;\n\n\tpadding: 0.3rem;\n\tbox-shadow: 7px 7px black;\n\tfont-family: monospace, sans-serif;\n\n\tborder-left: 3px solid rgb(248, 159, 27);\n}\n.prompt-setup button {\n\tbackground-color: rgb(248, 159, 27);\n\tcolor: darkgreen;\n\tpadding: 0 5px;\n}\n\n.hidden {\n\tdisplay: none;\n}\n", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/timer/timer.css":
 /*!*******************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/timer/timer.css ***!
@@ -231,23 +205,6 @@ var code = "<form class=\"m-submit\">\n\t<div id=\"error-box\" class=\"error-box
 
 /***/ }),
 
-/***/ "./src/prompt-setup/prompt-setup.html":
-/*!********************************************!*\
-  !*** ./src/prompt-setup/prompt-setup.html ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-// Module
-var code = "<p>\n\t<button id=\"setup\">Setup Mirkusve</button> to send leetcode answers to A2sv!\n</p>\n<p>Once you are done, refresh this page!</p>\n";
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
-
-/***/ }),
-
 /***/ "./src/timer/timer.html":
 /*!******************************!*\
   !*** ./src/timer/timer.html ***!
@@ -369,60 +326,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
-
-
-/***/ }),
-
-/***/ "./src/prompt-setup/prompt-setup.css":
-/*!*******************************************!*\
-  !*** ./src/prompt-setup/prompt-setup.css ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_prompt_setup_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./prompt-setup.css */ "./node_modules/css-loader/dist/cjs.js!./src/prompt-setup/prompt-setup.css");
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var options = {};
-
-options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
-options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
-options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
-options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_prompt_setup_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
-
-
-
-
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_prompt_setup_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_prompt_setup_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_prompt_setup_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -1544,6 +1447,31 @@ function test() {
 
 /***/ }),
 
+/***/ "./src/lib/has-setup.js":
+/*!******************************!*\
+  !*** ./src/lib/has-setup.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+async function hasSetup() {
+	const storageObject = await chrome.storage.local.get();
+    if (!storageObject) return false;
+
+    const keys = Object.keys(storageObject)
+    if(keys.length == 0) return false;
+
+	return true;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hasSetup);
+
+
+/***/ }),
+
 /***/ "./src/lib/robust-fetch.js":
 /*!*********************************!*\
   !*** ./src/lib/robust-fetch.js ***!
@@ -1578,48 +1506,6 @@ async function robustFetch(url, options) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (robustFetch);
-
-
-/***/ }),
-
-/***/ "./src/prompt-setup/prompt-setup.js":
-/*!******************************************!*\
-  !*** ./src/prompt-setup/prompt-setup.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "hide": () => (/* binding */ hide),
-/* harmony export */   "show": () => (/* binding */ show)
-/* harmony export */ });
-/* harmony import */ var _prompt_setup_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./prompt-setup.html */ "./src/prompt-setup/prompt-setup.html");
-/* harmony import */ var _prompt_setup_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./prompt-setup.css */ "./src/prompt-setup/prompt-setup.css");
-
-
-
-function createUi() {
-	const container = document.createElement("div");
-	container.classList.add("prompt-setup");
-	container.innerHTML = _prompt_setup_html__WEBPACK_IMPORTED_MODULE_0__["default"];
-
-	const setupButton = container.querySelector("#setup");
-	setupButton.onclick = () => chrome.runtime.sendMessage({ message: "set-up" });
-
-	return container;
-}
-
-const promptSetupUi = createUi();
-document.body.appendChild(promptSetupUi);
-
-function show() {
-	promptSetupUi.classList.remove("hidden");
-}
-function hide() {
-	promptSetupUi.classList.add("hidden");
-}
-
-
 
 
 /***/ }),
@@ -1819,10 +1705,8 @@ var __webpack_exports__ = {};
   \********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _timer_timer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../timer/timer.js */ "./src/timer/timer.js");
-/* harmony import */ var _prompt_setup_prompt_setup_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../prompt-setup/prompt-setup.js */ "./src/prompt-setup/prompt-setup.js");
+/* harmony import */ var _lib_has_setup_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/has-setup.js */ "./src/lib/has-setup.js");
 /* harmony import */ var _answer_submit_answer_submit_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../answer-submit/answer-submit.js */ "./src/answer-submit/answer-submit.js");
-
-
 
 
 
@@ -1836,15 +1720,14 @@ So, view selector is meant to manually detect a url change, and show/hide conten
 */
 
 const nameViewPairs = {
-	"prompt-setup": _prompt_setup_prompt_setup_js__WEBPACK_IMPORTED_MODULE_1__.show,
 	timer: _timer_timer_js__WEBPACK_IMPORTED_MODULE_0__.show,
 	"answer-submit": _answer_submit_answer_submit_js__WEBPACK_IMPORTED_MODULE_2__.show,
 };
 
 hideEveryView();
-chrome.runtime.onMessage.addListener((req, sender, next) => {
+chrome.runtime.onMessage.addListener(async (req, sender, next) => {
 	const { message, viewName } = req;
-	if (message === "change-view") {
+	if (message === "change-view" && (await (0,_lib_has_setup_js__WEBPACK_IMPORTED_MODULE_1__["default"])())) {
 		hideEveryView();
 		if (viewName in nameViewPairs) {
 			nameViewPairs[viewName]();
@@ -1854,7 +1737,6 @@ chrome.runtime.onMessage.addListener((req, sender, next) => {
 
 function hideEveryView() {
 	(0,_timer_timer_js__WEBPACK_IMPORTED_MODULE_0__.hide)();
-	(0,_prompt_setup_prompt_setup_js__WEBPACK_IMPORTED_MODULE_1__.hide)();
 	(0,_answer_submit_answer_submit_js__WEBPACK_IMPORTED_MODULE_2__.hide)();
 }
 

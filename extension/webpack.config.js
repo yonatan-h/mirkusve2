@@ -26,7 +26,6 @@ module.exports = {
 				//relative paths allowed
 				{ from: "./src/manifest.json" },
 				{ from: "./src/popup/popup.html" },
-				{ from: "./src/popup/popup.js" },
 				{ from: "./src/setup/setup.html", to: "setup.html" },
 				{ from: "./src/media/", to: "media" },
 			],

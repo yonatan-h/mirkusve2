@@ -1,10 +1,5 @@
 import { show as showTimer, hide as hideTimer } from "../timer/timer.js";
-
-import {
-	show as showPromptSetup,
-	hide as hidePromptSetup,
-} from "../prompt-setup/prompt-setup.js";
-
+import hasSetup from "../lib/has-setup.js";
 import {
 	show as showAnswerSubmit,
 	hide as hideAnswerSubmit,
@@ -19,15 +14,14 @@ So, view selector is meant to manually detect a url change, and show/hide conten
 */
 
 const nameViewPairs = {
-	"prompt-setup": showPromptSetup,
 	timer: showTimer,
 	"answer-submit": showAnswerSubmit,
 };
 
 hideEveryView();
-chrome.runtime.onMessage.addListener((req, sender, next) => {
+chrome.runtime.onMessage.addListener(async (req, sender, next) => {
 	const { message, viewName } = req;
-	if (message === "change-view") {
+	if (message === "change-view" && (await hasSetup())) {
 		hideEveryView();
 		if (viewName in nameViewPairs) {
 			nameViewPairs[viewName]();
@@ -37,6 +31,5 @@ chrome.runtime.onMessage.addListener((req, sender, next) => {
 
 function hideEveryView() {
 	hideTimer();
-	hidePromptSetup();
 	hideAnswerSubmit();
 }
