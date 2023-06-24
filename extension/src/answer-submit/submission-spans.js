@@ -2,9 +2,16 @@ function getSubmissionSpans() {
 	return document.querySelectorAll("span.text-green-s, span.text-red-s");
 }
 
-function recentWasAccepted() {
-	const submissionSpans = getSubmissionSpans();
-
-	return submissionSpans[0].classList.contains("text-green-s");
+function getSelectedDiv() {
+	const selected = document.querySelector("div.bg-blue-0");
+	return selected;
 }
-export { getSubmissionSpans, recentWasAccepted };
+
+function selectedWasAccepted() {
+	const selected = getSelectedDiv();
+	const greenSpan = selected.querySelector("span.text-green-s");
+	if (!greenSpan) return false;
+	return true;
+}
+
+export { getSubmissionSpans, selectedWasAccepted, getSelectedDiv };

@@ -1,8 +1,10 @@
 import { CustomError } from "../lib/custom-errors.js";
-import { getSubmissionSpans, recentWasAccepted } from "./submission-spans.js";
+import { getSubmissionSpans, selectedWasAccepted } from "./submission-spans.js";
 import getQuestionName from "../lib/get-question-name.js";
 
 async function fillInputs(form) {
+	errorIfNotAccepted();
+
 	setSubmissions(form);
 	await setMinutes(form);
 
@@ -12,11 +14,13 @@ async function fillInputs(form) {
 	setFile(form);
 }
 
-function setSubmissions(form) {
-	if (!recentWasAccepted()) {
-		throw new NotAcceptedError();
+function errorIfNotAccepted(){
+	if(!selectedWasAccepted()){
+		throw NotAcceptedError();
 	}
+}
 
+function setSubmissions(form) {
 	const submissionsInput = form.querySelector(`[name="submissions"]`);
 
 	const totalSubmissionCount = getSubmissionSpans().length;
@@ -42,24 +46,22 @@ function setQuestionName(form) {
 
 function setFileExtension(form) {
 	const fileExtensionInput = form.querySelector('[name="fileExtension"]');
-	const className = document.querySelector("code").className;
 	const map = {
 		"language-python": "py",
 		"language-javascript": "js",
 		"language-cpp": "cpp",
 		"language-java": "java",
 		"language-dart": "dart",
-		
-
 	};
 
+	const className = document.querySelector("code").className;
 	fileExtensionInput.value = map[className] || "txt";
 }
 
 async function setMinutes(form) {
 	const { durations } = await chrome.storage.local.get("durations");
 	const questionName = getQuestionName(window.location.href);
-	const milliseconds = durations[questionName]??0;
+	const milliseconds = durations[questionName] ?? 0;
 	const minutes = Math.floor(milliseconds / (1000 * 60)); //ms to minutes
 
 	if (minutes === undefined) throw new NoTimerError();

@@ -1,6 +1,6 @@
 import makeHandler from "../lib/handle-custom-error.js";
 import { CustomError } from "../lib/custom-errors.js";
-import { getSubmissionSpans } from "./submission-spans.js";
+import { getSubmissionSpans, getSelectedDiv } from "./submission-spans.js";
 import fillInputs from "./fill-inputs.js";
 import showTreeView from "./tree-view.js";
 import sendAnswer from "./send-answer.js";
@@ -26,14 +26,13 @@ const treeViewDiv = container.querySelector("#tree-view");
 const form = container.querySelector("form");
 const submitButton = form.querySelector('[type="submit"]');
 
+minimizeButton.onclick = () => {
+	form.classList.add("hidden");
+};
 
-minimizeButton.onclick=()=>{
-	form.classList.add('hidden');
-}
-
-maximizeButton.onclick=()=>{
-	form.classList.remove('hidden');
-}
+maximizeButton.onclick = () => {
+	form.classList.remove("hidden");
+};
 
 form.onsubmit = async (event) => {
 	event.preventDefault();
@@ -55,19 +54,12 @@ async function show() {
 	errorParagraph.textContent = "";
 	errorCode.textContent = "";
 	container.classList.remove("hidden");
-	form.classList.remove('hidden');
 
 	showLoading();
 
-	const numPolls = 20;
-
-	for (let i = 0; i < numPolls; i++) {
-		if (pageHasLoaded()) break;
-		await sleep(500);
-	}
+	await waitForLoad();
 
 	try {
-		errorIfPageNotLoaded();
 		await fillInputs(form);
 		await showTreeView(treeViewDiv, folderPathInput, handleCustomError);
 		stopShowingLoading();
@@ -94,20 +86,24 @@ async function sleep(duration) {
 	});
 }
 
-function pageHasLoaded() {
-	//one of the code elements is ours
-	const hasCode = document.querySelectorAll("code").length >= 2;
-	const submissionSpans = getSubmissionSpans();
-	const hasSubmissions = submissionSpans.length > 0;
+//compares the previous code with current one
+//or waits for code to load
+async function waitForLoad() {
+	const selected = getSelectedDiv();
+	const numPolls = 20;
 
-	return hasCode && hasSubmissions;
-}
+	for (let i = 0; i < numPolls; i++) {
+		const codes = document.querySelectorAll("code");
+		//error box has code too
+		if (selected !== getSelectedDiv() && codes.length >= 2) {
+			return;
+		}
 
-function errorIfPageNotLoaded() {
-	if (!pageHasLoaded()) {
-		const message = "Page has not loaded, try refreshing the page";
-		throw new CustomError(message);
+		await new Promise((resolve) => setTimeout(resolve, 500));
 	}
+
+	const message = "Page has not loaded, try refreshing the page";
+	throw new CustomError(message);
 }
 
 function showSuccessfulSubmit() {

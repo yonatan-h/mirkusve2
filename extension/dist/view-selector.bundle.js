@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n\tposition: fixed;\n\ttop: 4rem;\n\tright: 15rem;\n\tmax-width: 400px;\n\tpadding: 0.5rem;\n\n\tbox-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n\tbackground-color: rgba(235, 234, 234, 0.8);\n\tbackdrop-filter: blur(10px);\n\n\t/* border: 5px solid rgb(248, 159, 27); */\n\tborder-left: 5px solid rgb(248, 159, 27);\n\tfont-family: monospace, sans-serif;\n}\n\n.m-submit .window-bar{\n\tdisplay: flex;\n\tjustify-content: end;\n\tgap:1rem;\n}\n\n.m-submit .window-bar button{\n\tcolor: black;\n}\n\n.m-submit .window-bar button:hover{\n\tcolor: white;\n}\n\n\n\n.m-scroll {\n\twidth: 100%;\n\tmax-height: 50vh;\n\n\toverflow: auto;\n}\n\n.m-submit h2 {\n\tfont-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n\tcolor: black;\n}\n.m-submit input {\n\tbackground: none;\n\tborder-bottom: 3px solid grey;\n\tborder-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n\tmax-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n\tbackground: rgb(248, 159, 27);\n\tborder: none;\n\tpadding: 5px;\n\tcolor: black;\n}\n\n.m-submit .m-submit-button:hover {\n\tbox-shadow: 2px 2px rgb(0, 100, 0);\n\tcursor: pointer;\n}\n\n.m-submit .m-success-button {\n\tbackground: darkgreen;\n\tcolor: white;\n}\n\n.m-submit .error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n\tcolor: brown;\n}\n\n/*loading*/\n.m-loading {\n\tpointer-events: none;\n\tbackground-image: linear-gradient(\n\t\tto right,\n\t\trgba(255, 255, 255, 0.1),\n\t\trgb(189, 239, 189),\n\t\trgba(255, 255, 255, 0.1)\n\t);\n\tbackground-size: 200% 100%;\n\tanimation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n\t0% {\n\t\tbackground-position-x: 0%;\n\t}\n\t40% {\n\t\tbackground-position-x: 100%;\n\t}\n\t100% {\n\t\tbackground-position-x: 0%;\n\t}\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n\tpointer-events: none;\n\topacity: 0.9;\n}\n.m-submit.m-disabled {\n\tborder-color: grey;\n\tpointer-events: none;\n}\n\n.m-submit.m-disabled * {\n\tbackground: none;\n}\n\n.m-submit .m-grey-button {\n\tbackground: grey;\n\topacity: 0.5;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n\tposition: fixed;\n\ttop: 8%;\n\tright: 5%;\n\tmax-width: 400px;\n\tpadding: 0.5rem;\n\n\tbox-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n\tbackground-color: rgba(235, 234, 234, 0.8);\n\tbackdrop-filter: blur(10px);\n\n\t/* border: 5px solid rgb(248, 159, 27); */\n\tborder-left: 5px solid rgb(248, 159, 27);\n\tfont-family: monospace, sans-serif;\n}\n\n.m-submit .window-bar{\n\tdisplay: flex;\n\tjustify-content: end;\n\tgap:1rem;\n}\n\n.m-submit .window-bar button{\n\tcolor: black;\n}\n\n.m-submit .window-bar button:hover{\n\tcolor: white;\n}\n\n\n\n.m-scroll {\n\twidth: 100%;\n\tmax-height: 50vh;\n\n\toverflow: auto;\n}\n\n.m-submit h2 {\n\tfont-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n\tcolor: black;\n}\n.m-submit input {\n\tbackground: none;\n\tborder-bottom: 3px solid grey;\n\tborder-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n\tmax-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n\tbackground: rgb(248, 159, 27);\n\tborder: none;\n\tpadding: 5px;\n\tcolor: black;\n}\n\n.m-submit .m-submit-button:hover {\n\tbox-shadow: 2px 2px rgb(0, 100, 0);\n\tcursor: pointer;\n}\n\n.m-submit .m-success-button {\n\tbackground: darkgreen;\n\tcolor: white;\n}\n\n.m-submit .error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n\tcolor: brown;\n}\n\n/*loading*/\n.m-loading {\n\tpointer-events: none;\n\tbackground-image: linear-gradient(\n\t\tto right,\n\t\trgba(255, 255, 255, 0.1),\n\t\trgb(189, 239, 189),\n\t\trgba(255, 255, 255, 0.1)\n\t);\n\tbackground-size: 200% 100%;\n\tanimation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n\t0% {\n\t\tbackground-position-x: 0%;\n\t}\n\t40% {\n\t\tbackground-position-x: 100%;\n\t}\n\t100% {\n\t\tbackground-position-x: 0%;\n\t}\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n\tpointer-events: none;\n\topacity: 0.9;\n}\n.m-submit.m-disabled {\n\tborder-color: grey;\n\tpointer-events: none;\n}\n\n.m-submit.m-disabled * {\n\tbackground: none;\n}\n\n.m-submit .m-grey-button {\n\tbackground: grey;\n\topacity: 0.5;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -724,14 +724,13 @@ const treeViewDiv = container.querySelector("#tree-view");
 const form = container.querySelector("form");
 const submitButton = form.querySelector('[type="submit"]');
 
+minimizeButton.onclick = () => {
+	form.classList.add("hidden");
+};
 
-minimizeButton.onclick=()=>{
-	form.classList.add('hidden');
-}
-
-maximizeButton.onclick=()=>{
-	form.classList.remove('hidden');
-}
+maximizeButton.onclick = () => {
+	form.classList.remove("hidden");
+};
 
 form.onsubmit = async (event) => {
 	event.preventDefault();
@@ -753,19 +752,12 @@ async function show() {
 	errorParagraph.textContent = "";
 	errorCode.textContent = "";
 	container.classList.remove("hidden");
-	form.classList.remove('hidden');
 
 	showLoading();
 
-	const numPolls = 20;
-
-	for (let i = 0; i < numPolls; i++) {
-		if (pageHasLoaded()) break;
-		await sleep(500);
-	}
+	await waitForLoad();
 
 	try {
-		errorIfPageNotLoaded();
 		await (0,_fill_inputs_js__WEBPACK_IMPORTED_MODULE_3__["default"])(form);
 		await (0,_tree_view_js__WEBPACK_IMPORTED_MODULE_4__["default"])(treeViewDiv, folderPathInput, handleCustomError);
 		stopShowingLoading();
@@ -792,20 +784,24 @@ async function sleep(duration) {
 	});
 }
 
-function pageHasLoaded() {
-	//one of the code elements is ours
-	const hasCode = document.querySelectorAll("code").length >= 2;
-	const submissionSpans = (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)();
-	const hasSubmissions = submissionSpans.length > 0;
+//compares the previous code with current one
+//or waits for code to load
+async function waitForLoad() {
+	const selected = (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSelectedDiv)();
+	const numPolls = 20;
 
-	return hasCode && hasSubmissions;
-}
+	for (let i = 0; i < numPolls; i++) {
+		const codes = document.querySelectorAll("code");
+		//error box has code too
+		if (selected !== (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSelectedDiv)() && codes.length >= 2) {
+			return;
+		}
 
-function errorIfPageNotLoaded() {
-	if (!pageHasLoaded()) {
-		const message = "Page has not loaded, try refreshing the page";
-		throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message);
+		await new Promise((resolve) => setTimeout(resolve, 500));
 	}
+
+	const message = "Page has not loaded, try refreshing the page";
+	throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message);
 }
 
 function showSuccessfulSubmit() {
@@ -857,6 +853,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 async function fillInputs(form) {
+	errorIfNotAccepted();
+
 	setSubmissions(form);
 	await setMinutes(form);
 
@@ -866,11 +864,13 @@ async function fillInputs(form) {
 	setFile(form);
 }
 
-function setSubmissions(form) {
-	if (!(0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_1__.recentWasAccepted)()) {
-		throw new NotAcceptedError();
+function errorIfNotAccepted(){
+	if(!(0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_1__.selectedWasAccepted)()){
+		throw NotAcceptedError();
 	}
+}
 
+function setSubmissions(form) {
 	const submissionsInput = form.querySelector(`[name="submissions"]`);
 
 	const totalSubmissionCount = (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_1__.getSubmissionSpans)().length;
@@ -896,24 +896,22 @@ function setQuestionName(form) {
 
 function setFileExtension(form) {
 	const fileExtensionInput = form.querySelector('[name="fileExtension"]');
-	const className = document.querySelector("code").className;
 	const map = {
 		"language-python": "py",
 		"language-javascript": "js",
 		"language-cpp": "cpp",
 		"language-java": "java",
 		"language-dart": "dart",
-		
-
 	};
 
+	const className = document.querySelector("code").className;
 	fileExtensionInput.value = map[className] || "txt";
 }
 
 async function setMinutes(form) {
 	const { durations } = await chrome.storage.local.get("durations");
 	const questionName = (0,_lib_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href);
-	const milliseconds = durations[questionName]??0;
+	const milliseconds = durations[questionName] ?? 0;
 	const minutes = Math.floor(milliseconds / (1000 * 60)); //ms to minutes
 
 	if (minutes === undefined) throw new NoTimerError();
@@ -1104,18 +1102,26 @@ async function submitToSheets({
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSelectedDiv": () => (/* binding */ getSelectedDiv),
 /* harmony export */   "getSubmissionSpans": () => (/* binding */ getSubmissionSpans),
-/* harmony export */   "recentWasAccepted": () => (/* binding */ recentWasAccepted)
+/* harmony export */   "selectedWasAccepted": () => (/* binding */ selectedWasAccepted)
 /* harmony export */ });
 function getSubmissionSpans() {
 	return document.querySelectorAll("span.text-green-s, span.text-red-s");
 }
 
-function recentWasAccepted() {
-	const submissionSpans = getSubmissionSpans();
-
-	return submissionSpans[0].classList.contains("text-green-s");
+function getSelectedDiv() {
+	const selected = document.querySelector("div.bg-blue-0");
+	return selected;
 }
+
+function selectedWasAccepted() {
+	const selected = getSelectedDiv();
+	const greenSpan = selected.querySelector("span.text-green-s");
+	if (!greenSpan) return false;
+	return true;
+}
+
 
 
 
