@@ -54,7 +54,7 @@ async function show() {
 	errorParagraph.textContent = "";
 	errorCode.textContent = "";
 	container.classList.remove("hidden");
-
+	enableForm();
 	showLoading();
 
 	await waitForLoad();
@@ -113,6 +113,13 @@ function disableForm() {
 	submitButton.classList.add("m-grey-button");
 	form.classList.add("m-disabled-form");
 	window.classList.add("m-disabled");
+}
+
+function enableForm(){
+	submitButton.removeAttribute("disabled", "disabled");
+	submitButton.classList.remove("m-grey-button");
+	form.classList.remove("m-disabled-form");
+	window.classList.remove("m-disabled");
 }
 
 function showLoading() {
