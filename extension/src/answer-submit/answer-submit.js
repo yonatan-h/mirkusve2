@@ -11,6 +11,10 @@ import "./answer-submit.css";
 const container = createUi();
 document.body.appendChild(container);
 
+const window = container.querySelector(".m-submit");
+const minimizeButton = container.querySelector("#minimize-button");
+const maximizeButton = container.querySelector("#maximize-button");
+
 const errorBox = container.querySelector("#error-box");
 const errorParagraph = errorBox.querySelector("p");
 const errorCode = errorBox.querySelector("code");
@@ -21,6 +25,15 @@ const folderPathInput = container.querySelector('[name="folderPath"]');
 const treeViewDiv = container.querySelector("#tree-view");
 const form = container.querySelector("form");
 const submitButton = form.querySelector('[type="submit"]');
+
+
+minimizeButton.onclick=()=>{
+	form.classList.add('hidden');
+}
+
+maximizeButton.onclick=()=>{
+	form.classList.remove('hidden');
+}
 
 form.onsubmit = async (event) => {
 	event.preventDefault();
@@ -42,6 +55,7 @@ async function show() {
 	errorParagraph.textContent = "";
 	errorCode.textContent = "";
 	container.classList.remove("hidden");
+	form.classList.remove('hidden');
 
 	showLoading();
 
@@ -113,13 +127,13 @@ function disableForm() {
 function showLoading() {
 	submitButton.setAttribute("disabled", "disabled");
 	submitButton.classList.add("m-grey-button");
-	form.classList.add("m-loading");
+	window.classList.add("m-loading");
 }
 
 function stopShowingLoading() {
 	submitButton.removeAttribute("disabled");
 	submitButton.classList.remove("m-grey-button");
-	form.classList.remove("m-loading");
+	window.classList.remove("m-loading");
 }
 
 export { show, hide };
