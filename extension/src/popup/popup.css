@@ -29,12 +29,25 @@ h1 {
 	display: none;
 }
 
-#options-button{
-	background: none;
-	border: none;
-	border-bottom: 3px solid grey;
+button {
+	box-shadow: 2px 2px black;
+	padding: 5px;
+	border-radius: 2.5px;
 }
 
-.options{
+#options-button {
+	background: none;
+	border: none;
+	background: lightgrey;
+}
+
+#reset-button {
+	background: none;
+	border: none;
+	color: white;
+	background-color: rgb(188, 50, 0);
+}
+
+.options {
 	padding: 1rem;
 }

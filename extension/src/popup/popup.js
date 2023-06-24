@@ -5,6 +5,15 @@ document.getElementById("setup-button").onclick = () => {
 	chrome.runtime.sendMessage({ message: "set-up" });
 };
 
+document.getElementById("options-button").onclick = () => {
+	document.querySelector(".options").classList.toggle("hidden");
+};
+document.getElementById("reset-button").onclick = async (e) => {
+	await chrome.storage.local.clear();
+	e.target.textContent = "Cleared!";
+	setTimeout(() => window.close(), 1000);
+};
+
 const infoView = document.querySelector(".info-view");
 const promptSetupView = document.querySelector(".prompt-setup-view");
 chooseView();

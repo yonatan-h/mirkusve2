@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmin-width: 500px;\n}\n\nh1 {\n\tborder-bottom: 5px solid rgb(248, 159, 27);\n\ttext-align: center;\n}\n\n#setup-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: darkgreen;\n\tpadding: 5px;\n\tcolor: white;\n}\n\n#setup-button:hover {\n\ttransform: scale(1.05);\n}\n\n.hidden {\n\tdisplay: none;\n}\n\n#options-button{\n\tbackground: none;\n\tborder: none;\n\tborder-bottom: 3px solid grey;\n}\n\n.options{\n\tpadding: 1rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmin-width: 500px;\n}\n\nh1 {\n\tborder-bottom: 5px solid rgb(248, 159, 27);\n\ttext-align: center;\n}\n\n#setup-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: darkgreen;\n\tpadding: 5px;\n\tcolor: white;\n}\n\n#setup-button:hover {\n\ttransform: scale(1.05);\n}\n\n.hidden {\n\tdisplay: none;\n}\n\nbutton {\n\tbox-shadow: 2px 2px black;\n\tpadding: 5px;\n\tborder-radius: 2.5px;\n}\n\n#options-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: lightgrey;\n}\n\n#reset-button {\n\tbackground: none;\n\tborder: none;\n\tcolor: white;\n\tbackground-color: rgb(188, 50, 0);\n}\n\n.options {\n\tpadding: 1rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -569,6 +569,15 @@ __webpack_require__.r(__webpack_exports__);
 
 document.getElementById("setup-button").onclick = () => {
 	chrome.runtime.sendMessage({ message: "set-up" });
+};
+
+document.getElementById("options-button").onclick = () => {
+	document.querySelector(".options").classList.toggle("hidden");
+};
+document.getElementById("reset-button").onclick = async (e) => {
+	await chrome.storage.local.clear();
+	e.target.textContent = "Cleared!";
+	setTimeout(() => window.close(), 1000);
 };
 
 const infoView = document.querySelector(".info-view");

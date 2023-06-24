@@ -53,7 +53,7 @@ function setFileExtension(form) {
 async function setMinutes(form) {
 	const { durations } = await chrome.storage.local.get("durations");
 	const questionName = getQuestionName(window.location.href);
-	const milliseconds = durations[questionName];
+	const milliseconds = durations[questionName]??0;
 	const minutes = Math.floor(milliseconds / (1000 * 60)); //ms to minutes
 
 	if (minutes === undefined) throw new NoTimerError();
