@@ -80,12 +80,6 @@ function createUi() {
 	return container;
 }
 
-async function sleep(duration) {
-	return new Promise((onSuccess, onFail) => {
-		setTimeout(onSuccess, duration);
-	});
-}
-
 //compares the previous code with current one
 //or waits for code to load
 async function waitForLoad() {
@@ -117,7 +111,8 @@ function showSuccessfulSubmit() {
 function disableForm() {
 	submitButton.setAttribute("disabled", "disabled");
 	submitButton.classList.add("m-grey-button");
-	form.classList.add("m-disabled");
+	form.classList.add("m-disabled-form");
+	window.classList.add("m-disabled");
 }
 
 function showLoading() {

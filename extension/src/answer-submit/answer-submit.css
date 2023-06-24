@@ -113,6 +113,9 @@
 }
 .m-submit.m-disabled {
 	border-color: grey;
+}
+
+.m-submit .m-disabled-form{
 	pointer-events: none;
 }
 

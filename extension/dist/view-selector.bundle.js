@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n\tposition: fixed;\n\ttop: 8%;\n\tright: 5%;\n\tmax-width: 400px;\n\tpadding: 0.5rem;\n\n\tbox-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n\tbackground-color: rgba(235, 234, 234, 0.8);\n\tbackdrop-filter: blur(10px);\n\n\t/* border: 5px solid rgb(248, 159, 27); */\n\tborder-left: 5px solid rgb(248, 159, 27);\n\tfont-family: monospace, sans-serif;\n}\n\n.m-submit .window-bar{\n\tdisplay: flex;\n\tjustify-content: end;\n\tgap:1rem;\n}\n\n.m-submit .window-bar button{\n\tcolor: black;\n}\n\n.m-submit .window-bar button:hover{\n\tcolor: white;\n}\n\n\n\n.m-scroll {\n\twidth: 100%;\n\tmax-height: 50vh;\n\n\toverflow: auto;\n}\n\n.m-submit h2 {\n\tfont-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n\tcolor: black;\n}\n.m-submit input {\n\tbackground: none;\n\tborder-bottom: 3px solid grey;\n\tborder-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n\tmax-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n\tbackground: rgb(248, 159, 27);\n\tborder: none;\n\tpadding: 5px;\n\tcolor: black;\n}\n\n.m-submit .m-submit-button:hover {\n\tbox-shadow: 2px 2px rgb(0, 100, 0);\n\tcursor: pointer;\n}\n\n.m-submit .m-success-button {\n\tbackground: darkgreen;\n\tcolor: white;\n}\n\n.m-submit .error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n\tcolor: brown;\n}\n\n/*loading*/\n.m-loading {\n\tpointer-events: none;\n\tbackground-image: linear-gradient(\n\t\tto right,\n\t\trgba(255, 255, 255, 0.1),\n\t\trgb(189, 239, 189),\n\t\trgba(255, 255, 255, 0.1)\n\t);\n\tbackground-size: 200% 100%;\n\tanimation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n\t0% {\n\t\tbackground-position-x: 0%;\n\t}\n\t40% {\n\t\tbackground-position-x: 100%;\n\t}\n\t100% {\n\t\tbackground-position-x: 0%;\n\t}\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n\tpointer-events: none;\n\topacity: 0.9;\n}\n.m-submit.m-disabled {\n\tborder-color: grey;\n\tpointer-events: none;\n}\n\n.m-submit.m-disabled * {\n\tbackground: none;\n}\n\n.m-submit .m-grey-button {\n\tbackground: grey;\n\topacity: 0.5;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n\tposition: fixed;\n\ttop: 8%;\n\tright: 5%;\n\tmax-width: 400px;\n\tpadding: 0.5rem;\n\n\tbox-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n\tbackground-color: rgba(235, 234, 234, 0.8);\n\tbackdrop-filter: blur(10px);\n\n\t/* border: 5px solid rgb(248, 159, 27); */\n\tborder-left: 5px solid rgb(248, 159, 27);\n\tfont-family: monospace, sans-serif;\n}\n\n.m-submit .window-bar{\n\tdisplay: flex;\n\tjustify-content: end;\n\tgap:1rem;\n}\n\n.m-submit .window-bar button{\n\tcolor: black;\n}\n\n.m-submit .window-bar button:hover{\n\tcolor: white;\n}\n\n\n\n.m-scroll {\n\twidth: 100%;\n\tmax-height: 50vh;\n\n\toverflow: auto;\n}\n\n.m-submit h2 {\n\tfont-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n\tcolor: black;\n}\n.m-submit input {\n\tbackground: none;\n\tborder-bottom: 3px solid grey;\n\tborder-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n\tmax-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n\tbackground: rgb(248, 159, 27);\n\tborder: none;\n\tpadding: 5px;\n\tcolor: black;\n}\n\n.m-submit .m-submit-button:hover {\n\tbox-shadow: 2px 2px rgb(0, 100, 0);\n\tcursor: pointer;\n}\n\n.m-submit .m-success-button {\n\tbackground: darkgreen;\n\tcolor: white;\n}\n\n.m-submit .error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n\tcolor: brown;\n}\n\n/*loading*/\n.m-loading {\n\tpointer-events: none;\n\tbackground-image: linear-gradient(\n\t\tto right,\n\t\trgba(255, 255, 255, 0.1),\n\t\trgb(189, 239, 189),\n\t\trgba(255, 255, 255, 0.1)\n\t);\n\tbackground-size: 200% 100%;\n\tanimation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n\t0% {\n\t\tbackground-position-x: 0%;\n\t}\n\t40% {\n\t\tbackground-position-x: 100%;\n\t}\n\t100% {\n\t\tbackground-position-x: 0%;\n\t}\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n\tpointer-events: none;\n\topacity: 0.9;\n}\n.m-submit.m-disabled {\n\tborder-color: grey;\n}\n\n.m-submit .m-disabled-form{\n\tpointer-events: none;\n}\n\n.m-submit.m-disabled * {\n\tbackground: none;\n}\n\n.m-submit .m-grey-button {\n\tbackground: grey;\n\topacity: 0.5;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -778,12 +778,6 @@ function createUi() {
 	return container;
 }
 
-async function sleep(duration) {
-	return new Promise((onSuccess, onFail) => {
-		setTimeout(onSuccess, duration);
-	});
-}
-
 //compares the previous code with current one
 //or waits for code to load
 async function waitForLoad() {
@@ -815,7 +809,8 @@ function showSuccessfulSubmit() {
 function disableForm() {
 	submitButton.setAttribute("disabled", "disabled");
 	submitButton.classList.add("m-grey-button");
-	form.classList.add("m-disabled");
+	form.classList.add("m-disabled-form");
+	window.classList.add("m-disabled");
 }
 
 function showLoading() {
@@ -864,9 +859,9 @@ async function fillInputs(form) {
 	setFile(form);
 }
 
-function errorIfNotAccepted(){
-	if(!(0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_1__.selectedWasAccepted)()){
-		throw NotAcceptedError();
+function errorIfNotAccepted() {
+	if (!(0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_1__.selectedWasAccepted)()) {
+		throw new NotAcceptedError();
 	}
 }
 
@@ -923,14 +918,6 @@ async function setMinutes(form) {
 class NotAcceptedError extends _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError {
 	constructor() {
 		super("You need to have an accepted answer in order to submit");
-	}
-}
-
-class NoTimerError extends _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError {
-	constructor() {
-		super(
-			"Did the question before mirkusve? You have to manually input the minutes manually."
-		);
 	}
 }
 

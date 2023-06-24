@@ -14,9 +14,9 @@ async function fillInputs(form) {
 	setFile(form);
 }
 
-function errorIfNotAccepted(){
-	if(!selectedWasAccepted()){
-		throw NotAcceptedError();
+function errorIfNotAccepted() {
+	if (!selectedWasAccepted()) {
+		throw new NotAcceptedError();
 	}
 }
 
@@ -73,14 +73,6 @@ async function setMinutes(form) {
 class NotAcceptedError extends CustomError {
 	constructor() {
 		super("You need to have an accepted answer in order to submit");
-	}
-}
-
-class NoTimerError extends CustomError {
-	constructor() {
-		super(
-			"Did the question before mirkusve? You have to manually input the minutes manually."
-		);
 	}
 }
 
