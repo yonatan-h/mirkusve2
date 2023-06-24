@@ -885,6 +885,12 @@ function setFileExtension(form) {
 	const className = document.querySelector("code").className;
 	const map = {
 		"language-python": "py",
+		"language-javascript": "js",
+		"language-cpp": "cpp",
+		"language-java": "java",
+		"language-dart": "dart",
+		
+
 	};
 
 	fileExtensionInput.value = map[className] || "txt";
