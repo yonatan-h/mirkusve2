@@ -21,17 +21,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n\tposition: fixed;\n\ttop: 8%;\n\tright: 5%;\n\tmax-width: 400px;\n\tpadding: 0.5rem;\n\n\tbox-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n\tbackground-color: rgba(235, 234, 234, 0.8);\n\tbackdrop-filter: blur(10px);\n\n\t/* border: 5px solid rgb(248, 159, 27); */\n\tborder-left: 5px solid rgb(248, 159, 27);\n\tfont-family: monospace, sans-serif;\n}\n\n.m-submit .window-bar{\n\tdisplay: flex;\n\tjustify-content: end;\n\tgap:1rem;\n}\n\n.m-submit .window-bar button{\n\tcolor: black;\n}\n\n.m-submit .window-bar button:hover{\n\tcolor: white;\n}\n\n\n\n.m-scroll {\n\twidth: 100%;\n\tmax-height: 50vh;\n\n\toverflow: auto;\n}\n\n.m-submit h2 {\n\tfont-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n\tcolor: black;\n}\n.m-submit input {\n\tbackground: none;\n\tborder-bottom: 3px solid grey;\n\tborder-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n\tmax-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n\tbackground: rgb(248, 159, 27);\n\tborder: none;\n\tpadding: 5px;\n\tcolor: black;\n}\n\n.m-submit .m-submit-button:hover {\n\tbox-shadow: 2px 2px rgb(0, 100, 0);\n\tcursor: pointer;\n}\n\n.m-submit .m-success-button {\n\tbackground: darkgreen;\n\tcolor: white;\n}\n\n.m-submit .error-box p {\n\tcolor: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n\tcolor: brown;\n}\n\n/*loading*/\n.m-loading {\n\tpointer-events: none;\n\tbackground-image: linear-gradient(\n\t\tto right,\n\t\trgba(255, 255, 255, 0.1),\n\t\trgb(189, 239, 189),\n\t\trgba(255, 255, 255, 0.1)\n\t);\n\tbackground-size: 200% 100%;\n\tanimation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n\t0% {\n\t\tbackground-position-x: 0%;\n\t}\n\t40% {\n\t\tbackground-position-x: 100%;\n\t}\n\t100% {\n\t\tbackground-position-x: 0%;\n\t}\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n\tpointer-events: none;\n\topacity: 0.9;\n}\n.m-submit.m-disabled {\n\tborder-color: grey;\n}\n\n.m-submit .m-disabled-form{\n\tpointer-events: none;\n}\n\n.m-submit.m-disabled * {\n\tbackground: none;\n}\n\n.m-submit .m-grey-button {\n\tbackground: grey;\n\topacity: 0.5;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit {\n  position: fixed;\n  top: 8%;\n  right: 5%;\n  max-width: 400px;\n  padding: 0.5rem;\n\n  box-shadow: 7px 7px 10px rgba(29, 29, 29, 0.3);\n  background-color: rgba(235, 234, 234, 0.8);\n  backdrop-filter: blur(10px);\n\n  /* border: 5px solid rgb(248, 159, 27); */\n  border-left: 5px solid rgb(248, 159, 27);\n  font-family: monospace, sans-serif;\n}\n\n.m-submit .window-bar {\n  display: flex;\n  justify-content: end;\n  gap: 1rem;\n}\n\n.m-submit .window-bar button {\n  color: black;\n}\n\n.m-submit .window-bar button:hover {\n  color: white;\n}\n\n.m-scroll {\n  width: 100%;\n  max-height: 50vh;\n\n  overflow: auto;\n}\n\n.m-submit h2 {\n  font-size: 1.5rem;\n}\n\n.m-submit h2,\n.m-submit p,\n.m-submit code,\n.m-submit input {\n  color: black;\n}\n.m-submit input {\n  background: none;\n  border-bottom: 3px solid grey;\n  border-radius: 3px;\n}\n\n.m-submit .m-thin-input {\n  max-width: 5ch;\n}\n\n.m-submit .m-submit-button {\n  background: rgb(248, 159, 27);\n  border: none;\n  padding: 5px;\n  color: black;\n}\n\n.m-submit .m-submit-button:hover {\n  box-shadow: 2px 2px rgb(0, 100, 0);\n  cursor: pointer;\n}\n\n.m-submit .m-success-button {\n  background: darkgreen;\n  color: white;\n}\n\n.m-submit .error-box p {\n  color: rgb(98, 25, 25);\n}\n.m-submit .error-box code {\n  color: brown;\n}\n\n/*loading*/\n.m-loading {\n  pointer-events: none;\n  background-image: linear-gradient(\n    to right,\n    rgba(255, 255, 255, 0.1),\n    rgb(189, 239, 189),\n    rgba(255, 255, 255, 0.1)\n  );\n  background-size: 200% 100%;\n  animation: loading-wave 2s infinite;\n}\n\n@keyframes loading-wave {\n  0% {\n    background-position-x: 0%;\n  }\n  40% {\n    background-position-x: 100%;\n  }\n  100% {\n    background-position-x: 0%;\n  }\n}\n/*disabled*/\n\n.m-submit .m-visible-only {\n  pointer-events: none;\n  opacity: 0.9;\n}\n.m-submit.m-disabled {\n  border-color: grey;\n}\n\n.m-submit .m-disabled-form {\n  pointer-events: none;\n}\n\n.m-submit.m-disabled * {\n  background: none;\n}\n\n.m-submit .m-grey-button {\n  background: grey;\n  opacity: 0.5;\n}\n\n.m-submit .m-spacer {\n  height: 1rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/answer-submit/tree-view.css":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/answer-submit/tree-view.css ***!
-  \*******************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/answer-submit/folder.css":
+/*!****************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/answer-submit/folder.css ***!
+  \****************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -47,7 +47,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-folder {\n\tcolor: black;\n\tbackground-color: rgba(255, 255, 255, 0.7);\n\tborder-left: 3px solid darkgreen;\n\n\tpadding-left: 3px;\n\tmargin-top: 3px;\n\n\twidth: fit-content;\n\tcursor: pointer;\n}\n\n.m-folder:hover {\n\tbackground-color: darkgreen;\n}\n\n.m-folder__selected {\n\tbackground-color: darkgreen;\n\tcolor: white;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-folder {\n  color: black;\n\n  margin-top: 2px;\n\n  width: fit-content;\n  cursor: pointer;\n\n  display: flex;\n  gap: 0.5rem;\n  align-items: center;\n}\n\n.m-folder-btn {\n  padding: 1px;\n  border-radius: 0.25rem;\n  background-color: rgba(255, 255, 255, 0.5);\n}\n.m-folder-btn:hover {\n  background-color: darkgreen;\n}\n\n.m-folder-btn__selected {\n  background-color: darkgreen;\n  color: white;\n}\n\n.m-new-folder-btn {\n  color: black;\n  border: 1px solid grey;\n\n  /* to center the + sign */\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  width: 1.1rem;\n  height: 1.1rem;\n  border-radius: 100%;\n}\n\n.m-hidden {\n  display: none;\n}\n\n.m-hint {\n  color: rgb(62, 62, 62) !important;\n}\n\n.m-new-folder-bar {\n  display: flex;\n  align-items: center;\n  gap: 5px;\n}\n.m-new-folder-bar input {\n  flex: 1;\n}\n\n.m-new-folder-bar #new-folder-cancel {\n  color: white;\n  background: brown;\n  /* to center the x sign */\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  width: 1.1rem;\n  height: 1.1rem;\n  border-radius: 100%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -199,7 +199,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // Module
-var code = "<div class=\"m-submit\">\n\t<div class=\"window-bar\">\n\t\t<button id=\"minimize-button\">🗕</button>\n\t\t<button id=\"maximize-button\">🗖</button>\n\t</div>\n\t<form>\n\t\t<div id=\"error-box\" class=\"error-box\">\n\t\t\t<p></p>\n\t\t\t<code></code>\n\t\t</div>\n\t\t<h2>Submit To A2SV</h2>\n\n\t\t<p>\n\t\t\t<input\n\t\t\t\ttype=\"text\"\n\t\t\t\tname=\"submissions\"\n\t\t\t\tplaceholder=\"?\"\n\t\t\t\tclass=\"m-thin-input\"\n\t\t\t\tclass=\"m-visible-only\"\n\t\t\t/>\n\t\t\tsubmissions &\n\t\t\t<input\n\t\t\t\ttype=\"text\"\n\t\t\t\tname=\"minutes\"\n\t\t\t\tplaceholder=\"?\"\n\t\t\t\tclass=\"m-thin-input\"\n\t\t\t\tclass=\"m-visible-only\"\n\t\t\t/>\n\t\t\tminutes\n\t\t</p>\n\t\t<p>\n\t\t\tSelect a folder in your repo to upload\n\t\t\t<input\n\t\t\t\ttype=\"text\"\n\t\t\t\tname=\"questionName\"\n\t\t\t\tplaceholder=\"question-name\"\n\t\t\t\thidden\n\t\t\t/>\n\t\t\t<input\n\t\t\t\ttype=\"text\"\n\t\t\t\tname=\"fileName\"\n\t\t\t\tplaceholder=\"file-name\"\n\t\t\t\tclass=\"m-visible-only\"\n\t\t\t/>.<input\n\t\t\t\ttype=\"text\"\n\t\t\t\tname=\"fileExtension\"\n\t\t\t\tplaceholder=\"file extension\"\n\t\t\t\tclass=\"m-thin-input\"\n\t\t\t\tclass=\"m-visible-only\"\n\t\t\t/>\n\t\t\t<br />\n\t\t\t<textarea\n\t\t\t\ttype=\"text\"\n\t\t\t\tname=\"file\"\n\t\t\t\tplaceholder=\"file content\"\n\t\t\t\thidden\n\t\t\t></textarea>\n\t\t</p>\n\n\t\t<div>\n\t\t\t<div id=\"tree-view\" class=\"m-scroll\"></div>\n\t\t\t<input\n\t\t\t\ttype=\"text\"\n\t\t\t\tname=\"folderPath\"\n\t\t\t\tplaceholder=\"something/something\"\n\t\t\t\tclass=\"m-visible-only\"\n\t\t\t/>\n\t\t</div>\n\n\t\t<input type=\"submit\" value=\"Submit\" class=\"m-submit-button\" />\n\t</form>\n</div>\n";
+var code = "<div class=\"m-submit\">\n  <div class=\"window-bar\">\n    <button id=\"minimize-button\">🗕</button>\n    <button id=\"maximize-button\">🗖</button>\n  </div>\n  <form>\n    <div id=\"error-box\" class=\"error-box\">\n      <p></p>\n      <code></code>\n    </div>\n    <h2>Submit To A2SV</h2>\n\n    <p>\n      <input\n        type=\"text\"\n        name=\"submissions\"\n        placeholder=\"?\"\n        class=\"m-thin-input\"\n      />\n      submissions &\n      <input\n        type=\"text\"\n        name=\"minutes\"\n        placeholder=\"?\"\n        class=\"m-thin-input\"\n      />\n      minutes\n    </p>\n    <p>\n      📄\n      <input\n        type=\"text\"\n        name=\"questionName\"\n        placeholder=\"question-name\"\n        hidden\n      />\n      <input\n        type=\"text\"\n        name=\"fileName\"\n        placeholder=\"file-name\"\n      />.<input\n        type=\"text\"\n        name=\"fileExtension\"\n        placeholder=\"file extension\"\n        class=\"m-thin-input\"\n      />\n      <br />\n      <textarea\n        type=\"text\"\n        name=\"file\"\n        placeholder=\"file content\"\n        hidden\n      ></textarea>\n    </p>\n    <div class=\"m-spacer\"></div>\n\n    <div>\n      <div id=\"folder-prompt-container\" class=\"m-scroll\"></div>\n      <input\n        type=\"text\"\n        name=\"folderPath\"\n        placeholder=\"something/something\"\n        class=\"m-visible-only\"\n        hidden\n      />\n    </div>\n    <div class=\"m-spacer\"></div>\n    <input type=\"submit\" value=\"Submit\" class=\"m-submit-button\" />\n  </form>\n</div>\n";
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
+
+/***/ }),
+
+/***/ "./src/answer-submit/folder.html":
+/*!***************************************!*\
+  !*** ./src/answer-submit/folder.html ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = "<div id=\"tree-view\">\n  <p>Choose Github folder</p>\n</div>\n<div id=\"new-folder-view\">\n  <p>📁Create Github folder</p>\n  <p class=\"m-hint\">eg) leet/hard/week9</p>\n  <div class=\"m-new-folder-bar m-hidden\">\n    <input type=\"text\" />\n    <button id=\"new-folder-cancel\" type=\"button\">x</button>\n  </div>\n</div>\n";
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
@@ -276,10 +293,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./src/answer-submit/tree-view.css":
-/*!*****************************************!*\
-  !*** ./src/answer-submit/tree-view.css ***!
-  \*****************************************/
+/***/ "./src/answer-submit/folder.css":
+/*!**************************************!*\
+  !*** ./src/answer-submit/folder.css ***!
+  \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -298,7 +315,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./tree-view.css */ "./node_modules/css-loader/dist/cjs.js!./src/answer-submit/tree-view.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_folder_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./folder.css */ "./node_modules/css-loader/dist/cjs.js!./src/answer-submit/folder.css");
 
       
       
@@ -320,12 +337,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_folder_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_tree_view_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_folder_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_folder_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_folder_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -691,11 +708,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/custom-errors.js */ "./src/lib/custom-errors.js");
 /* harmony import */ var _submission_spans_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./submission-spans.js */ "./src/answer-submit/submission-spans.js");
 /* harmony import */ var _fill_inputs_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fill-inputs.js */ "./src/answer-submit/fill-inputs.js");
-/* harmony import */ var _tree_view_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tree-view.js */ "./src/answer-submit/tree-view.js");
+/* harmony import */ var _folder_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./folder.js */ "./src/answer-submit/folder.js");
 /* harmony import */ var _send_answer_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./send-answer.js */ "./src/answer-submit/send-answer.js");
 /* harmony import */ var _after_submit_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./after-submit.js */ "./src/answer-submit/after-submit.js");
 /* harmony import */ var _answer_submit_html__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./answer-submit.html */ "./src/answer-submit/answer-submit.html");
 /* harmony import */ var _answer_submit_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./answer-submit.css */ "./src/answer-submit/answer-submit.css");
+
 
 
 
@@ -720,116 +738,127 @@ const errorCode = errorBox.querySelector("code");
 const handleCustomError = (0,_lib_handle_custom_error_js__WEBPACK_IMPORTED_MODULE_0__["default"])(errorParagraph, errorCode);
 
 const folderPathInput = container.querySelector('[name="folderPath"]');
-const treeViewDiv = container.querySelector("#tree-view");
+const folderPromptContainer = container.querySelector(
+  "#folder-prompt-container"
+);
 const form = container.querySelector("form");
 const submitButton = form.querySelector('[type="submit"]');
 
 minimizeButton.onclick = () => {
-	form.classList.add("hidden");
+  form.classList.add("hidden");
 };
 
 maximizeButton.onclick = () => {
-	form.classList.remove("hidden");
+  form.classList.remove("hidden");
 };
 
 form.onsubmit = async (event) => {
-	event.preventDefault();
-	await (0,_after_submit_js__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  event.preventDefault();
+  await (0,_after_submit_js__WEBPACK_IMPORTED_MODULE_6__["default"])();
 
-	try {
-		showLoading();
-		await (0,_send_answer_js__WEBPACK_IMPORTED_MODULE_5__["default"])(form);
-		stopShowingLoading();
+  try {
+    showLoading();
+    await (0,_send_answer_js__WEBPACK_IMPORTED_MODULE_5__["default"])(form);
+    stopShowingLoading();
 
-		showSuccessfulSubmit();
-	} catch (error) {
-		stopShowingLoading();
-		handleCustomError(error);
-	}
+    showSuccessfulSubmit();
+  } catch (error) {
+    stopShowingLoading();
+    handleCustomError(error);
+  }
 };
 
+function clearError() {
+  errorParagraph.textContent = "";
+  errorCode.textContent = "";
+}
+
 async function show() {
-	errorParagraph.textContent = "";
-	errorCode.textContent = "";
-	container.classList.remove("hidden");
-	enableForm();
-	showLoading();
+  clearError();
+  container.classList.remove("hidden");
+  enableForm();
+  showLoading();
 
-	await waitForLoad();
+  await waitForLoad();
 
-	try {
-		await (0,_fill_inputs_js__WEBPACK_IMPORTED_MODULE_3__["default"])(form);
-		await (0,_tree_view_js__WEBPACK_IMPORTED_MODULE_4__["default"])(treeViewDiv, folderPathInput, handleCustomError);
-		stopShowingLoading();
-	} catch (error) {
-		stopShowingLoading();
-		disableForm();
-		handleCustomError(error);
-	}
+  try {
+    await (0,_fill_inputs_js__WEBPACK_IMPORTED_MODULE_3__["default"])(form);
+    await (0,_folder_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
+      promptContainer: folderPromptContainer,
+      folderPathInput,
+      handleCustomError,
+      clearError,
+    });
+    stopShowingLoading();
+  } catch (error) {
+    stopShowingLoading();
+    disableForm();
+    handleCustomError(error);
+  }
 }
 
 function hide() {
-	container.classList.add("hidden");
+  container.classList.add("hidden");
 }
 
 function createUi() {
-	const container = document.createElement("div");
-	container.innerHTML = _answer_submit_html__WEBPACK_IMPORTED_MODULE_7__["default"];
-	return container;
+  const container = document.createElement("div");
+  container.innerHTML = _answer_submit_html__WEBPACK_IMPORTED_MODULE_7__["default"];
+  return container;
 }
 
 //compares the previous code with current one
 //or waits for code to load
 async function waitForLoad() {
-	const selected = (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSelectedDiv)();
-	const numPolls = 20;
+  const selected = (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSelectedDiv)();
+  const numPolls = 20;
 
-	for (let i = 0; i < numPolls; i++) {
-		const codes = document.querySelectorAll("code");
-		//error box has code too
-		if (selected !== (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSelectedDiv)() && codes.length >= 2) {
-			return;
-		}
+  for (let i = 0; i < numPolls; i++) {
+    const codes = document.querySelectorAll("code");
+    //error box has code too
+    if (selected !== (0,_submission_spans_js__WEBPACK_IMPORTED_MODULE_2__.getSelectedDiv)() && codes.length >= 2) {
+      return;
+    }
 
-		await new Promise((resolve) => setTimeout(resolve, 500));
-	}
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
 
-	const message = "Page has not loaded, try refreshing the page";
-	throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message);
+  const message = "Page has not loaded, try refreshing the page";
+  throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message);
 }
 
 function showSuccessfulSubmit() {
-	errorParagraph.textContent = "";
-	errorCode.textContent = "";
-	submitButton.setAttribute("disabled", "disabled");
-	submitButton.classList.add("m-success-button");
-	submitButton.value = "Submitted!";
+  errorParagraph.textContent = "";
+  errorCode.textContent = "";
+  submitButton.setAttribute("disabled", "disabled");
+  submitButton.classList.add("m-success-button");
+  submitButton.value = "Submitted!";
 }
 
 function disableForm() {
-	submitButton.setAttribute("disabled", "disabled");
-	submitButton.classList.add("m-grey-button");
-	form.classList.add("m-disabled-form");
-	window.classList.add("m-disabled");
+  submitButton.setAttribute("disabled", "disabled");
+  submitButton.classList.add("m-grey-button");
+  form.classList.add("m-disabled-form");
+  window.classList.add("m-disabled");
 }
 
-function enableForm(){
-	submitButton.removeAttribute("disabled", "disabled");
-	submitButton.classList.remove("m-grey-button");
-	form.classList.remove("m-disabled-form");
-	window.classList.remove("m-disabled");
+function enableForm() {
+  submitButton.removeAttribute("disabled", "disabled");
+  submitButton.classList.remove("m-grey-button");
+  form.classList.remove("m-disabled-form");
+  window.classList.remove("m-disabled");
 }
 
 function showLoading() {
-	submitButton.setAttribute("disabled", "disabled");
-	submitButton.classList.add("m-grey-button");
-	window.classList.add("m-loading");
+  submitButton.setAttribute("disabled", "disabled");
+  submitButton.classList.add("m-grey-button");
+  window.classList.add("m-loading");
 }
 
 function stopShowingLoading() {
-	submitButton.removeAttribute("disabled");
-	submitButton.classList.remove("m-grey-button");
-	window.classList.remove("m-loading");
+  submitButton.removeAttribute("disabled");
+  submitButton.classList.remove("m-grey-button");
+  window.classList.remove("m-loading");
 }
 
 
@@ -929,6 +958,205 @@ class NotAcceptedError extends _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0_
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fillInputs);
+
+
+/***/ }),
+
+/***/ "./src/answer-submit/folder.js":
+/*!*************************************!*\
+  !*** ./src/answer-submit/folder.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/custom-errors.js */ "./src/lib/custom-errors.js");
+/* harmony import */ var _lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../lib/robust-fetch.js */ "./src/lib/robust-fetch.js");
+/* harmony import */ var _folder_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./folder.css */ "./src/answer-submit/folder.css");
+/* harmony import */ var _folder_html__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./folder.html */ "./src/answer-submit/folder.html");
+
+
+
+
+
+async function showFolderPrompt({
+  promptContainer,
+  folderPathInput,
+  handleCustomError,
+  clearError,
+}) {
+  const fetchOptions = await getFetchOptions();
+  const sha = await getSha(getFetchOptions);
+  const folderPaths = await getFolderPaths(sha, fetchOptions);
+
+  promptContainer.innerHTML = _folder_html__WEBPACK_IMPORTED_MODULE_3__["default"]; //has tree view and new folder view
+
+  setupNewFolderView(
+    promptContainer,
+    folderPathInput,
+    handleCustomError,
+    clearError
+  );
+  createTreeView(folderPaths, promptContainer, folderPathInput);
+}
+
+function setupNewFolderView(
+  promptContainer,
+  folderPathInput,
+  handleCustomError,
+  clearError
+) {
+  const newFolderView = promptContainer.querySelector("#new-folder-view");
+  const input = newFolderView.querySelector('[type="text"]');
+  const cancelButton = newFolderView.querySelector("#new-folder-cancel");
+
+  input.oninput = () => {
+    const value = input.value;
+    try {
+      errorIfBadFolderPath(value);
+      clearError();
+      folderPathInput.value = value;
+    } catch (error) {
+      handleCustomError(error);
+    }
+  };
+
+  cancelButton.onclick = () => {
+    promptContainer.querySelector("#tree-view").classList.remove("hidden");
+    newFolderView.classList.add("hidden");
+    folderPathInput.value = "";
+  };
+}
+
+function errorIfBadFolderPath(path) {
+  if (path.includes(".")) {
+    throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError(
+      `There is a '.' in the folder path. Please enter only the path of the folder, don't include any file.`
+    );
+  }
+
+  if (path.includes("//")) {
+    throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError(
+      `There is a double slash '//' in the folder path. Remove it.`
+    );
+  }
+
+  if (path.includes(" ")) {
+    throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError(
+      `Please don't include space characters in the folder path.`
+    );
+  }
+
+  try {
+    const url = new URL("https://abebe.com/" + path);
+  } catch (error) {
+    throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError(
+      `The folder path is not url safe somehow. Please modify it.`
+    );
+  }
+}
+
+async function getFetchOptions() {
+  const { token } = await chrome.storage.local.get("token");
+
+  const fetchOptions = {
+    method: "GET",
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return fetchOptions;
+}
+
+async function getSha(fetchOptions) {
+  const { userName, repoName } = await chrome.storage.local.get([
+    "userName",
+    "repoName",
+  ]);
+
+  const url = `https://api.github.com/repos/${userName}/${repoName}/commits/main`;
+  const data = await (0,_lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_1__["default"])(url, fetchOptions);
+  return data.sha;
+}
+
+async function getFolderPaths(sha, fetchOptions) {
+  const { userName, repoName } = await chrome.storage.local.get([
+    "userName",
+    "repoName",
+  ]);
+
+  const treeUrl = `https://api.github.com/repos/${userName}/${repoName}/git/trees/${sha}?recursive=1`;
+  const { tree } = await (0,_lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_1__["default"])(treeUrl, fetchOptions);
+
+  const folderPaths = tree
+    .filter((node) => node.type === "tree")
+    .map((folder) => folder.path);
+
+  folderPaths.push("/");
+  return folderPaths;
+}
+
+function createTreeView(folderPaths, promptContainer, folderPathInput) {
+  const treeView = promptContainer.querySelector("#tree-view");
+  folderPaths.sort(); // same parents together
+
+  for (const path of folderPaths) {
+    const folderElement = createFolderElement({
+      path,
+      folderPathInput,
+      promptContainer,
+    });
+    treeView.appendChild(folderElement);
+  }
+}
+
+function createFolderElement({ path, folderPathInput, promptContainer }) {
+  const nodes = path.split("/").filter((node) => node !== "");
+  const length = nodes.length;
+  const name = length ? nodes[length - 1] : "root";
+
+  const element = document.createElement("div");
+  element.classList.add("m-folder");
+  element.style.marginLeft = `${15 * length}px`;
+
+  const folderButton = document.createElement("button");
+  folderButton.textContent = "📁" + name;
+  folderButton.classList.add("m-folder-btn");
+  folderButton.setAttribute("type", "button");
+
+  folderButton.onclick = () => {
+    const selectedButton = promptContainer.querySelector(
+      ".m-folder-btn__selected"
+    );
+    selectedButton?.classList.remove("m-folder-btn__selected");
+    folderButton.classList.add("m-folder-btn__selected");
+    folderPathInput.value = path;
+  };
+
+  const newFolderButton = document.createElement("button");
+  newFolderButton.textContent = "+";
+  newFolderButton.classList.add("m-new-folder-btn");
+  newFolderButton.setAttribute("type", "button");
+
+  newFolderButton.onclick = (e) => {
+    promptContainer.querySelector("#tree-view").classList.add("hidden");
+    const newFolderView = promptContainer.querySelector("#new-folder-view");
+
+    newFolderView.classList.remove("hidden");
+    newFolderView.querySelector('[type="text"]').value = path;
+    folderPathInput.value = path;
+  };
+
+  element.appendChild(folderButton);
+  element.appendChild(newFolderButton);
+  return element;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (showFolderPrompt);
 
 
 /***/ }),
@@ -1117,110 +1345,6 @@ function selectedWasAccepted() {
 }
 
 
-
-
-/***/ }),
-
-/***/ "./src/answer-submit/tree-view.js":
-/*!****************************************!*\
-  !*** ./src/answer-submit/tree-view.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/robust-fetch.js */ "./src/lib/robust-fetch.js");
-/* harmony import */ var _tree_view_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tree-view.css */ "./src/answer-submit/tree-view.css");
-
-
-
-async function showTreeView(viewDiv, folderPathInput) {
-	const fetchOptions = await getFetchOptions();
-	const sha = await getSha(getFetchOptions);
-	const folderPaths = await getFolderPaths(sha, fetchOptions);
-
-	viewDiv.replaceChildren(); //by nothing
-	createView(folderPaths, viewDiv, folderPathInput);
-}
-
-async function getFetchOptions() {
-	const { token } = await chrome.storage.local.get("token");
-
-	const fetchOptions = {
-		method: "GET",
-		headers: {
-			Accept: "application/vnd.github+json",
-			Authorization: `Bearer ${token}`,
-		},
-	};
-
-	return fetchOptions;
-}
-
-async function getSha(fetchOptions) {
-	const { userName, repoName } = await chrome.storage.local.get([
-		"userName",
-		"repoName",
-	]);
-
-	const url = `https://api.github.com/repos/${userName}/${repoName}/commits/main`;
-	const data = await (0,_lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(url, fetchOptions);
-	return data.sha;
-}
-
-async function getFolderPaths(sha, fetchOptions) {
-	const { userName, repoName } = await chrome.storage.local.get([
-		"userName",
-		"repoName",
-	]);
-
-	const treeUrl = `https://api.github.com/repos/${userName}/${repoName}/git/trees/${sha}?recursive=1`;
-	const { tree } = await (0,_lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(treeUrl, fetchOptions);
-
-	const folderPaths = tree
-		.filter((node) => node.type === "tree")
-		.map((folder) => folder.path);
-
-	folderPaths.push("/");
-	return folderPaths;
-}
-
-function createView(folderPaths, viewDiv, folderPathInput) {
-	folderPaths.sort(); // same parents together
-
-	for (const path of folderPaths) {
-		const folderElement = createFolderElement({
-			path,
-			folderPathInput,
-			viewDiv,
-		});
-		viewDiv.appendChild(folderElement);
-	}
-}
-
-function createFolderElement({ path, folderPathInput, viewDiv }) {
-	const nodes = path.split("/").filter((node) => node !== "");
-	const length = nodes.length;
-	const name = length ? nodes[length - 1] : "root";
-
-	const element = document.createElement("div");
-	element.classList.add("m-folder");
-	element.textContent = name;
-	element.style.marginLeft = `${15 * length}px`;
-
-	element.onclick = () => {
-		const selectedLabel = viewDiv.querySelector(".m-folder__selected");
-		if (selectedLabel) selectedLabel.classList.remove("m-folder__selected");
-		element.classList.add("m-folder__selected");
-		folderPathInput.value = path;
-	};
-
-	return element;
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (showTreeView);
 
 
 /***/ }),
