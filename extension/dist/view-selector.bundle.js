@@ -216,7 +216,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // Module
-var code = "<div id=\"tree-view\">\n  <p>Choose Github folder</p>\n</div>\n<div id=\"new-folder-view\">\n  <p>📁Create Github folder</p>\n  <p class=\"m-hint\">eg) leet/hard/week9</p>\n  <div class=\"m-new-folder-bar m-hidden\">\n    <input type=\"text\" />\n    <button id=\"new-folder-cancel\" type=\"button\">x</button>\n  </div>\n</div>\n";
+var code = "<div id=\"tree-view\">\n  <p>Choose Github folder</p>\n</div>\n<div id=\"new-folder-view\" class=\"hidden\">\n  <p>📁Create Github folder</p>\n  <p class=\"m-hint\">eg) leet/hard/week9</p>\n  <div class=\"m-new-folder-bar m-hidden\">\n    <input type=\"text\" />\n    <button id=\"new-folder-cancel\" type=\"button\">x</button>\n  </div>\n</div>\n";
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 

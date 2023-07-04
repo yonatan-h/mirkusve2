@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>MirkuSVe</title>
-	</head>
-	<body>
-		<h1>MirkuSVe</h1>
-		<div class="info-view">
-			<p>Name: <span id="name"></span></p>
-			<p>Group: <span id="group"></span></p>
-			<p>Github Username: <span id="userName"></span></p>
-			<p>Repo: <span id="repoName"></span></p>
-		</div>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MirkuSVe</title>
+  </head>
+  <body>
+    <h1>MirkuSVe</h1>
+    <div class="info-view">
+      <p>Name: <span id="name"></span></p>
+      <p>Group: <span id="group"></span></p>
+      <p>Github Username: <span id="userName"></span></p>
+      <p>Repo: <span id="repoName"></span></p>
 
+      <button id="options-button">More options...</button>
+      <div class="options hidden">
+        <button id="reset-button">Reset Extension</button>
+        <p>
+          (Same as uninstalling then installing the extension. But don't worry
+          your google sheet submissions and github files won't be affected)
+        </p>
+      </div>
+    </div>
 
-		<div class="prompt-setup-view">
-			<p>
-				You need to
-				<button id="setup-button">Setup Mirkusve</button> to send leetcode
-				answers to A2SV and Github(any folder you choose)
-			</p>
-		</div>
+    <div class="prompt-setup-view">
+      <p>
+        You need to
+        <button id="setup-button">Setup Mirkusve</button> to send leetcode
+        answers to
+      </p>
+      <ul>
+        <li>A2SV Google Sheets</li>
+        <li>Github(any folder you choose)</li>
+      </ul>
+    </div>
 
-		<script src="popup.bundle.js"></script>
-	</body>
+    <script src="popup.bundle.js"></script>
+  </body>
 </html>

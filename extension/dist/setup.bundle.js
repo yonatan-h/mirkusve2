@@ -655,37 +655,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 async function handleFinish(event) {
-	(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_0__.disableNexts)();
-	try {
-		event.preventDefault();
+  (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_0__.disableNexts)();
+  try {
+    event.preventDefault();
 
-		const form = document.querySelector("form");
-		alert(form);
-		const formData = new FormData(form);
+    const form = document.querySelector("form");
+    const formData = new FormData(form);
 
-		const keyValues = { durations: {} }; //for timer
-		for (const [key, value] of formData) {
-			keyValues[key] = value;
-		}
+    const keyValues = { durations: {} }; //for timer
+    for (const [key, value] of formData) {
+      keyValues[key] = value;
+    }
 
-		await save(keyValues);
-		const submitInputButton = event.target;
-		submitInputButton.value = "Saved!";
-		document.getElementById("cancel").setAttribute("disabled", "disabled");
-	} catch (error) {
-		(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_0__.enableNexts)();
-		(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_0__.handleCustomError)(error);
-	}
+    await save(keyValues);
+    const submitInputButton = event.target;
+    submitInputButton.textContent = "Saved!";
+    document.getElementById("cancel").setAttribute("disabled", "disabled");
+  } catch (error) {
+    (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_0__.enableNexts)();
+    (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_0__.handleCustomError)(error);
+  }
 }
 
 async function save(keyValueObject) {
-	try {
-		await chrome.storage.local.set(keyValueObject);
-		const things = await chrome.storage.local.get(keyValueObject);
-		alert(JSON.stringify(things));
-	} catch (error) {
-		throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError("Could not save setup", error.message);
-	}
+  try {
+    await chrome.storage.local.set(keyValueObject);
+    const things = await chrome.storage.local.get(keyValueObject);
+  } catch (error) {
+    throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError("Could not save setup", error.message);
+  }
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (handleFinish);
@@ -895,62 +893,63 @@ const signInButton = document.getElementById("sign-in");
 signInButton.addEventListener("click", signInAndStoreToken);
 
 function handleTokenSubmit() {
-	(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.disableNexts)();
-	try {
-		const token = document.querySelector(`[name="token"]`).value;
-		if (token === "" || token === "undefined") {
-			throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.EmptyInputError("Signing in to Github", token);
-		}
-		(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.showSection)("finish");
-	} catch (error) {
-		(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.enableNexts)();
-		(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.handleCustomError)(error);
-	}
-	(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.enableNexts)();
+  (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.disableNexts)();
+  try {
+    const token = document.querySelector(`[name="token"]`).value;
+    if (token === "" || token === "undefined") {
+      throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.EmptyInputError("Signing in to Github", token);
+    }
+    (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.showSection)("finish");
+  } catch (error) {
+    (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.enableNexts)();
+    (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.handleCustomError)(error);
+  }
+  (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.enableNexts)();
 }
 
 async function signInAndStoreToken() {
-	try {
-		const userName = document.querySelector(`[name="userName"]`).value;
-		const redirectedUrl = await getRedirectedUrl(userName);
+  try {
+    const userName = document.querySelector(`[name="userName"]`).value;
+    const redirectedUrl = await getRedirectedUrl(userName);
 
-		const search = new URL(redirectedUrl).search;
-		const code = new URLSearchParams(search).get("code");
+    const search = new URL(redirectedUrl).search;
+    const code = new URLSearchParams(search).get("code");
 
-		const token = await exchangeForToken(code);
-		document.querySelector(`[name="token"]`).value = token;
-	} catch (error) {
-		(0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.handleCustomError)(error);
-	}
+    const token = await exchangeForToken(code);
+    document.querySelector("#signed-in-bool").textContent = "You're Signed In!";
+    document.querySelector(`[name="token"]`).value = token;
+  } catch (error) {
+    (0,_ui_functions_js__WEBPACK_IMPORTED_MODULE_3__.handleCustomError)(error);
+  }
 }
 
 async function getRedirectedUrl(userName) {
-	const response = await chrome.runtime.sendMessage({
-		message: "sign-in",
-		userName: userName,
-	});
+  const response = await chrome.runtime.sendMessage({
+    message: "sign-in",
+    userName: userName,
+  });
 
-	if (response.error) {
-		const { descriptionAndSolution, errorAsString } = response.error;
-		throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(descriptionAndSolution, errorAsString);
-	}
+  if (response.error) {
+    const { descriptionAndSolution, errorAsString } = response.error;
+    throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(descriptionAndSolution, errorAsString);
+  }
 
-	if (!response.redirectedUrl) {
-		const message = "Signin failed. Try signing in again?";
-		throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message, responseString);
-	}
+  if (!response.redirectedUrl) {
+    const message = "Signin failed. Try signing in again?";
+    throw new _lib_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message, responseString);
+  }
 
-	return response.redirectedUrl;
+  return response.redirectedUrl;
 }
 
 async function exchangeForToken(code) {
-	let tokenUrl;
-	tokenUrl = _keys_js__WEBPACK_IMPORTED_MODULE_2__.codeForTokenUrl.split("/").filter((n) => n !== "");
-	tokenUrl = tokenUrl.join("/");
-	tokenUrl += `&code=${code}`;
+  let tokenUrl;
+  tokenUrl = _keys_js__WEBPACK_IMPORTED_MODULE_2__.codeForTokenUrl.split("/").filter((n) => n !== "");
+  tokenUrl = tokenUrl.join("/");
+  tokenUrl += `&code=${code}`;
 
-	const data = await (0,_lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(tokenUrl);
-	return data.accessToken;
+  const data = await (0,_lib_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(tokenUrl);
+  return data.accessToken;
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (handleTokenSubmit);
