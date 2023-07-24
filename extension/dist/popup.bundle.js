@@ -2,32 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/popup/popup.css":
-/*!*******************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/popup/popup.css ***!
-  \*******************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "./node_modules/css-loader/dist/runtime/noSourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmin-width: 500px;\n}\n\nh1 {\n\tborder-bottom: 5px solid rgb(248, 159, 27);\n\ttext-align: center;\n}\n\n#setup-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: darkgreen;\n\tpadding: 5px;\n\tcolor: white;\n}\n\n#setup-button:hover {\n\ttransform: scale(1.05);\n}\n\n.hidden {\n\tdisplay: none;\n}\n\nbutton {\n\tbox-shadow: 2px 2px black;\n\tpadding: 5px;\n\tborder-radius: 2.5px;\n}\n\n#options-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: lightgrey;\n}\n\n#reset-button {\n\tbackground: none;\n\tborder: none;\n\tcolor: white;\n\tbackground-color: rgb(188, 50, 0);\n}\n\n.options {\n\tpadding: 1rem;\n}\n", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/runtime/api.js":
 /*!*****************************************************!*\
   !*** ./node_modules/css-loader/dist/runtime/api.js ***!
@@ -133,6 +107,53 @@ module.exports = function (cssWithMappingToString) {
 module.exports = function (i) {
   return i[1];
 };
+
+/***/ }),
+
+/***/ "./src/utils/has-setup.js":
+/*!********************************!*\
+  !*** ./src/utils/has-setup.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+async function hasSetup() {
+  const storageObject = await chrome.storage.local.get();
+  if (!storageObject) return false;
+  const keys = Object.keys(storageObject);
+  if (keys.length == 0) return false;
+  return true;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hasSetup);
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/popup/popup.css":
+/*!*******************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/popup/popup.css ***!
+  \*******************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "./node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmin-width: 500px;\n}\n\nh1 {\n\tborder-bottom: 5px solid rgb(248, 159, 27);\n\ttext-align: center;\n}\n\n#setup-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: darkgreen;\n\tpadding: 5px;\n\tcolor: white;\n}\n\n#setup-button:hover {\n\ttransform: scale(1.05);\n}\n\n.hidden {\n\tdisplay: none;\n}\n\nbutton {\n\tbox-shadow: 2px 2px black;\n\tpadding: 5px;\n\tborder-radius: 2.5px;\n}\n\n#options-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: lightgrey;\n}\n\n#reset-button {\n\tbackground: none;\n\tborder: none;\n\tcolor: white;\n\tbackground-color: rgb(188, 50, 0);\n}\n\n.options {\n\tpadding: 1rem;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
 
 /***/ }),
 
@@ -455,31 +476,6 @@ function styleTagTransform(css, styleElement) {
 }
 module.exports = styleTagTransform;
 
-/***/ }),
-
-/***/ "./src/lib/has-setup.js":
-/*!******************************!*\
-  !*** ./src/lib/has-setup.js ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-async function hasSetup() {
-	const storageObject = await chrome.storage.local.get();
-    if (!storageObject) return false;
-
-    const keys = Object.keys(storageObject)
-    if(keys.length == 0) return false;
-
-	return true;
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hasSetup);
-
-
 /***/ })
 
 /******/ 	});
@@ -562,46 +558,48 @@ var __webpack_exports__ = {};
   !*** ./src/popup/popup.js ***!
   \****************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib_has_setup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/has-setup */ "./src/lib/has-setup.js");
+/* harmony import */ var _utils_has_setup_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/has-setup.js */ "./src/utils/has-setup.js");
 /* harmony import */ var _popup_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./popup.css */ "./src/popup/popup.css");
 
 
-
-document.getElementById("setup-button").onclick = () => {
-  chrome.runtime.sendMessage({ message: "set-up" });
+document.getElementById('setup-button').onclick = () => {
+  chrome.runtime.sendMessage({
+    message: 'set-up'
+  });
 };
-
-document.getElementById("options-button").onclick = () => {
-  document.querySelector(".options").classList.toggle("hidden");
+document.getElementById('options-button').onclick = () => {
+  document.querySelector('.options').classList.toggle('hidden');
 };
-document.getElementById("reset-button").onclick = async (e) => {
+document.getElementById('reset-button').onclick = async e => {
   await chrome.storage.local.clear();
-  e.target.textContent = "Cleared!";
+  e.target.textContent = 'Cleared!';
   setTimeout(() => window.close(), 1000);
 };
-
-const infoView = document.querySelector(".info-view");
-const promptSetupView = document.querySelector(".prompt-setup-view");
+const infoView = document.querySelector('.info-view');
+const promptSetupView = document.querySelector('.prompt-setup-view');
 chooseView();
-
 async function chooseView() {
-  if (await (0,_lib_has_setup__WEBPACK_IMPORTED_MODULE_0__["default"])()) {
-    console.log("has setup");
+  if (await (0,_utils_has_setup_js__WEBPACK_IMPORTED_MODULE_0__["default"])()) {
+    console.log('has setup');
     const storageObject = await chrome.storage.local.get();
-    const { name, group, userName, repoName, durations } = storageObject;
-    infoView.classList.remove("hidden");
-    promptSetupView.classList.add("hidden");
-
-    document.querySelector("#name").textContent = name;
-    document.querySelector("#group").textContent = group;
-    document.querySelector("#userName").textContent = userName;
-    document.querySelector("#repoName").textContent = repoName;
+    const {
+      name,
+      group,
+      userName,
+      repoName,
+      durations
+    } = storageObject;
+    infoView.classList.remove('hidden');
+    promptSetupView.classList.add('hidden');
+    document.querySelector('#name').textContent = name;
+    document.querySelector('#group').textContent = group;
+    document.querySelector('#userName').textContent = userName;
+    document.querySelector('#repoName').textContent = repoName;
   } else {
-    infoView.classList.add("hidden");
-    promptSetupView.classList.remove("hidden");
+    infoView.classList.add('hidden');
+    promptSetupView.classList.remove('hidden');
   }
 }
-
 })();
 
 /******/ })()

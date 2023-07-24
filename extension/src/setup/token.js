@@ -1,24 +1,24 @@
-import robustFetch from "../lib/robust-fetch.js";
-import { EmptyInputError, CustomError } from "../lib/custom-errors.js";
-import { codeForTokenUrl } from "../keys.js";
+import robustFetch from '../lib/robust-fetch.js';
+import { EmptyInputError, CustomError } from '../lib/custom-errors.js';
+import { codeForTokenUrl } from '../utils/keys.js';
 import {
   disableNexts,
   enableNexts,
   showSection,
   handleCustomError,
-} from "./ui-functions.js";
+} from './ui-functions.js';
 
-const signInButton = document.getElementById("sign-in");
-signInButton.addEventListener("click", signInAndStoreToken);
+const signInButton = document.getElementById('sign-in');
+signInButton.addEventListener('click', signInAndStoreToken);
 
 function handleTokenSubmit() {
   disableNexts();
   try {
     const token = document.querySelector(`[name="token"]`).value;
-    if (token === "" || token === "undefined") {
-      throw new EmptyInputError("Signing in to Github", token);
+    if (token === '' || token === 'undefined') {
+      throw new EmptyInputError('Signing in to Github', token);
     }
-    showSection("finish");
+    showSection('finish');
   } catch (error) {
     enableNexts();
     handleCustomError(error);
@@ -32,10 +32,10 @@ async function signInAndStoreToken() {
     const redirectedUrl = await getRedirectedUrl(userName);
 
     const search = new URL(redirectedUrl).search;
-    const code = new URLSearchParams(search).get("code");
+    const code = new URLSearchParams(search).get('code');
 
     const token = await exchangeForToken(code);
-    document.querySelector("#signed-in-bool").textContent = "You're Signed In!";
+    document.querySelector('#signed-in-bool').textContent = "You're Signed In!";
     document.querySelector(`[name="token"]`).value = token;
   } catch (error) {
     handleCustomError(error);
@@ -44,7 +44,7 @@ async function signInAndStoreToken() {
 
 async function getRedirectedUrl(userName) {
   const response = await chrome.runtime.sendMessage({
-    message: "sign-in",
+    message: 'sign-in',
     userName: userName,
   });
 
@@ -54,7 +54,7 @@ async function getRedirectedUrl(userName) {
   }
 
   if (!response.redirectedUrl) {
-    const message = "Signin failed. Try signing in again?";
+    const message = 'Signin failed. Try signing in again?';
     throw new CustomError(message, responseString);
   }
 
@@ -63,8 +63,8 @@ async function getRedirectedUrl(userName) {
 
 async function exchangeForToken(code) {
   let tokenUrl;
-  tokenUrl = codeForTokenUrl.split("/").filter((n) => n !== "");
-  tokenUrl = tokenUrl.join("/");
+  tokenUrl = codeForTokenUrl.split('/').filter((n) => n !== '');
+  tokenUrl = tokenUrl.join('/');
   tokenUrl += `&code=${code}`;
 
   const data = await robustFetch(tokenUrl);

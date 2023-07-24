@@ -14,7 +14,6 @@ async function handleFinish(event) {
     for (const [key, value] of formData) {
       keyValues[key] = value;
     }
-
     await save(keyValues);
     const submitInputButton = event.target;
     submitInputButton.textContent = "Saved!";

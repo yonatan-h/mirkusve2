@@ -1,0 +1,64 @@
+:root {
+  --m-error-color: brown;
+  --m-grey-color: rgb(87, 87, 87);
+  --m-dark-grey-color: rgb(68, 68, 68);
+  --m-border-radius: 5px;
+  --m-border: 2px solid black;
+  --m-primary-color: darkgreen;
+  --m-secondary-color: rgb(170, 251, 170);
+  --m-disabled-color: lightgrey;
+}
+
+.m-ff {
+  font-family: sans-serif;
+}
+
+.m-error-color {
+  color: var(--m-error-color);
+  animation: m-error-fade-in 0.5s;
+}
+@keyframes m-error-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+.m-grey-color {
+  color: var(--m-grey-color);
+}
+
+.m-dark-grey-color {
+  color: var(--m-dark-grey-color);
+}
+
+.m-big-fs{
+  font-size: 2rem;
+}
+
+.m-primary-button {
+  background-color: var(--m-primary-color);
+  border: var(--m-border);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--m-border-radius);
+}
+
+.m-primary-button:hover{
+  cursor: pointer;
+}
+
+.m-secondary-button {
+  background-color: var(--m-secondary-color);
+  border: var(--m-border);
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--m-border-radius);
+}
+
+.m-disabled-button {
+  pointer-events: none;
+  background-color: var(--m-disabled-color);
+  border: none;
+}
