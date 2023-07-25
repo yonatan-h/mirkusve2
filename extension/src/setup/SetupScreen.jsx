@@ -8,21 +8,21 @@ import './style.css';
 import Welcome from './components/Welcome.jsx';
 import NameAndGroup from './components/NameAndGroup.jsx';
 import Repo from './components/Repo.jsx';
-import GithubApp from './components/GithubApp.jsx';
-import GithubSignin from './components/GithubSignin.jsx';
+import InstallGithubApp from './components/InstallGithubApp.jsx';
+import GithubAppSignin from './components/GithubAppSignin.jsx';
 import Finish from './components/Finish.jsx';
 import CustomErrorView from './components/ErrorView.jsx';
 
 function SetupScreen() {
-  const screensFunctions = [
+  const screenFunctions = [
     NameAndGroup,
     Repo,
-    GithubApp,
-    GithubSignin,
+    InstallGithubApp,
+    GithubAppSignin,
     Finish,
   ];
 
-  const [screenIndex, setScreenIndex] = useState(3);
+  const [screenIndex, setScreenIndex] = useState(0);
   const [data, setData] = useState({});
   const [customError, setCustomError] = useState(undefined);
   const [nextIsDisabled, setNextIsDisabled] = useState(false);
@@ -46,11 +46,13 @@ function SetupScreen() {
   };
 
   const setDatum = (key, value) => {
-    setCustomError(undefined); //user is taking action to change
+    //user is taking action to correct the error
+    setCustomError(undefined);
     setData({ ...data, [key]: value });
   };
 
-  const screens = screensFunctions.map((screenFunction) =>
+  //all screens created here so that num of use[hook] calls are the same for every render
+  const screens = screenFunctions.map((screenFunction) =>
     screenFunction({
       data,
       setDatum,
@@ -67,12 +69,11 @@ function SetupScreen() {
       </div>
       <div className="container flex-3 smooth-left wbg">
         <div>
-          <h2 className="m-smaller-header m-grey-color">Setup Mirkusve</h2>
+          <h2 className="m-grey-color">Setup Mirkusve</h2>
           <p className="m-grey-color">
-            {screenIndex + 1}/{screens.length}
+            {screenIndex + 1}/{screenFunctions.length}
           </p>
 
-          <p>{JSON.stringify(data)}</p>
           {customError && (
             //random keys to play the fade in animation again. to let users know the same error is happening again
             <CustomErrorView customError={customError} key={Math.random()} />

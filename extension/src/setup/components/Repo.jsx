@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { EmptyInputError, CustomError, BadStatusError, BadUrlError } from '../../utils/custom-errors.js';
+import {
+  EmptyInputError,
+  CustomError,
+  BadStatusError,
+  BadUrlError,
+} from '../../utils/custom-errors.js';
 import Next from './Next.jsx';
 
 function Repo({ data, setDatum, runBeforeNext, nextIsDisabled }) {
@@ -17,17 +22,16 @@ function Repo({ data, setDatum, runBeforeNext, nextIsDisabled }) {
     await errorIfTooManyTries(response);
     if (!response.ok) throw new BadStatusError(response);
 
-
     setDatum('userName', userName);
     setDatum('repoName', repoName);
   };
   return (
     <div>
-      <h2 className='m-big-fs'>A2SV Repo</h2>
+      <h2 className="m-big-fs">A2SV Repo</h2>
       <p className="m-small-top">
         Copy-Paste the link of your A2SV github repository
       </p>
-      <p className="smaller-font">
+      <p className="m-small-fs">
         eg) https://github.com/abebe-kebede/competitive-programming
       </p>
       <input
@@ -36,7 +40,10 @@ function Repo({ data, setDatum, runBeforeNext, nextIsDisabled }) {
         onChange={(event) => setDatum('repoLink', event.target.value)}
       />
 
-      <Next onClick={()=>runBeforeNext(setRepoInfo)} nextIsDisabled={nextIsDisabled} />
+      <Next
+        onClick={() => runBeforeNext(setRepoInfo)}
+        nextIsDisabled={nextIsDisabled}
+      />
     </div>
   );
 }

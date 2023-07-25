@@ -7,6 +7,11 @@
   --m-primary-color: darkgreen;
   --m-secondary-color: rgb(170, 251, 170);
   --m-disabled-color: lightgrey;
+
+  --m-small-fs: 0.8rem;
+  --m-medium-fs: 1rem;
+  --m-large-fs: 1.5rem;
+  --m-very-large-fs: 3rem;
 }
 
 .m-ff {
@@ -34,9 +39,23 @@
   color: var(--m-dark-grey-color);
 }
 
-.m-big-fs{
-  font-size: 2rem;
+.m-small-fs {
+  font-size: var(--m-small-fs);
 }
+
+.m-medium-fs {
+  font-size: var(--m-medium-fs);
+}
+
+.m-large-fs {
+  font-size: var(--m-large-fs);
+}
+
+.m-very-large-fs {
+  font-size: var(--m-very-large-fs);
+}
+
+
 
 .m-primary-button {
   background-color: var(--m-primary-color);
@@ -46,7 +65,7 @@
   border-radius: var(--m-border-radius);
 }
 
-.m-primary-button:hover{
+.m-primary-button:hover {
   cursor: pointer;
 }
 

@@ -8153,67 +8153,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
 
-function Finish() {
-  const [hasFinished, setHasFinished] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, hasFinished ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "You are good to go!") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: () => setHasFinished(true)
-  }, "Done"));
+
+function Finish({
+  data
+}) {
+  const [hasFinished, sethasFinished] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  return hasFinished ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TryOut, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    onClick: async () => {
+      await save(data);
+      sethasFinished(true);
+    },
+    content: 'Finish Setup'
+  });
+}
+function TryOut() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Setup Finished!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "m-small-top"
+  }, "Try it out! Pick a leetcode question from A2SV sheets ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), " and use Mirkusve to submit your answer."));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Finish);
-
-/***/ }),
-
-/***/ "./src/setup/components/GithubApp.jsx":
-/*!********************************************!*\
-  !*** ./src/setup/components/GithubApp.jsx ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
-/* harmony import */ var _utils_keys_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/keys.js */ "./src/utils/keys.js");
-
-
-
-function GithubApp({
-  runBeforeNext,
-  nextIsDisabled
-}) {
-  const [hasClickedInstall, setHasClickedInstall] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const openInstallLink = () => {
-    window.open(_utils_keys_js__WEBPACK_IMPORTED_MODULE_2__.githubAppLink, 'Mirkusve Github App', 'width=1600,height=800,status=yes,scrollbars=yes');
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Mirkusve Github App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "You have to install Mirkusve's Github app on your Github account.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "That way, Mirkusve can only access your A2SV repo."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "Please ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "only"), " enable access to your ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, " A2SV Repo"), "!")), hasClickedInstall ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-small-top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "\u26A0\uFE0F If GithubApp was already installed previously , ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), " no problem, just ensure it only accesses your A2SV repo.")) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-secondary-button m-small-top",
-    onClick: () => {
-      setHasClickedInstall(true);
-      openInstallLink();
-    }
-  }, "Install Link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    onClick: () => runBeforeNext(() => {}),
-    nextIsDisabled: nextIsDisabled
-  }));
+async function save(keyValueObject) {
+  try {
+    await chrome.storage.local.set(keyValueObject);
+    const things = await chrome.storage.local.get(keyValueObject);
+    alert(JSON.stringify(things));
+  } catch (error) {
+    throw new CustomError("Could not save setup", error.message);
+  }
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GithubApp);
 
 /***/ }),
 
-/***/ "./src/setup/components/GithubSignin.jsx":
-/*!***********************************************!*\
-  !*** ./src/setup/components/GithubSignin.jsx ***!
-  \***********************************************/
+/***/ "./src/setup/components/GithubAppSignin.jsx":
+/*!**************************************************!*\
+  !*** ./src/setup/components/GithubAppSignin.jsx ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -8233,7 +8209,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function GithubSignin({
+function GithubAppSignin({
   data,
   setDatum,
   runBeforeNext,
@@ -8259,16 +8235,16 @@ function GithubSignin({
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Sign In"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-small-top"
-  }, "Sign in to Github so that we can put your Leetcode answer files to your repo."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-secondary-button m-small-top",
-    onClick: goPrevious
+  }, "Sign in to Github, then authorize Mirkusve's Github app.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "We need permission so that we can upload your leetcode answer files to your repo."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: `m-secondary-button m-small-top ${nextIsDisabled ? 'm-disabled-button' : ''}`,
+    onClick: () => nextIsDisabled && goPrevious()
   }, "Back", ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
     onClick: () => runBeforeNext(getTokenAndCheckError),
     nextIsDisabled: nextIsDisabled,
     content: 'Sign In'
   }));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GithubSignin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GithubAppSignin);
 class GithubAppAccessError extends _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_3__.CustomError {
   constructor(descriptionAndSolution, errorAsString) {
     super(descriptionAndSolution, errorAsString);
@@ -8286,8 +8262,18 @@ class NoAccessToRepoError extends GithubAppAccessError {
 }
 class AccessToOtherReposError extends GithubAppAccessError {
   constructor(repoName, repos) {
-    super(`Please ONLY give access to ${repoName} (your A2SV repo).` + `These were the repos you've selected: ${repos}`);
+    const numPeekRepos = 3;
+    const peekRepos = repos.slice(0, Math.min(numPeekRepos, repos.length));
+    const addDotDot = repos.length > numPeekRepos;
+    super(`Please ONLY give access to your A2SV repo (${repoName}). You've given access to ${repos.length} repos such as ${peekRepos}${addDotDot ? '...' : ''}`);
   }
+}
+async function signInAndGetToken(userName) {
+  const redirectedUrl = await getRedirectedUrl(userName);
+  const search = new URL(redirectedUrl).search;
+  const code = new URLSearchParams(search).get('code');
+  const token = await exchangeForToken(code);
+  return token;
 }
 async function errorIfAccessProblems({
   token,
@@ -8313,13 +8299,9 @@ async function errorIfAccessProblems({
     throw new NoAccessToRepoError(repoName);
   }
 }
-async function signInAndGetToken(userName) {
-  const redirectedUrl = await getRedirectedUrl(userName);
-  const search = new URL(redirectedUrl).search;
-  const code = new URLSearchParams(search).get('code');
-  const token = await exchangeForToken(code);
-  return token;
-}
+
+///
+
 async function getRedirectedUrl(userName) {
   const response = await chrome.runtime.sendMessage({
     message: 'sign-in',
@@ -8369,6 +8351,52 @@ async function getAccessibleRepos({
   const repoNames = data.repositories.map(repo => repo.name);
   return repoNames;
 }
+
+/***/ }),
+
+/***/ "./src/setup/components/InstallGithubApp.jsx":
+/*!***************************************************!*\
+  !*** ./src/setup/components/InstallGithubApp.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
+/* harmony import */ var _utils_keys_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/keys.js */ "./src/utils/keys.js");
+
+
+
+function InstallGithubApp({
+  runBeforeNext,
+  nextIsDisabled
+}) {
+  const [hasClickedInstall, setHasClickedInstall] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const openInstallLink = () => {
+    window.open(_utils_keys_js__WEBPACK_IMPORTED_MODULE_2__.githubAppLink, 'Mirkusve Github App', 'width=1600,height=800,status=yes,scrollbars=yes');
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Mirkusve Github App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "m-small-top"
+  }, "You have to install Mirkusve's Github app on your Github account.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "That way, Mirkusve can only access your A2SV repo."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "m-small-top"
+  }, "Please ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "only"), " enable access to your ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, " A2SV Repo"), "!")), hasClickedInstall ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "m-small-top"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "\u26A0\uFE0F If GithubApp was already installed previously , ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), " no problem, just ensure it only accesses your A2SV repo.")) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "m-secondary-button m-small-top",
+    onClick: () => {
+      setHasClickedInstall(true);
+      openInstallLink();
+    }
+  }, "Install Link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    onClick: () => runBeforeNext(() => {}),
+    nextIsDisabled: nextIsDisabled
+  }));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InstallGithubApp);
 
 /***/ }),
 
@@ -8504,7 +8532,7 @@ function Repo({
   }, "A2SV Repo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-small-top"
   }, "Copy-Paste the link of your A2SV github repository"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "smaller-font"
+    className: "m-small-fs"
   }, "eg) https://github.com/abebe-kebede/competitive-programming"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     className: "w-100  m-small-top",
     placeholder: "A2SV repo",
@@ -8590,30 +8618,65 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _media_a2sv_logo_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../media/a2sv-logo.png */ "./src/media/a2sv-logo.png");
+/* harmony import */ var _media_folder_choice_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../media/folder-choice.svg */ "./src/media/folder-choice.svg");
+/* harmony import */ var _media_github_logo_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../media/github-logo.png */ "./src/media/github-logo.png");
+/* harmony import */ var _media_leetcode_logo_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../media/leetcode-logo.png */ "./src/media/leetcode-logo.png");
+/* harmony import */ var _media_lock_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../media/lock.svg */ "./src/media/lock.svg");
+/* harmony import */ var _media_mirkusve_logo_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../media/mirkusve-logo.svg */ "./src/media/mirkusve-logo.svg");
+/* harmony import */ var _media_sheets_logo_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../media/sheets-logo.png */ "./src/media/sheets-logo.png");
+
+
+
+
+
+
+
 
 function Welcome() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Welcome to mirkusve"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Old Days"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+  const pClass = 'm-dark-grey-color ';
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "welcome-width"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "m-very-large-fs m-top"
+  }, "A Little Help of a", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "hoverable"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "hover-appetizer"
+  }, "Mirkuz "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: _media_mirkusve_logo_svg__WEBPACK_IMPORTED_MODULE_6__["default"],
+    className: "hover-pop-image"
+  })), "on your journey to", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, " Silicon Valley")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-small-top"
-  }, "Submitting leetcode questions to A2SV can be a hastle. You have to:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, "Create a GitHub file"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, "Submit the file link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, "Write number of tries"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", null, "Write time spent on the question ")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "But now..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "With Mirkusve, you can do this all in two clicks!"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "How"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("figure", {
-    className: "m-small-top"
+  }, "Welcome to Mirkisve! We simplify submitting Leetcode answers to A2SV. Instead of doing the manual work of copy-pasting and typing, you can submit your answers in 2 clicks."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "m-secondary-button m-small-top"
+  }, "Watch Demo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "image-text-grid m-top"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "circular-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "",
-    alt: "time"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("figcaption", null, "Keep Track Of Time")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("figure", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "",
-    alt: "time"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("figcaption", null, "Choose Github Folder")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("figure", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: "",
-    alt: "time"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("figcaption", null, "Submit to A2SV sheets & Github")))));
+    src: _media_sheets_logo_png__WEBPACK_IMPORTED_MODULE_7__["default"]
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: pClass
+  }, "We submit your leetcode answers to A2SV sheets."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "circular-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: _media_github_logo_png__WEBPACK_IMPORTED_MODULE_3__["default"]
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: pClass
+  }, "We upload answer files to Github "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "circular-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: _media_folder_choice_svg__WEBPACK_IMPORTED_MODULE_2__["default"]
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: pClass
+  }, "You choose the Github folder for your answer file."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "circular-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: _media_lock_svg__WEBPACK_IMPORTED_MODULE_5__["default"]
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: pClass
+  }, "We only require access to your A2SV repo, not your github account."))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Welcome);
 
@@ -8801,7 +8864,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n}\n\n.m-ff {\n  font-family: sans-serif;\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-big-fs{\n  font-size: 2rem;\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover{\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.8rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n}\n\n.m-ff {\n  font-family: sans-serif;\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8827,10 +8890,108 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nbody {\n  padding-left: 2rem;\n  min-height: 100vh;\n  background-color: var(--m-secondary-color);\n}\n#root {\n  min-height: 100vh;\n}\n\n.split {\n  display: flex;\n}\n\n.container {\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-top {\n  margin-top: 5rem;\n}\n.m-small-top {\n  margin-top: 1rem;\n}\n\n.w-100 {\n  width: 100%;\n}\n.vh-100 {\n  min-height: 100vh;\n}\n\n.wbg {\n  background-color: white;\n}\n\n.bbg {\n  background-color: blue;\n}\n\n.rbg {\n  background-color: red;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.flex-3 {\n  flex: 3;\n}\n\ninput {\n  padding: 0.8rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n\n}\n\n.align-end {\n  display: flex;\n  justify-content: end;\n}\n\n.smaller-font {\n  font-size: smaller;\n}\n\n.smooth-left {\n  border-top-left-radius: 5rem;\n  border-bottom-left-radius: 5rem;\n  border: var(--m-border);\n  border-right: none;\n}\n\n.error-box{\n  max-width: 400px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nbody {\n  padding-left: 2rem;\n  min-height: 100vh;\n  background-color: var(--m-secondary-color);\n  font-size: 1rem;\n}\n#root {\n  min-height: 100vh;\n}\n\n.split {\n  display: flex;\n}\n\n.container {\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-top {\n  margin-top: 5rem;\n}\n\n.m-small-top {\n  margin-top: 1rem;\n}\n\n.w-100 {\n  width: 100%;\n}\n.welcome-width {\n  max-width: 500px;\n}\n\n.bold {\n  font-weight: bold;\n}\n\n.vh-100 {\n  min-height: 100vh;\n}\n\n.wbg {\n  background-color: white;\n}\n\n.bbg {\n  background-color: blue;\n}\n\n.rbg {\n  background-color: red;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.flex-3 {\n  flex: 3;\n}\n\ninput {\n  padding: 0.8rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n}\n\n.align-end {\n  display: flex;\n  justify-content: end;\n}\n\n.smooth-left {\n  border-top-left-radius: 5rem;\n  border-bottom-left-radius: 5rem;\n  border: var(--m-border);\n  border-right: none;\n}\n\n.error-box {\n  max-width: 500px;\n}\n\n.image-text-grid {\n  padding: 1rem;\n  display: grid;\n\n  grid-template-columns: auto 1fr;\n\n  row-gap: 2rem;\n  column-gap: 1rem;\n\n  align-items: center;\n}\n\nimg {\n  width: 100%;\n  height: 100%;\n  object-fit: contain;\n}\n\n.circular-container {\n  --size: 5rem;\n\n  width: var(--size);\n  height: var(--size);\n  border-radius: 40%;\n  background-color: rgba(255, 255, 255, 0.8);\n}\n\n.hover-appetizer{\n  font-weight: bold;\n  border-bottom: 2px dashed black; \n}\n\n.hoverable{\n  position: relative;\n}\n\n.hover-pop-image {\n  --size: 15rem;\n  height: var(--size);\n  width: var(--size);\n\n  padding: 2rem;\n  border-radius: 100%;\n  border: var(--m-border);\n\n  opacity: 0;\n  transition: opacity;\n  transition-duration: 0.5s;\n  background-color: white;\n\n  position: absolute;\n  left: 10rem;\n  bottom: 0;\n}\n\n.hoverable:hover .hover-pop-image {\n  opacity: 1;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
+
+/***/ }),
+
+/***/ "./src/media/a2sv-logo.png":
+/*!*********************************!*\
+  !*** ./src/media/a2sv-logo.png ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "b8c068ab5c47842692d0a1fb3eda8fb7.png");
+
+/***/ }),
+
+/***/ "./src/media/folder-choice.svg":
+/*!*************************************!*\
+  !*** ./src/media/folder-choice.svg ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "1f2f13ffca54f3bebbeae3e78115b89a.svg");
+
+/***/ }),
+
+/***/ "./src/media/github-logo.png":
+/*!***********************************!*\
+  !*** ./src/media/github-logo.png ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "746ec8f0bc97208f903e1a6bfe34c79e.png");
+
+/***/ }),
+
+/***/ "./src/media/leetcode-logo.png":
+/*!*************************************!*\
+  !*** ./src/media/leetcode-logo.png ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "c79f333b12595d3eec8f64c729c83bd6.png");
+
+/***/ }),
+
+/***/ "./src/media/lock.svg":
+/*!****************************!*\
+  !*** ./src/media/lock.svg ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "630b6acdc7a8c3e8a9d3b5c9c09eb7a4.svg");
+
+/***/ }),
+
+/***/ "./src/media/mirkusve-logo.svg":
+/*!*************************************!*\
+  !*** ./src/media/mirkusve-logo.svg ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "71e02780364e7e23c5f34d459e60573d.svg");
+
+/***/ }),
+
+/***/ "./src/media/sheets-logo.png":
+/*!***********************************!*\
+  !*** ./src/media/sheets-logo.png ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "a8e42f3e5fe231ceaa8bfdca7a7b59c6.png");
 
 /***/ }),
 
@@ -9263,6 +9424,18 @@ module.exports = styleTagTransform;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -9288,6 +9461,29 @@ module.exports = styleTagTransform;
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/nonce */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nc = undefined;
@@ -9310,8 +9506,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Welcome_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Welcome.jsx */ "./src/setup/components/Welcome.jsx");
 /* harmony import */ var _components_NameAndGroup_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/NameAndGroup.jsx */ "./src/setup/components/NameAndGroup.jsx");
 /* harmony import */ var _components_Repo_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Repo.jsx */ "./src/setup/components/Repo.jsx");
-/* harmony import */ var _components_GithubApp_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/GithubApp.jsx */ "./src/setup/components/GithubApp.jsx");
-/* harmony import */ var _components_GithubSignin_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/GithubSignin.jsx */ "./src/setup/components/GithubSignin.jsx");
+/* harmony import */ var _components_InstallGithubApp_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/InstallGithubApp.jsx */ "./src/setup/components/InstallGithubApp.jsx");
+/* harmony import */ var _components_GithubAppSignin_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/GithubAppSignin.jsx */ "./src/setup/components/GithubAppSignin.jsx");
 /* harmony import */ var _components_Finish_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Finish.jsx */ "./src/setup/components/Finish.jsx");
 /* harmony import */ var _components_ErrorView_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/ErrorView.jsx */ "./src/setup/components/ErrorView.jsx");
 
@@ -9327,8 +9523,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function SetupScreen() {
-  const screensFunctions = [_components_NameAndGroup_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], _components_Repo_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], _components_GithubApp_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _components_GithubSignin_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _components_Finish_jsx__WEBPACK_IMPORTED_MODULE_10__["default"]];
-  const [screenIndex, setScreenIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(3);
+  const screenFunctions = [_components_NameAndGroup_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], _components_Repo_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], _components_InstallGithubApp_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _components_GithubAppSignin_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _components_Finish_jsx__WEBPACK_IMPORTED_MODULE_10__["default"]];
+  const [screenIndex, setScreenIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
   const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [nextIsDisabled, setNextIsDisabled] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -9348,13 +9544,16 @@ function SetupScreen() {
     setScreenIndex(screenIndex - 1);
   };
   const setDatum = (key, value) => {
-    setCustomError(undefined); //user is taking action to change
+    //user is taking action to correct the error
+    setCustomError(undefined);
     setData({
       ...data,
       [key]: value
     });
   };
-  const screens = screensFunctions.map(screenFunction => screenFunction({
+
+  //all screens created here so that num of use[hook] calls are the same for every render
+  const screens = screenFunctions.map(screenFunction => screenFunction({
     data,
     setDatum,
     runBeforeNext,
@@ -9369,10 +9568,10 @@ function SetupScreen() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Welcome_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "container flex-3 smooth-left wbg"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    className: "m-smaller-header m-grey-color"
+    className: "m-grey-color"
   }, "Setup Mirkusve"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-grey-color"
-  }, screenIndex + 1, "/", screens.length), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, JSON.stringify(data)), customError &&
+  }, screenIndex + 1, "/", screenFunctions.length), customError &&
   /*#__PURE__*/
   //random keys to play the fade in animation again. to let users know the same error is happening again
   react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ErrorView_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], {
