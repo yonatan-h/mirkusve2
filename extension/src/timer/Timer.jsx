@@ -9,7 +9,6 @@ import {
 } from '../utils/duration.js';
 
 import './style.css';
-import '../assets/style.css';
 
 const pauseIcon = mapUrl('/media/pause.svg');
 const playIcon = mapUrl('/media/play.svg');

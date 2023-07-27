@@ -90,3 +90,12 @@
   background-color: var(--m-disabled-color);
   border: none;
 }
+
+
+/* for testing  */
+.m-bg-red{
+  background-color: red;
+}
+.m-bg-blue{
+  background-color: blue;
+}

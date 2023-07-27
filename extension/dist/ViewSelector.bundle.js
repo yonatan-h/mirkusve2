@@ -8113,6 +8113,250 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./src/answer-submit/SubmitCard.jsx":
+/*!******************************************!*\
+  !*** ./src/answer-submit/SubmitCard.jsx ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.css */ "./src/answer-submit/style.css");
+/* harmony import */ var _components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/FolderTree.jsx */ "./src/answer-submit/components/FolderTree.jsx");
+/* harmony import */ var _components_CreateNewFolder_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CreateNewFolder.jsx */ "./src/answer-submit/components/CreateNewFolder.jsx");
+/* harmony import */ var _components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/LabelledInput.jsx */ "./src/answer-submit/components/LabelledInput.jsx");
+/* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/mapUrl.js */ "./src/utils/mapUrl.js");
+/* harmony import */ var _components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/CustomErrorView.jsx */ "./src/answer-submit/components/CustomErrorView.jsx");
+/* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
+
+
+
+
+
+
+
+
+const cancelIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/cancel.svg');
+const folderIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/folder.svg');
+const leftIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/left.svg');
+const rightIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/right.svg');
+const saveIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/save.svg');
+const sendIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/send.svg');
+const timeIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/time.svg');
+const tryIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/try.svg');
+function SubmitCard() {
+  const [isHidden, setIsHidden] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
+  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const url = window.location.href;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const load = async () => {};
+    load();
+  }, [url]);
+  const setDatum = (name, value) => setData({
+    ...data,
+    [name]: value
+  });
+  const onChange = event => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value || target.innerText;
+    setDatum(name, value);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: `m-submit-card ${isHidden ? '' : 'm-card-exposed'}`
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "m-vertical-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "m-drawer-button",
+    onClick: () => setIsHidden(!isHidden)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: isHidden ? leftIcon : rightIcon
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "m-flex-1"
+  }, customError ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    customError: customError
+  }) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "m-spaced-flex"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "number",
+      min: "0",
+      name: "submissions",
+      className: "m-flex-1",
+      onChange: onChange,
+      required: true,
+      value: data.submissions || ''
+    }),
+    label: "Tries",
+    className: "m-flex-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "number",
+      min: "0",
+      name: "minutes",
+      onChange: onChange,
+      required: true,
+      value: data.minutes || ''
+    }),
+    label: "Minutes",
+    className: "m-flex-1"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "m-spaced-flex"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "text",
+      name: "fileName",
+      onChange: onChange,
+      required: true,
+      value: data.fileName || ''
+    }),
+    label: "Filename",
+    className: "m-flex-2"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "text",
+      name: "fileExtension",
+      onChange: onChange,
+      required: true,
+      value: data.fileExtension || ''
+    }),
+    label: "Extension",
+    className: "m-flex-1"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CreateNewFolder_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
+    onClick: e => 1 + 1
+  }, "Submit"))));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SubmitCard);
+
+/***/ }),
+
+/***/ "./src/answer-submit/components/CreateNewFolder.jsx":
+/*!**********************************************************!*\
+  !*** ./src/answer-submit/components/CreateNewFolder.jsx ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function CreateNewFolder() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "eg) abebe/kebede/chala"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text"
+  }));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateNewFolder);
+
+/***/ }),
+
+/***/ "./src/answer-submit/components/CustomErrorView.jsx":
+/*!**********************************************************!*\
+  !*** ./src/answer-submit/components/CustomErrorView.jsx ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function CustomErrorView({
+  customError
+}) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "error-box"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+    className: "m-error-color"
+  }, customError.descriptionAndSolution), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", {
+    className: "m-error-color"
+  }, customError.errorAsString));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomErrorView);
+
+/***/ }),
+
+/***/ "./src/answer-submit/components/Folder.jsx":
+/*!*************************************************!*\
+  !*** ./src/answer-submit/components/Folder.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function Folder() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, " -- abebe folder "));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Folder);
+
+/***/ }),
+
+/***/ "./src/answer-submit/components/FolderTree.jsx":
+/*!*****************************************************!*\
+  !*** ./src/answer-submit/components/FolderTree.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Folder_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Folder.jsx */ "./src/answer-submit/components/Folder.jsx");
+
+
+function FolderTree() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FolderTree);
+
+/***/ }),
+
+/***/ "./src/answer-submit/components/LabelledInput.jsx":
+/*!********************************************************!*\
+  !*** ./src/answer-submit/components/LabelledInput.jsx ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function LabelledInput({
+  input,
+  label,
+  className
+}) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: `m-labelled-input-container ${className || ''}`
+  }, input, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "m-label m-top-left-label"
+  }, label));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LabelledInput);
+
+/***/ }),
+
 /***/ "./src/timer/Timer.jsx":
 /*!*****************************!*\
   !*** ./src/timer/Timer.jsx ***!
@@ -8129,8 +8373,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/get-question-name.js */ "./src/utils/get-question-name.js");
 /* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./src/timer/style.css");
-/* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../assets/style.css */ "./src/assets/style.css");
-
 
 
 
@@ -8190,6 +8432,79 @@ function Timer() {
   }, " ", (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_3__.calculateMinutes)(duration), " "), "min"))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Timer);
+
+/***/ }),
+
+/***/ "./src/utils/custom-errors.js":
+/*!************************************!*\
+  !*** ./src/utils/custom-errors.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AppScriptError": () => (/* binding */ AppScriptError),
+/* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
+/* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
+/* harmony export */   "CustomError": () => (/* binding */ CustomError),
+/* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
+/* harmony export */   "NetworkError": () => (/* binding */ NetworkError)
+/* harmony export */ });
+class CustomError extends Error {
+  constructor(descriptionAndSolution, errorAsString = "") {
+    super(`Custom Error: \n- ${descriptionAndSolution}\n- ${errorAsString}\n`);
+    this.descriptionAndSolution = descriptionAndSolution;
+    this.errorAsString = errorAsString;
+  }
+}
+class NetworkError extends CustomError {
+  constructor(typeError) {
+    const {
+      name,
+      message
+    } = typeError;
+    const errorAsString = JSON.stringify({
+      name,
+      message
+    });
+    super("Weak connection? Please try again later.", errorAsString);
+  }
+}
+class BadStatusError extends CustomError {
+  constructor(response) {
+    const {
+      ok,
+      status,
+      statusText,
+      url
+    } = response;
+    const errorAsString = JSON.stringify({
+      ok,
+      status,
+      statusText,
+      url
+    });
+    super("Http response not ok. Try avoiding vpn or try again later.", errorAsString);
+  }
+}
+class BadUrlError extends CustomError {
+  constructor(badUrl) {
+    super(`${badUrl} is not a valid url`);
+  }
+}
+
+//because (at least sofar) you cant send status codes in appscript responses
+class AppScriptError extends CustomError {
+  constructor(responseObject) {
+    super(`Message from Sheets: ${responseObject.error}`);
+  }
+}
+class EmptyInputError extends CustomError {
+  constructor(inputName) {
+    super(`Please fill out '${inputName}'`);
+  }
+}
+
 
 /***/ }),
 
@@ -8293,6 +8608,32 @@ function mapUrl(url) {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/answer-submit/style.css":
+/*!***************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/answer-submit/style.css ***!
+  \***************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "./node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n}\n\n.m-submit-card input {\n  padding: 0.5rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n  width: 100%;\n  margin-bottom: 1rem;\n}\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 20rem;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  bottom: 30%;\n\n  background-color: white;\n\n  width: var(--width);\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-drawer-button img {\n  width: 100%;\n  object-fit: contain;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n}\n\n.m-spaced-flex{\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1{\n  flex: 1;\n}\n\n.m-flex-2{\n  flex: 2;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/assets/style.css":
 /*!********************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/assets/style.css ***!
@@ -8312,7 +8653,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.8rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.8rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n\n/* for testing  */\n.m-bg-red{\n  background-color: red;\n}\n.m-bg-blue{\n  background-color: blue;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8341,6 +8682,60 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, ".m-play-pause-button > img {\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button {\n  --size: 1.75rem;\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n\n  /* for outside leetcode styles */\n  background: none;\n  padding: 0;\n  margin: 0;\n  border: none;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-animated-timer:before {\n  content: '';\n  position: absolute;\n  width: 15rem;\n  height: 15rem;\n  background: conic-gradient(\n    var(--m-secondary-color),\n    white,\n    var(--m-secondary-color)\n  );\n\n  animation: 2s linear m-timer-rotation infinite;\n}\n\n.m-animated-timer {\n  background: transparent;\n}\n\n@keyframes m-timer-rotation {\n  0% {\n    transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(360deg);\n  }\n}\n\n.m-timer-super-container {\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 30%;\n  z-index: 999;\n}\n.m-timer-container {\n  /* border */\n  /* border: var(--m-border); */\n  border-top: none;\n\n  /*shape*/\n  --br: var(--m-border-radius);\n  width: 10rem;\n  height: 3rem;\n\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* to children */\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  position: relative;\n  overflow: hidden;\n\n  /* override by animation */\n  background-color: lightgrey;\n}\n\n.m-timer {\n  /*content alignment*/\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n\n  /*justin case*/\n  box-sizing: border-box;\n  padding-left: 0.5rem;\n  margin: 0;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n\n  /* self alignment */\n  z-index: 5;\n  position: absolute;\n  --crack: 5px;\n  inset: 0 var(--crack) var(--crack) var(--crack);\n\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./src/answer-submit/style.css":
+/*!*************************************!*\
+  !*** ./src/answer-submit/style.css ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./src/answer-submit/style.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -8816,18 +9211,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _timer_Timer_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../timer/Timer.jsx */ "./src/timer/Timer.jsx");
+/* harmony import */ var _answer_submit_SubmitCard_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../answer-submit/SubmitCard.jsx */ "./src/answer-submit/SubmitCard.jsx");
+/* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../assets/style.css */ "./src/assets/style.css");
+
+
 
 
 
 function ViewSelector() {
+  //enumish
   const PageStates = {
-    //enumish
     inQuestionPage: 'in-question-page',
     inSubmissionsPage: 'in-submissions-page',
     inNietherPage: 'in-niether-page'
   };
   const [currentPage, setCurrentPage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(PageStates.inNietherPage);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_timer_Timer_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log('use-effect-view-selector');
+    const setPage = url => {
+      if (matchesQuestionPage(url)) {
+        setCurrentPage(PageStates.inQuestionPage);
+      } else if (matchesSubmissionPage(url)) {
+        setCurrentPage(PageStates.inSubmissionsPage);
+      } else {
+        setCurrentPage(PageStates.inSubmissionsPage);
+      }
+    };
+    setPage(window.location.href);
+    navigation.addEventListener('navigate', event => setPage(event.destination.url));
+  }, []);
+  if (currentPage == PageStates.inQuestionPage) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_timer_Timer_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+  } else if (currentPage == PageStates.inSubmissionsPage) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_answer_submit_SubmitCard_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+  } else {
+    return null;
+  }
+}
+function matchesSubmissionPage(url) {
+  //https://leetcode.com/problems/two-sum/submissions/54654
+  //https://leetcode.com/problems/two-sum/submissions/
+
+  const questionPageRegex = /problems\/[^\/]+\/submissions\/[^\/]*[\/]?$/;
+  return url.match(questionPageRegex) != null;
+}
+function matchesQuestionPage(url) {
+  //https://leetcode.com/problems/two-sum/description/
+  //https://leetcode.com/problems/two-sum/
+
+  const questionPageRegex = /problems\/[^\/]+\/(description)?[\/]?$/;
+  return url.match(questionPageRegex) != null;
 }
 
 //add to leetcode page

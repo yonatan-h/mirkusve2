@@ -1,0 +1,94 @@
+.m-submit-card,
+.m-submit-card * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--m-font-family);
+}
+
+.m-submit-card input {
+  padding: 0.5rem;
+  border-radius: var(--m-border-radius);
+  border: 1px solid var(--m-grey-color);
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.m-submit-card {
+  /* size */
+  --drawer-button-width: 1.5rem;
+  --width: 20rem;
+
+  /* position */
+  position: fixed;
+  right: calc(var(--drawer-button-width) - var(--width));
+  bottom: 30%;
+
+  background-color: white;
+
+  width: var(--width);
+
+  /* shape */
+  border: var(--m-border);
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+
+  /* to children  */
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  padding-left: 0;
+
+  transition: right 0.5s ease-in;
+}
+
+.m-card-exposed {
+  right: -2px;
+}
+
+.m-vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.m-drawer-button {
+  width: var(--drawer-button-width);
+  background: none;
+  border: none;
+  opacity: 0.5;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.m-drawer-button img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.m-labelled-input-container {
+  position: relative;
+}
+/* for labelled input */
+.m-label {
+  pointer-events: none;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+
+  font-size: var(--m-small-fs);
+  background-color: white;
+}
+
+.m-spaced-flex{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.m-flex-1{
+  flex: 1;
+}
+
+.m-flex-2{
+  flex: 2;
+}
