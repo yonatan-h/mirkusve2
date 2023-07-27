@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "matches": ["https://leetcode.com/problems/*"],
-      "js": ["SetupScreen.bundle.js"]
+      "js": ["ViewSelector.bundle.js"]
     }
   ],
   "background": {
@@ -18,7 +18,14 @@
     "default_popup": "popup.html"
   },
 
-  "permissions": ["tabs", "storage", "identity"],
+  "web_accessible_resources": [
+    {
+      "resources": ["/media/*"],
+      "matches": ["https://leetcode.com/*"]
+    }
+  ],
+
+  "permissions": ["storage", "identity"],
 
   "key": "jgcbcknahneghfjgknaaepecdenjpdeh"
 }

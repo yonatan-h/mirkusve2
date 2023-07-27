@@ -1,23 +1,33 @@
-async function getDuration(questionName) {
-	const { durations } = await chrome.storage.local.get("durations");
-	return durations[questionName];
+async function getStorageObject() {
+  const storageObject = await chrome.storage.local.get('durations');
+
+  if (storageObject.durations === undefined) {
+    return { durations: {} };
+  } else {
+    return storageObject;
+  }
 }
 
-async function setDuration(questionName, duration) {
-	const { durations } = await chrome.storage.local.get("durations");
-	durations[questionName] = duration;
-	await chrome.storage.local.set({ durations: durations });
+async function loadDuration(questionName) {
+  const { durations } = await getStorageObject();
+  return durations[questionName];
+}
+
+async function storeDuration(questionName, duration) {
+  const { durations } = await getStorageObject();
+  durations[questionName] = duration;
+  await chrome.storage.local.set({ durations });
 }
 
 async function forgetDuration(questionName) {
-	let { durations } = await chrome.storage.local.get("durations");
-	delete durations[questionName];
-	await chrome.storage.local.set({ durations: durations });
+  const { durations } = await getStorageObject();
+  delete durations[questionName];
+  await chrome.storage.local.set({ durations });
 }
 
 function calculateMinutes(duration) {
-	const minutes = Math.floor(duration / (60 * 1000));
-	return minutes;
+  const minutes = Math.floor(duration / (60 * 1000));
+  return minutes;
 }
 
-export { getDuration, setDuration, forgetDuration, calculateMinutes };
+export { loadDuration, storeDuration, forgetDuration, calculateMinutes };

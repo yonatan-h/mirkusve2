@@ -8113,10 +8113,10 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./src/setup/components/ErrorView.jsx":
-/*!********************************************!*\
-  !*** ./src/setup/components/ErrorView.jsx ***!
-  \********************************************/
+/***/ "./src/timer/Timer.jsx":
+/*!*****************************!*\
+  !*** ./src/timer/Timer.jsx ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -8125,716 +8125,171 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/mapUrl.js */ "./src/utils/mapUrl.js");
+/* harmony import */ var _utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/get-question-name.js */ "./src/utils/get-question-name.js");
+/* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./src/timer/style.css");
+/* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../assets/style.css */ "./src/assets/style.css");
 
-function CustomErrorView({
-  customError
-}) {
+
+
+
+
+
+const pauseIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/pause.svg');
+const playIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/play.svg');
+
+// const loadDuration = (name) => new Promise((s) => s(0));
+// const storeDuration = (name, time) => {};
+// const getQuestionName = () => 'abebe';
+// const calculateMinutes = (x) => x % 100;
+
+function Timer() {
+  //assuming load duration and store duration are almost instantanous
+  //other wise, load, and store race conditions can happen
+  const [isPlaying, setIsPlaying] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [duration, setDuration] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!isPlaying) return;
+    const startTime = Date.now();
+    const oldDurationPromise = (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_3__.loadDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href)).then(duration => duration || 0); //incase it's the first time it's running
+
+    const updateTime = async () => {
+      const duration = (await oldDurationPromise) + Date.now() - startTime;
+      setDuration(duration);
+      (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_3__.storeDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href), duration);
+    };
+    const intervalId = setInterval(updateTime, 1000);
+    return () => {
+      clearInterval(intervalId);
+      updateTime();
+    };
+  }, [isPlaying]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "error-box"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-error-color"
-  }, customError.descriptionAndSolution), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", {
-    className: "m-error-color"
-  }, customError.errorAsString));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomErrorView);
-
-/***/ }),
-
-/***/ "./src/setup/components/Finish.jsx":
-/*!*****************************************!*\
-  !*** ./src/setup/components/Finish.jsx ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
-
-
-function Finish({
-  data
-}) {
-  const [hasFinished, sethasFinished] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  return hasFinished ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TryOut, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    onClick: async () => {
-      await save(data);
-      sethasFinished(true);
-    },
-    content: 'Finish Setup'
-  });
-}
-function TryOut() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Setup Finished!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "Try it out! Pick a leetcode question from A2SV sheets ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), " and use Mirkusve to submit your answer."));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Finish);
-async function save(keyValueObject) {
-  try {
-    await chrome.storage.local.set(keyValueObject);
-    const things = await chrome.storage.local.get(keyValueObject);
-    alert(JSON.stringify(things));
-  } catch (error) {
-    throw new CustomError("Could not save setup", error.message);
-  }
-}
-
-/***/ }),
-
-/***/ "./src/setup/components/GithubAppSignin.jsx":
-/*!**************************************************!*\
-  !*** ./src/setup/components/GithubAppSignin.jsx ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
-/* harmony import */ var _utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/robust-fetch.js */ "./src/utils/robust-fetch.js");
-/* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/custom-errors.js */ "./src/utils/custom-errors.js");
-/* harmony import */ var _utils_keys_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/keys.js */ "./src/utils/keys.js");
-/* harmony import */ var _utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/excess-slash.js */ "./src/utils/excess-slash.js");
-
-
-
-
-
-
-function GithubAppSignin({
-  data,
-  setDatum,
-  runBeforeNext,
-  nextIsDisabled,
-  goPrevious
-}) {
-  const getTokenAndCheckError = async () => {
-    const token = await signInAndGetToken(data.userName);
-    if (!token) throw (0,_utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_3__.EmptyInputError)('sign in');
-    try {
-      await errorIfAccessProblems({
-        token,
-        repoName: data.repoName || 'competitive-programming',
-        githubAppId: _utils_keys_js__WEBPACK_IMPORTED_MODULE_4__.githubAppId
-      });
-    } catch (error) {
-      if (error instanceof GithubAppAccessError) {
-        goPrevious();
-      }
-      throw error;
-    }
-    setDatum('token', token);
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Sign In"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "Sign in to Github, then authorize Mirkusve's Github app.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "We need permission so that we can upload your leetcode answer files to your repo."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: `m-secondary-button m-small-top ${nextIsDisabled ? 'm-disabled-button' : ''}`,
-    onClick: () => nextIsDisabled && goPrevious()
-  }, "Back", ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    onClick: () => runBeforeNext(getTokenAndCheckError),
-    nextIsDisabled: nextIsDisabled,
-    content: 'Sign In'
-  }));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GithubAppSignin);
-class GithubAppAccessError extends _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_3__.CustomError {
-  constructor(descriptionAndSolution, errorAsString) {
-    super(descriptionAndSolution, errorAsString);
-  }
-}
-class NotInstalledError extends GithubAppAccessError {
-  constructor() {
-    super(`You have to Install Mirkusve's Github App first!`);
-  }
-}
-class NoAccessToRepoError extends GithubAppAccessError {
-  constructor(repoName) {
-    super(`Please give Mirkusve's Github App access to ${repoName} (your A2SV repo)`);
-  }
-}
-class AccessToOtherReposError extends GithubAppAccessError {
-  constructor(repoName, repos) {
-    const numPeekRepos = 3;
-    const peekRepos = repos.slice(0, Math.min(numPeekRepos, repos.length));
-    const addDotDot = repos.length > numPeekRepos;
-    super(`Please ONLY give access to your A2SV repo (${repoName}). You've given access to ${repos.length} repos such as ${peekRepos}${addDotDot ? '...' : ''}`);
-  }
-}
-async function signInAndGetToken(userName) {
-  const redirectedUrl = await getRedirectedUrl(userName);
-  const search = new URL(redirectedUrl).search;
-  const code = new URLSearchParams(search).get('code');
-  const token = await exchangeForToken(code);
-  return token;
-}
-async function errorIfAccessProblems({
-  token,
-  repoName,
-  githubAppId
-}) {
-  const installationInfo = await getInstallationInfo({
-    token,
-    githubAppId
-  });
-  if (!installationInfo) {
-    throw new NotInstalledError();
-  }
-  const installationId = installationInfo.id;
-  const accessibleRepos = await getAccessibleRepos({
-    installationId,
-    token
-  });
-  if (accessibleRepos.length > 1) {
-    throw new AccessToOtherReposError(repoName, accessibleRepos);
-  }
-  if (accessibleRepos.length != 1 || accessibleRepos[0] !== repoName) {
-    throw new NoAccessToRepoError(repoName);
-  }
-}
-
-///
-
-async function getRedirectedUrl(userName) {
-  const response = await chrome.runtime.sendMessage({
-    message: 'sign-in',
-    userName: userName
-  });
-  if (response.error) {
-    const {
-      descriptionAndSolution,
-      errorAsString
-    } = response.error;
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_3__.CustomError(descriptionAndSolution, errorAsString);
-  }
-  if (!response.redirectedUrl) {
-    const message = 'Signin failed. Try signing in again?';
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_3__.CustomError(message, responseString);
-  }
-  return response.redirectedUrl;
-}
-async function exchangeForToken(code) {
-  const tokenUrl = (0,_utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_5__["default"])(`${_utils_keys_js__WEBPACK_IMPORTED_MODULE_4__.codeForTokenUrl}&code=${code}`);
-  const data = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_2__["default"])(tokenUrl);
-  return data.accessToken;
-}
-async function getInstallationInfo({
-  token,
-  githubAppId
-}) {
-  const data = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_2__["default"])(`https://api.github.com/user/installations`, {
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${token}`
-    }
-  });
-  const mirkusveInstallation = data.installations.find(installation => installation.app_id === githubAppId);
-  return mirkusveInstallation;
-}
-async function getAccessibleRepos({
-  installationId,
-  token
-}) {
-  const data = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_2__["default"])(`https://api.github.com/user/installations/${installationId}/repositories`, {
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${token}`
-    }
-  });
-  const repoNames = data.repositories.map(repo => repo.name);
-  return repoNames;
-}
-
-/***/ }),
-
-/***/ "./src/setup/components/InstallGithubApp.jsx":
-/*!***************************************************!*\
-  !*** ./src/setup/components/InstallGithubApp.jsx ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
-/* harmony import */ var _utils_keys_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/keys.js */ "./src/utils/keys.js");
-
-
-
-function InstallGithubApp({
-  runBeforeNext,
-  nextIsDisabled
-}) {
-  const [hasClickedInstall, setHasClickedInstall] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const openInstallLink = () => {
-    window.open(_utils_keys_js__WEBPACK_IMPORTED_MODULE_2__.githubAppLink, 'Mirkusve Github App', 'width=1600,height=800,status=yes,scrollbars=yes');
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Mirkusve Github App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "You have to install Mirkusve's Github app on your Github account.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "That way, Mirkusve can only access your A2SV repo."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "Please ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "only"), " enable access to your ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, " A2SV Repo"), "!")), hasClickedInstall ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-small-top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "\u26A0\uFE0F If GithubApp was already installed previously , ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), " no problem, just ensure it only accesses your A2SV repo.")) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-secondary-button m-small-top",
-    onClick: () => {
-      setHasClickedInstall(true);
-      openInstallLink();
-    }
-  }, "Install Link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    onClick: () => runBeforeNext(() => {}),
-    nextIsDisabled: nextIsDisabled
-  }));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InstallGithubApp);
-
-/***/ }),
-
-/***/ "./src/setup/components/NameAndGroup.jsx":
-/*!***********************************************!*\
-  !*** ./src/setup/components/NameAndGroup.jsx ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
-/* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/custom-errors */ "./src/utils/custom-errors.js");
-/* harmony import */ var _utils_keys_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/keys.js */ "./src/utils/keys.js");
-/* harmony import */ var _utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/robust-fetch.js */ "./src/utils/robust-fetch.js");
-/* harmony import */ var _utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/excess-slash.js */ "./src/utils/excess-slash.js");
-
-
-
-
-
-
-function NameAndGroup({
-  data,
-  setDatum,
-  runBeforeNext,
-  nextIsDisabled
-}) {
-  const setNameAndGroup = async () => {
-    if (!data.name) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_2__.EmptyInputError('name');
-    const groupUrl = await fetchGroupUrl(data.name);
-    setDatum('groupUrl', groupUrl);
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Write your name exactly as in the A2SV sheets"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text",
-    placeholder: "eg) Abebe Kebede",
-    className: "m-small-top w-100",
-    onChange: event => setDatum('name', event.target.value)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    onClick: () => runBeforeNext(setNameAndGroup),
-    nextIsDisabled: nextIsDisabled
-  }));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NameAndGroup);
-async function fetchGroupUrl(name) {
-  const data = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_4__["default"])((0,_utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_5__["default"])(`${_utils_keys_js__WEBPACK_IMPORTED_MODULE_3__.groupFinderUrl}&name=${name}`));
-  const {
-    url
-  } = data;
-  return url;
-}
-
-/***/ }),
-
-/***/ "./src/setup/components/Next.jsx":
-/*!***************************************!*\
-  !*** ./src/setup/components/Next.jsx ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-function Next({
-  onClick,
-  nextIsDisabled,
-  content
-}) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "align-end m-small-top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: `m-primary-button ${nextIsDisabled ? 'm-disabled-button' : ''}`,
-    onClick: () => !nextIsDisabled && onClick(),
-    disabled: nextIsDisabled ? true : false
-  }, content || 'Next'));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Next);
-
-/***/ }),
-
-/***/ "./src/setup/components/Repo.jsx":
-/*!***************************************!*\
-  !*** ./src/setup/components/Repo.jsx ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/custom-errors.js */ "./src/utils/custom-errors.js");
-/* harmony import */ var _Next_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Next.jsx */ "./src/setup/components/Next.jsx");
-
-
-
-function Repo({
-  data,
-  setDatum,
-  runBeforeNext,
-  nextIsDisabled
-}) {
-  const setRepoInfo = async () => {
-    const repoLink = data.repoLink;
-    if (!repoLink) throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.EmptyInputError('a2sv repo link');
-    errorIfBadUrl(repoLink);
-    errorIfWrongOrigin(repoLink, 'https://github.com');
-    errorIfBadPath(repoLink);
-
-    //online checks
-    const {
-      userName,
-      repoName
-    } = getUserAndRepoName(repoLink);
-    const response = await getRepoResponse(userName, repoName);
-    errorIfRepoMissing(response, userName, repoName);
-    await errorIfTooManyTries(response);
-    if (!response.ok) throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.BadStatusError(response);
-    setDatum('userName', userName);
-    setDatum('repoName', repoName);
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    className: "m-big-fs"
-  }, "A2SV Repo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "Copy-Paste the link of your A2SV github repository"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-fs"
-  }, "eg) https://github.com/abebe-kebede/competitive-programming"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    className: "w-100  m-small-top",
-    placeholder: "A2SV repo",
-    onChange: event => setDatum('repoLink', event.target.value)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    onClick: () => runBeforeNext(setRepoInfo),
-    nextIsDisabled: nextIsDisabled
-  }));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Repo);
-function errorIfBadUrl(url) {
-  try {
-    new URL(url);
-  } catch (error) {
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.BadUrlError(url);
-  }
-}
-function errorIfWrongOrigin(url, correctOrigin) {
-  const origin = new URL(url).origin;
-  if (origin !== correctOrigin) {
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(`'${url}' should begin with '${correctOrigin}'`);
-  }
-}
-function errorIfBadPath(repoLink) {
-  const path = new URL(repoLink).pathname;
-  const pathNodes = path.split('/').filter(node => node !== '');
-  if (pathNodes.length !== 2) {
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(`'${repoLink}' should've been like \r\n 'https://github.com/USER_NAME/REPO_NAME'`);
-  }
-}
-function getUserAndRepoName(repoLink) {
-  const path = new URL(repoLink).pathname;
-  const nonEmpty = node => node !== '';
-  const [userName, repoName] = path.split('/').filter(nonEmpty);
-  return {
-    userName,
-    repoName
-  };
-}
-async function getRepoResponse(userName, repoName) {
-  const repoUrl = `https://api.github.com/repos/${userName}/${repoName}`;
-  try {
-    return await fetch(repoUrl);
-  } catch (error) {
-    if (error instanceof TypeError) throw new NetworkError(error);else throw error;
-  }
-}
-function errorIfRepoMissing(response, userName, repoName) {
-  if (response.status !== 404) return;
-  const message = `Mistyped the link? We could'nt find the repo in github (github.com/${userName}/${repoName})`;
-  const {
-    ok,
-    status,
-    statusText,
-    url
-  } = response;
-  throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message, JSON.stringify({
-    ok,
-    status,
-    statusText,
-    url
-  }));
-}
-async function errorIfTooManyTries(response) {
-  if (response.status !== 403) return;
-  const data = await response.json();
-  const message = `Too many tries! Try again in a few hours. You can switch to another wifi and try again too.`;
-  const code = JSON.stringify(data);
-  throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message, code);
-}
-
-/***/ }),
-
-/***/ "./src/setup/components/Welcome.jsx":
-/*!******************************************!*\
-  !*** ./src/setup/components/Welcome.jsx ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-const a2svLogo = '/media/a2sv-logo.png';
-const folderChoiceImage = '/media/folder-choice.svg';
-const githubLogo = '/media/github-logo.png';
-const leetcodeLogo = '/media/leetcode-logo.png';
-const lockImage = '/media/lock.svg';
-const mirkusveLogo = '/media/mirkusve-logo.svg';
-const sheetsLogo = '/media/sheets-logo.png';
-function Welcome() {
-  const pClass = 'm-dark-grey-color ';
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "welcome-width"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-very-large-fs m-top"
-  }, "A Little Help of a", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "hoverable"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "hover-appetizer"
-  }, "Mirkuz "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: mirkusveLogo,
-    className: "hover-pop-image"
-  })), "on your journey to", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, " Silicon Valley")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-top"
-  }, "Welcome to Mirkisve! We simplify submitting Leetcode answers to A2SV. Instead of doing the manual work of copy-pasting and typing, you can submit your answers in 2 clicks."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-secondary-button m-small-top"
-  }, "Watch Demo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "image-text-grid m-top"
+    className: "m-timer-super-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "circular-container"
+    className: `m-timer-container ${isPlaying ? 'm-animated-timer' : ''}`
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "m-timer"
+  }, isPlaying ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "m-play-pause-button",
+    onClick: () => setIsPlaying(false)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: sheetsLogo
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: pClass
-  }, "We submit your leetcode answers to A2SV sheets."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "circular-container"
+    src: pauseIcon,
+    alt: "pause"
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "m-play-pause-button",
+    onClick: () => setIsPlaying(true)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: githubLogo
+    src: playIcon,
+    alt: "play"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: pClass
-  }, "We upload answer files to Github "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "circular-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: folderChoiceImage
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: pClass
-  }, "You choose the Github folder for your answer file."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "circular-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: lockImage
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: pClass
-  }, "We only require access to your A2SV repo, not your github account."))));
+    className: "m-secondary-underline"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "m-large-fs "
+  }, " ", (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_3__.calculateMinutes)(duration), " "), "min"))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Welcome);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Timer);
 
 /***/ }),
 
-/***/ "./src/utils/custom-errors.js":
-/*!************************************!*\
-  !*** ./src/utils/custom-errors.js ***!
-  \************************************/
+/***/ "./src/utils/duration.js":
+/*!*******************************!*\
+  !*** ./src/utils/duration.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AppScriptError": () => (/* binding */ AppScriptError),
-/* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
-/* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
-/* harmony export */   "CustomError": () => (/* binding */ CustomError),
-/* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
-/* harmony export */   "NetworkError": () => (/* binding */ NetworkError)
+/* harmony export */   "calculateMinutes": () => (/* binding */ calculateMinutes),
+/* harmony export */   "forgetDuration": () => (/* binding */ forgetDuration),
+/* harmony export */   "loadDuration": () => (/* binding */ loadDuration),
+/* harmony export */   "storeDuration": () => (/* binding */ storeDuration)
 /* harmony export */ });
-class CustomError extends Error {
-  constructor(descriptionAndSolution, errorAsString = "") {
-    super(`Custom Error: \n- ${descriptionAndSolution}\n- ${errorAsString}\n`);
-    this.descriptionAndSolution = descriptionAndSolution;
-    this.errorAsString = errorAsString;
+async function getStorageObject() {
+  const storageObject = await chrome.storage.local.get('durations');
+  if (storageObject.durations === undefined) {
+    return {
+      durations: {}
+    };
+  } else {
+    return storageObject;
   }
 }
-class NetworkError extends CustomError {
-  constructor(typeError) {
-    const {
-      name,
-      message
-    } = typeError;
-    const errorAsString = JSON.stringify({
-      name,
-      message
-    });
-    super("Weak connection? Please try again later.", errorAsString);
-  }
+async function loadDuration(questionName) {
+  const {
+    durations
+  } = await getStorageObject();
+  return durations[questionName];
 }
-class BadStatusError extends CustomError {
-  constructor(response) {
-    const {
-      ok,
-      status,
-      statusText,
-      url
-    } = response;
-    const errorAsString = JSON.stringify({
-      ok,
-      status,
-      statusText,
-      url
-    });
-    super("Http response not ok. Try avoiding vpn or try again later.", errorAsString);
-  }
+async function storeDuration(questionName, duration) {
+  const {
+    durations
+  } = await getStorageObject();
+  durations[questionName] = duration;
+  await chrome.storage.local.set({
+    durations
+  });
 }
-class BadUrlError extends CustomError {
-  constructor(badUrl) {
-    super(`${badUrl} is not a valid url`);
-  }
+async function forgetDuration(questionName) {
+  const {
+    durations
+  } = await getStorageObject();
+  delete durations[questionName];
+  await chrome.storage.local.set({
+    durations
+  });
 }
-
-//because (at least sofar) you cant send status codes in appscript responses
-class AppScriptError extends CustomError {
-  constructor(responseObject) {
-    super(`Message from Sheets: ${responseObject.error}`);
-  }
-}
-class EmptyInputError extends CustomError {
-  constructor(inputName) {
-    super(`Please fill out '${inputName}'`);
-  }
+function calculateMinutes(duration) {
+  const minutes = Math.floor(duration / (60 * 1000));
+  return minutes;
 }
 
 
 /***/ }),
 
-/***/ "./src/utils/excess-slash.js":
-/*!***********************************!*\
-  !*** ./src/utils/excess-slash.js ***!
-  \***********************************/
+/***/ "./src/utils/get-question-name.js":
+/*!****************************************!*\
+  !*** ./src/utils/get-question-name.js ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./custom-errors.js */ "./src/utils/custom-errors.js");
-
-function removeExcessSlash(url) {
-  try {
-    var urlObj = new URL(url);
-  } catch (error) {
-    throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.BadUrlError(url);
+function getQuestionName(link) {
+  // -> /*/problems/*withoutslash/*;
+  const match = /.*\/problems\/([^/.]*)\/*.*/.exec(link);
+  if (!match) {
+    throw new Error(`Question name could not be extracted from link (${link})`);
   }
-  let path = urlObj.pathname;
-  path = path.split("/");
-  path = path.filter(node => node !== "");
-  path = path.join("/");
-  urlObj.pathname = path;
-  return urlObj.href;
+  return match[1];
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (removeExcessSlash);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getQuestionName);
 
 /***/ }),
 
-/***/ "./src/utils/keys.js":
-/*!***************************!*\
-  !*** ./src/utils/keys.js ***!
-  \***************************/
+/***/ "./src/utils/mapUrl.js":
+/*!*****************************!*\
+  !*** ./src/utils/mapUrl.js ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "clientId": () => (/* binding */ clientId),
-/* harmony export */   "codeForTokenUrl": () => (/* binding */ codeForTokenUrl),
-/* harmony export */   "getAnswerSubmitUrl": () => (/* binding */ getAnswerSubmitUrl),
-/* harmony export */   "githubAppId": () => (/* binding */ githubAppId),
-/* harmony export */   "githubAppLink": () => (/* binding */ githubAppLink),
-/* harmony export */   "groupFinderUrl": () => (/* binding */ groupFinderUrl)
+/* harmony export */   "default": () => (/* binding */ mapUrl)
 /* harmony export */ });
-const clientId = 'Iv1.0c9196e6fcd3647a';
-const githubAppId = 356032; //the github apps
-const githubAppLink = 'https://github.com/apps/mirkusve/installations/new';
-const mainWebappUrl = 'https://script.google.com/macros/s/AKfycbwztq78Ffh6hPaXVHECZloSnIDnSZ0CJYzjTy96KJ0prxna96NwSO1HoUs8XKIDuIRt/exec';
-const codeForTokenUrl = mainWebappUrl + '?path=tokens';
-const groupFinderUrl = mainWebappUrl + '?path=group-urls';
-const getGroupWebappUrl = async () => {};
-const getAnswerSubmitUrl = async () => {
-  return (await getGroupWebappUrl()) + '&path=answers';
-};
+function mapUrl(url) {
+  //when using live server to debug
 
-
-/***/ }),
-
-/***/ "./src/utils/robust-fetch.js":
-/*!***********************************!*\
-  !*** ./src/utils/robust-fetch.js ***!
-  \***********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./custom-errors.js */ "./src/utils/custom-errors.js");
-
-async function robustFetch(url, options) {
-  try {
-    const fetchPromise = options ? fetch(url, options) : fetch(url);
-    const response = await fetchPromise;
-    if (!response.ok) {
-      throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.BadStatusError(response);
-    }
-    const data = await response.json();
-    if (data.error) {
-      throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.AppScriptError(data);
-    }
-    return data;
-  } catch (error) {
-    if (error instanceof TypeError) throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.NetworkError(error);else throw error;
+  const inContentScript = window.location.href.match(/leetcode/);
+  if (inContentScript) {
+    return chrome.runtime.getURL(url);
+  } else {
+    return './' + url;
   }
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (robustFetch);
 
 /***/ }),
 
@@ -8864,9 +8319,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/setup/style.css":
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/timer/style.css":
 /*!*******************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/setup/style.css ***!
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/timer/style.css ***!
   \*******************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -8883,7 +8338,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nbody {\n  padding-left: 2rem;\n  min-height: 100vh;\n  background-color: var(--m-secondary-color);\n  font-size: 1rem;\n}\n#root {\n  min-height: 100vh;\n}\n\n.split {\n  display: flex;\n}\n\n.container {\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-top {\n  margin-top: 5rem;\n}\n\n.m-small-top {\n  margin-top: 1rem;\n}\n\n.w-100 {\n  width: 100%;\n}\n.welcome-width {\n  max-width: 500px;\n}\n\n.bold {\n  font-weight: bold;\n}\n\n.vh-100 {\n  min-height: 100vh;\n}\n\n.wbg {\n  background-color: white;\n}\n\n.bbg {\n  background-color: blue;\n}\n\n.rbg {\n  background-color: red;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.flex-3 {\n  flex: 3;\n}\n\ninput {\n  padding: 0.8rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n}\n\n.align-end {\n  display: flex;\n  justify-content: end;\n}\n\n.smooth-left {\n  border-top-left-radius: 5rem;\n  border-bottom-left-radius: 5rem;\n  border: var(--m-border);\n  border-right: none;\n}\n\n.error-box {\n  max-width: 500px;\n}\n\n.image-text-grid {\n  padding: 1rem;\n  display: grid;\n\n  grid-template-columns: auto 1fr;\n\n  row-gap: 2rem;\n  column-gap: 1rem;\n\n  align-items: center;\n}\n\nimg {\n  width: 100%;\n  height: 100%;\n  object-fit: contain;\n}\n\n.circular-container {\n  --size: 5rem;\n\n  width: var(--size);\n  height: var(--size);\n  border-radius: 40%;\n  background-color: rgba(255, 255, 255, 0.8);\n}\n\n.hover-appetizer {\n  font-weight: bold;\n  border-bottom: 2px dashed black;\n}\n\n.hoverable {\n  position: relative;\n}\n\n.hover-pop-image {\n  --size: 15rem;\n  height: var(--size);\n  width: var(--size);\n\n  padding: 2rem;\n  border-radius: 100%;\n  border: var(--m-border);\n\n  opacity: 0;\n  transition: opacity;\n  transition-duration: 0.5s;\n  background-color: white;\n\n  position: absolute;\n  left: 10rem;\n  bottom: 0;\n}\n\n.hoverable:hover .hover-pop-image {\n  opacity: 1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-play-pause-button > img {\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button {\n  --size: 1.75rem;\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n\n  /* for outside leetcode styles */\n  background: none;\n  padding: 0;\n  margin: 0;\n  border: none;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-animated-timer:before {\n  content: '';\n  position: absolute;\n  width: 15rem;\n  height: 15rem;\n  background: conic-gradient(\n    var(--m-secondary-color),\n    white,\n    var(--m-secondary-color)\n  );\n\n  animation: 2s linear m-timer-rotation infinite;\n}\n\n.m-animated-timer {\n  background: transparent;\n}\n\n@keyframes m-timer-rotation {\n  0% {\n    transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(360deg);\n  }\n}\n\n.m-timer-super-container {\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 30%;\n  z-index: 999;\n}\n.m-timer-container {\n  /* border */\n  /* border: var(--m-border); */\n  border-top: none;\n\n  /*shape*/\n  --br: var(--m-border-radius);\n  width: 10rem;\n  height: 3rem;\n\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* to children */\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  position: relative;\n  overflow: hidden;\n\n  /* override by animation */\n  background-color: lightgrey;\n}\n\n.m-timer {\n  /*content alignment*/\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n\n  /*justin case*/\n  box-sizing: border-box;\n  padding-left: 0.5rem;\n  margin: 0;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n\n  /* self alignment */\n  z-index: 5;\n  position: absolute;\n  --crack: 5px;\n  inset: 0 var(--crack) var(--crack) var(--crack);\n\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8944,9 +8399,9 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./src/setup/style.css":
+/***/ "./src/timer/style.css":
 /*!*****************************!*\
-  !*** ./src/setup/style.css ***!
+  !*** ./src/timer/style.css ***!
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -8966,7 +8421,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./src/setup/style.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./src/timer/style.css");
 
       
       
@@ -9353,96 +8808,35 @@ module.exports = styleTagTransform;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***********************************!*\
-  !*** ./src/setup/SetupScreen.jsx ***!
-  \***********************************/
+/*!*************************************!*\
+  !*** ./src/answer/ViewSelector.jsx ***!
+  \*************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
-/* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../assets/style.css */ "./src/assets/style.css");
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./src/setup/style.css");
-/* harmony import */ var _components_Welcome_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Welcome.jsx */ "./src/setup/components/Welcome.jsx");
-/* harmony import */ var _components_NameAndGroup_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/NameAndGroup.jsx */ "./src/setup/components/NameAndGroup.jsx");
-/* harmony import */ var _components_Repo_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Repo.jsx */ "./src/setup/components/Repo.jsx");
-/* harmony import */ var _components_InstallGithubApp_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/InstallGithubApp.jsx */ "./src/setup/components/InstallGithubApp.jsx");
-/* harmony import */ var _components_GithubAppSignin_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/GithubAppSignin.jsx */ "./src/setup/components/GithubAppSignin.jsx");
-/* harmony import */ var _components_Finish_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Finish.jsx */ "./src/setup/components/Finish.jsx");
-/* harmony import */ var _components_ErrorView_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/ErrorView.jsx */ "./src/setup/components/ErrorView.jsx");
+/* harmony import */ var _timer_Timer_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../timer/Timer.jsx */ "./src/timer/Timer.jsx");
 
 
 
-
-
-
-
-
-
-
-
-
-function SetupScreen() {
-  const screenFunctions = [_components_NameAndGroup_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], _components_Repo_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], _components_InstallGithubApp_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _components_GithubAppSignin_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _components_Finish_jsx__WEBPACK_IMPORTED_MODULE_10__["default"]];
-  const [screenIndex, setScreenIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
-  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
-  const [nextIsDisabled, setNextIsDisabled] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const runBeforeNext = async task => {
-    try {
-      setNextIsDisabled(true);
-      await task();
-      setScreenIndex(screenIndex + 1);
-      setCustomError(undefined);
-    } catch (error) {
-      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_2__.CustomError) setCustomError(error);else throw error;
-    } finally {
-      setNextIsDisabled(false);
-    }
+function ViewSelector() {
+  const PageStates = {
+    //enumish
+    inQuestionPage: 'in-question-page',
+    inSubmissionsPage: 'in-submissions-page',
+    inNietherPage: 'in-niether-page'
   };
-  const goPrevious = () => {
-    setScreenIndex(screenIndex - 1);
-  };
-  const setDatum = (key, value) => {
-    //user is taking action to correct the error
-    setCustomError(undefined);
-    setData({
-      ...data,
-      [key]: value
-    });
-  };
-
-  //all screens created here so that num of use[hook] calls are the same for every render
-  const screens = screenFunctions.map(screenFunction => screenFunction({
-    data,
-    setDatum,
-    runBeforeNext,
-    nextIsDisabled,
-    goPrevious //optional
-  }));
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "split vh-100 m-ff "
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "container flex-2 "
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Welcome_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "container flex-3 smooth-left wbg"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    className: "m-grey-color"
-  }, "Setup Mirkusve"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-grey-color"
-  }, screenIndex + 1, "/", screenFunctions.length), customError &&
-  /*#__PURE__*/
-  //random keys to play the fade in animation again. to let users know the same error is happening again
-  react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ErrorView_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], {
-    customError: customError,
-    key: Math.random()
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), screens[screenIndex])));
+  const [currentPage, setCurrentPage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(PageStates.inNietherPage);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_timer_Timer_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null);
 }
-const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(document.getElementById('root'));
-root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(SetupScreen, null));
+
+//add to leetcode page
+const div = document.createElement('div');
+document.body.appendChild(div);
+const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(div);
+root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(ViewSelector, null));
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=SetupScreen.bundle.js.map
+//# sourceMappingURL=ViewSelector.bundle.js.map

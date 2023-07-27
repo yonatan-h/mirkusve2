@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import a2svLogo from '../../media/a2sv-logo.png';
-import folderChoiceImage from '../../media/folder-choice.svg';
-import githubLogo from '../../media/github-logo.png';
-import leetcodeLogo from '../../media/leetcode-logo.png';
-import lockImage from '../../media/lock.svg';
-import mirkusveLogo from '../../media/mirkusve-logo.svg';
-import sheetsLogo from '../../media/sheets-logo.png';
+const a2svLogo = '/media/a2sv-logo.png';
+const folderChoiceImage = '/media/folder-choice.svg';
+const githubLogo = '/media/github-logo.png';
+const leetcodeLogo = '/media/leetcode-logo.png';
+const lockImage = '/media/lock.svg';
+const mirkusveLogo = '/media/mirkusve-logo.svg';
+const sheetsLogo = '/media/sheets-logo.png';
 
 function Welcome() {
   const pClass = 'm-dark-grey-color ';

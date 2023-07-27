@@ -283,12 +283,6 @@ chrome.runtime.onMessage.addListener((req, sender, next) => {
     return true;
   }
 });
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  const url = tab.url;
-  if (url && changeInfo.status === "complete") {
-    (0,_view_request_js__WEBPACK_IMPORTED_MODULE_1__["default"])(tabId, url);
-  }
-});
 })();
 
 /******/ })()

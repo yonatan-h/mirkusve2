@@ -3,7 +3,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    // 'view-selector': './src/view-selector/view-selector.js',
+    ViewSelector: './src/answer/ViewSelector.jsx',
     index: './src/index.jsx',
     SetupScreen: './src/setup/SetupScreen.jsx',
     background: './src/background/background.js',
@@ -21,7 +21,6 @@ module.exports = {
       { test: /\.(js|jsx)$/, use: 'babel-loader' },
       { test: /\.html$/, use: 'html-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.(png|jpeg|jpg|svg)$/, use: 'file-loader' },
     ],
   },
   plugins: [
@@ -32,6 +31,8 @@ module.exports = {
         { from: './src/index.html' },
         { from: './src/popup/popup.html' },
         { from: './src/setup/setup.html', to: 'setup.html' },
+        //not using file loader because it adds leetcodes url to the image paths
+        //eg) import path from './logo.png' gives you 'https://leetcode.com...logo.png' -> error
         { from: './src/media/', to: 'media' },
       ],
     }),

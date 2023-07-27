@@ -12,10 +12,13 @@
   --m-medium-fs: 1rem;
   --m-large-fs: 1.5rem;
   --m-very-large-fs: 3rem;
+
+  --m-font-family: sans-serif;
+  --m-glass-bg: rgba(255, 255, 255, 0.9);
 }
 
 .m-ff {
-  font-family: sans-serif;
+  font-family: var(--m-font-family);
 }
 
 .m-error-color {
@@ -33,6 +36,14 @@
 
 .m-grey-color {
   color: var(--m-grey-color);
+}
+
+.m-primary-color {
+  color: var(--m-primary-color);
+}
+
+.m-secondary-color {
+  color: var(--m-secondary-color);
 }
 
 .m-dark-grey-color {
@@ -54,8 +65,6 @@
 .m-very-large-fs {
   font-size: var(--m-very-large-fs);
 }
-
-
 
 .m-primary-button {
   background-color: var(--m-primary-color);

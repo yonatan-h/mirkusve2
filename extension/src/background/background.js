@@ -14,10 +14,4 @@ chrome.runtime.onMessage.addListener((req, sender, next) => {
 	}
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-	const url = tab.url;
-	if (url && changeInfo.status === "complete") {
-		requestViewChange(tabId, url);
-	}
-});
 
