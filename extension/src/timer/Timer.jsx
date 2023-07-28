@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import mapUrl from '../utils/mapUrl.js';
+import './style.css';
 
 import getQuestionName from '../utils/get-question-name.js';
 import {
@@ -7,8 +8,6 @@ import {
   storeDuration,
   calculateMinutes,
 } from '../utils/duration.js';
-
-import './style.css';
 
 const pauseIcon = mapUrl('/media/pause.svg');
 const playIcon = mapUrl('/media/play.svg');
@@ -38,6 +37,7 @@ function Timer() {
       storeDuration(getQuestionName(window.location.href), duration);
     };
 
+    updateTime();
     const intervalId = setInterval(updateTime, 1000);
 
     return () => {
@@ -47,32 +47,25 @@ function Timer() {
   }, [isPlaying]);
 
   return (
-    <div className="m-timer-super-container">
-      <div
-        className={`m-timer-container ${isPlaying ? 'm-animated-timer' : ''}`}
-      >
-        <div className="m-timer">
-          {isPlaying ? (
-            <button
-              className="m-play-pause-button"
-              onClick={() => setIsPlaying(false)}
-            >
-              <img src={pauseIcon} alt="pause" />
-            </button>
-          ) : (
-            <button
-              className="m-play-pause-button"
-              onClick={() => setIsPlaying(true)}
-            >
-              <img src={playIcon} alt="play" />
-            </button>
-          )}
-
-          <div>
-            <span className="m-medium-fs "> {calculateMinutes(duration)} </span>
-            <span className="m-small-fs">min</span>
-          </div>
-        </div>
+    <div className="m-timer ">
+      {isPlaying ? (
+        <button
+          className="m-play-pause-button m-timer-playing"
+          onClick={() => setIsPlaying(false)}
+        >
+          <img src={pauseIcon} alt="pause" />
+        </button>
+      ) : (
+        <button
+          className="m-play-pause-button m-timer-paused"
+          onClick={() => setIsPlaying(true)}
+        >
+          <img src={playIcon} alt="play" />
+        </button>
+      )}
+      <div>
+        <span className="m-medium-fs "> {calculateMinutes(duration)} </span>
+        <span className="m-small-fs">min</span>
       </div>
     </div>
   );

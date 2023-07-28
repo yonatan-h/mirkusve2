@@ -18,7 +18,7 @@ function ViewSelector() {
       } else if (matchesSubmissionPage(url)) {
         setCurrentPage(SUBMISSION_PAGE);
       } else {
-        setCurrentPage(undefined);
+        setCurrentPage(QUESTION_PAGE);
       }
     };
     setPage(window.location.href);

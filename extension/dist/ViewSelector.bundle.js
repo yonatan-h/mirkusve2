@@ -8370,9 +8370,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/mapUrl.js */ "./src/utils/mapUrl.js");
-/* harmony import */ var _utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/get-question-name.js */ "./src/utils/get-question-name.js");
-/* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./src/timer/style.css");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.css */ "./src/timer/style.css");
+/* harmony import */ var _utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/get-question-name.js */ "./src/utils/get-question-name.js");
+/* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
 
 
 
@@ -8394,13 +8394,14 @@ function Timer() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!isPlaying) return;
     const startTime = Date.now();
-    const oldDurationPromise = (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_3__.loadDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href)).then(duration => duration || 0); //incase it's the first time it's running
+    const oldDurationPromise = (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.loadDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_3__["default"])(window.location.href)).then(duration => duration || 0); //incase it's the first time it's running
 
     const updateTime = async () => {
       const duration = (await oldDurationPromise) + Date.now() - startTime;
       setDuration(duration);
-      (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_3__.storeDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_2__["default"])(window.location.href), duration);
+      (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.storeDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_3__["default"])(window.location.href), duration);
     };
+    updateTime();
     const intervalId = setInterval(updateTime, 1000);
     return () => {
       clearInterval(intervalId);
@@ -8408,28 +8409,24 @@ function Timer() {
     };
   }, [isPlaying]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-timer-super-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: `m-timer-container ${isPlaying ? 'm-animated-timer' : ''}`
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-timer"
+    className: "m-timer "
   }, isPlaying ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-play-pause-button",
+    className: "m-play-pause-button m-timer-playing",
     onClick: () => setIsPlaying(false)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: pauseIcon,
     alt: "pause"
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-play-pause-button",
+    className: "m-play-pause-button m-timer-paused",
     onClick: () => setIsPlaying(true)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: playIcon,
     alt: "play"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "m-medium-fs "
-  }, " ", (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_3__.calculateMinutes)(duration), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+  }, " ", (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.calculateMinutes)(duration), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "m-small-fs"
-  }, "min")))));
+  }, "min")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Timer);
 
@@ -8679,7 +8676,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-play-pause-button > img {\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button {\n  --size: 1.5rem;\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n\n  /* for outside leetcode styles */\n  background: none;\n  padding: 0;\n  margin: 0;\n  border: none;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-animated-timer:before {\n  content: '';\n  position: absolute;\n  width: 15rem;\n  height: 15rem;\n  background: conic-gradient(\n    var(--m-secondary-color),\n    white,\n    var(--m-secondary-color)\n  );\n\n  animation: 2s linear m-timer-rotation infinite;\n}\n\n.m-animated-timer {\n  background: transparent;\n}\n\n@keyframes m-timer-rotation {\n  0% {\n    transform: rotate(0deg);\n  }\n\n  100% {\n    transform: rotate(360deg);\n  }\n}\n\n.m-timer-super-container {\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 30%;\n  z-index: 999;\n}\n.m-timer-container {\n  /* border */\n  /* border: var(--m-border); */\n  border-top: none;\n\n  /*shape*/\n  --br: var(--m-border-radius);\n  width: 8rem;\n  height: 2rem;\n\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* to children */\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  position: relative;\n  overflow: hidden;\n\n  /* override by animation */\n  background-color: lightgrey;\n}\n\n.m-timer {\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /*justin case*/\n  box-sizing: border-box;\n  padding-left: 0.5rem;\n  margin: 0;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n\n  /* self alignment */\n  z-index: 5;\n  position: absolute;\n  --crack: 5px;\n  inset: 0 var(--crack) var(--crack) var(--crack);\n\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-timer-playing::before,\n.m-timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.m-timer-playing::before {\n  background-color: var(--m-secondary-color);\n}\n.m-timer-paused::before {\n  background-color: lightgrey;\n}\n\n.m-timer-playing,\n.m-timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-play-pause-button {\n  /* looks  */\n  --size: var(--m-medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.m-play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-timer * {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\n.m-timer button {\n  border: none;\n  background: none;\n}\n\n.m-timer {\n  /* size  */\n  padding: 0rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 30%;\n  z-index: 1000;\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n  font-family: var(--m-font-family);\n\n  /* border */\n  border: var(--m-border);\n  border-top: none;\n  --br: var(--m-border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9230,7 +9227,7 @@ function ViewSelector() {
       } else if (matchesSubmissionPage(url)) {
         setCurrentPage(SUBMISSION_PAGE);
       } else {
-        setCurrentPage(undefined);
+        setCurrentPage(QUESTION_PAGE);
       }
     };
     setPage(window.location.href);

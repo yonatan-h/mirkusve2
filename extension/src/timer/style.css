@@ -1,107 +1,88 @@
-.m-play-pause-button > img {
-  width: 100%;
-  height: 100%;
+.m-timer-playing::before,
+.m-timer-paused::before {
+  content: '';
+  position: absolute;
+  border-radius: 100%;
+
+  --size: 2.5rem;
+  width: var(--size);
+  height: var(--size);
+
+  z-index: -1;
+}
+
+.m-timer-playing::before {
+  background-color: var(--m-secondary-color);
+}
+.m-timer-paused::before {
+  background-color: lightgrey;
+}
+
+.m-timer-playing,
+.m-timer-paused {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .m-play-pause-button {
-  --size: 1.5rem;
+  /* looks  */
+  --size: var(--m-medium-fs);
   width: var(--size);
   height: var(--size);
   border-radius: 100%;
+}
 
-  /* for outside leetcode styles */
-  background: none;
-  padding: 0;
-  margin: 0;
-  border: none;
+.m-play-pause-button > img {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .m-play-pause-button:hover {
   cursor: pointer;
 }
 
-.m-animated-timer:before {
-  content: '';
-  position: absolute;
-  width: 15rem;
-  height: 15rem;
-  background: conic-gradient(
-    var(--m-secondary-color),
-    white,
-    var(--m-secondary-color)
-  );
-
-  animation: 2s linear m-timer-rotation infinite;
+.m-timer * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.m-animated-timer {
-  background: transparent;
+.m-timer button {
+  border: none;
+  background: none;
 }
 
-@keyframes m-timer-rotation {
-  0% {
-    transform: rotate(0deg);
-  }
+.m-timer {
+  /* size  */
+  padding: 0rem 0.5rem;
 
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.m-timer-super-container {
   /* self alignment */
   position: fixed;
   top: -2px;
   left: 30%;
-  z-index: 999;
-}
-.m-timer-container {
-  /* border */
-  /* border: var(--m-border); */
-  border-top: none;
+  z-index: 1000;
 
-  /*shape*/
-  --br: var(--m-border-radius);
-  width: 8rem;
-  height: 2rem;
-
-  border-bottom-left-radius: var(--br);
-  border-bottom-right-radius: var(--br);
-
-  /* to children */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: relative;
-  overflow: hidden;
-
-  /* override by animation */
-  background-color: lightgrey;
-}
-
-.m-timer {
   /*content alignment*/
   display: flex;
   gap: 1rem;
   align-items: center;
 
-  /*justin case*/
-  box-sizing: border-box;
-  padding-left: 0.5rem;
-  margin: 0;
-
   /* color */
   background-color: white;
   color: black;
   font-size: var(--m-medium-fs);
+  font-family: var(--m-font-family);
 
-  /* self alignment */
-  z-index: 5;
-  position: absolute;
-  --crack: 5px;
-  inset: 0 var(--crack) var(--crack) var(--crack);
-
+  /* border */
+  border: var(--m-border);
+  border-top: none;
+  --br: var(--m-border-radius);
   border-bottom-left-radius: var(--br);
   border-bottom-right-radius: var(--br);
+
+  /* for nice looking button */
+  overflow: hidden;
 }
