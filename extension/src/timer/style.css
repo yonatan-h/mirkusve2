@@ -17,7 +17,7 @@
 }
 @keyframes m-resize-animation {
   0% {
-    opacity: 0.5;
+    opacity: 0.3;
   }
 
   100% {
@@ -73,8 +73,9 @@
   /* self alignment */
   position: fixed;
   top: -2px;
-  left: 30%;
+  left: 50%;
   z-index: 1000;
+  transform: translateX(-50%);
 
   /*content alignment*/
   display: flex;

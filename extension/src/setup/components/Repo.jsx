@@ -7,7 +7,7 @@ import {
 } from '../../utils/custom-errors.js';
 import Next from './Next.jsx';
 
-function Repo({ data, setDatum, runBeforeNext, nextIsDisabled }) {
+function Repo({ data, updateData, runBeforeNext, nextIsDisabled }) {
   const setRepoInfo = async () => {
     const repoLink = data.repoLink;
     if (!repoLink) throw new EmptyInputError('a2sv repo link');
@@ -22,8 +22,7 @@ function Repo({ data, setDatum, runBeforeNext, nextIsDisabled }) {
     await errorIfTooManyTries(response);
     if (!response.ok) throw new BadStatusError(response);
 
-    setDatum('userName', userName);
-    setDatum('repoName', repoName);
+    updateData({ userName, repoName });
   };
   return (
     <div>
@@ -37,7 +36,7 @@ function Repo({ data, setDatum, runBeforeNext, nextIsDisabled }) {
       <input
         className="w-100  m-small-top"
         placeholder="A2SV repo"
-        onChange={(event) => setDatum('repoLink', event.target.value)}
+        onChange={(event) => updateData({ repoLink: event.target.value })}
       />
 
       <Next

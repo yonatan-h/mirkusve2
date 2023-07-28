@@ -8134,6 +8134,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
 /* harmony import */ var _wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./wait-to-load.js */ "./src/answer-submit/wait-to-load.js");
 /* harmony import */ var _auto_fill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./auto-fill */ "./src/answer-submit/auto-fill.js");
+/* harmony import */ var _fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./fetch-repo.js */ "./src/answer-submit/fetch-repo.js");
+/* harmony import */ var _determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./determine-file-name.js */ "./src/answer-submit/determine-file-name.js");
+/* harmony import */ var _utils_web_scrape__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/web-scrape */ "./src/utils/web-scrape.js");
+// 0||undefined is undefined
+//but 0??undefined is 0
+
+
+
+
 
 
 
@@ -8152,15 +8161,18 @@ const saveIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/
 const sendIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/send.svg');
 const timeIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/time.svg');
 const tryIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/try.svg');
-function SubmitCard() {
+function SubmitCard({
+  inView
+}) {
   const [isHidden, setIsHidden] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const setDatum = (name, value) => setData({
+  const [inSelectFolderMode, setInSelectFolderMode] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const updateData = newData => setData({
     ...data,
-    [name]: value
+    ...newData
   });
   const runAndHandleCustomError = async task => {
     try {
@@ -8175,17 +8187,29 @@ function SubmitCard() {
     return () => navigation.removeEventListener('navigate', changeUrl);
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!inView) return;
+    let collected = {};
+    const collectData = updated => collected = {
+      ...collected,
+      ...updated
+    };
     runAndHandleCustomError(async () => {
       await (0,_wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
-      await (0,_auto_fill__WEBPACK_IMPORTED_MODULE_9__["default"])(setDatum);
-      alert(JSON.stringify(data));
+      await Promise.all([(0,_auto_fill__WEBPACK_IMPORTED_MODULE_9__["default"])(collectData), (0,_fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__["default"])().then(collectData)]);
+      collectData({
+        fileName: (0,_determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__["default"])(collected.filePaths)
+      });
+      setData(collected);
     });
-  }, [window.location.href]);
+  }, [inView, url]);
   const onInputChange = event => {
     const target = event.target;
     const name = target.name;
-    const value = target.value || target.innerText;
-    setDatum(name, value);
+    const value = target.value ?? target.innerText;
+    updateData({
+      [name]: value
+    });
+    console.log(name, value);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: `m-submit-card ${isHidden ? '' : 'm-card-exposed'}`
@@ -8210,7 +8234,7 @@ function SubmitCard() {
       className: "m-flex-1",
       onChange: onInputChange,
       required: true,
-      value: data.submissions || ''
+      value: data.submissions ?? ''
     }),
     label: "Tries",
     className: "m-flex-1"
@@ -8221,7 +8245,7 @@ function SubmitCard() {
       name: "minutes",
       onChange: onInputChange,
       required: true,
-      value: data.minutes || ''
+      value: data.minutes ?? ''
     }),
     label: "Minutes",
     className: "m-flex-1"
@@ -8233,7 +8257,7 @@ function SubmitCard() {
       name: "fileName",
       onChange: onInputChange,
       required: true,
-      value: data.fileName || ''
+      value: data.fileName ?? ''
     }),
     label: "Filename",
     className: "m-flex-2"
@@ -8243,11 +8267,15 @@ function SubmitCard() {
       name: "fileExtension",
       onChange: onInputChange,
       required: true,
-      value: data.fileExtension || ''
+      value: data.fileExtension ?? ''
     }),
     label: "Extension",
     className: "m-flex-1"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CreateNewFolder_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  })), inSelectFolderMode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    folderPaths: data.folderPaths,
+    setInSelectFolderMode: setInSelectFolderMode,
+    updateData: updateData
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CreateNewFolder_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     onClick: e => 1 + 1
   }, "Submit"))));
@@ -8273,29 +8301,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-async function autoFill(setDatum) {
+async function autoFill(updateData) {
   if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length) {
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError('No answer has been submitted so far. There is nothing to submit.');
+    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError('No answer has been submitted so far. There is nothing to submit.');
   }
   if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.currentCodeIsAccepted)()) {
     if ((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.acceptedSubmissionExists)()) {
-      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(`You can't submit an unaccepted answer. Please select/view an accepted answer.`);
+      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError(`You can't submit an unaccepted answer. Please select/view an accepted answer.`);
     } else {
-      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(`Try more and have an accepted answer! Unaccepted answers can not be submitted.`);
+      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError(`Try more and have an accepted answer! Unaccepted answers can not be submitted.`);
     }
   }
   const url = window.location.href;
-  console.log(JSON.stringify({
+  const duration = (await (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionName)(url))) || 0;
+  const data = {
     submissions: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length,
-    minutes: (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.calculateMinutes)(await (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionName)(url))),
     fileExtension: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentFileExtension)(),
-    file: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentCode)()
-  }));
-  setDatum('submissions', (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length);
-  setDatum('minutes', await (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionName)(url)));
-  // setDatum('fileName', getQuestionName(url));
-  setDatum('fileExtension', (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentFileExtension)());
-  setDatum('file', (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentCode)());
+    file: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentCode)(),
+    minutes: (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.calculateMinutes)(duration)
+  };
+  updateData(data);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (autoFill);
 
@@ -8364,10 +8389,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
-function Folder() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, " -- abebe folder "));
+function Folder({
+  folderPath,
+  onSelect,
+  onNewFolder
+}) {
+  const nodes = folderPath.split('/');
+  //assuming they are not named abc/
+  const folderName = nodes[nodes.length - 1];
+  const indents = nodes.length - 1;
+  const style = {
+    marginLeft: `${0.5 * indents}rem`
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    style: style
+  }, folderName === '' ? 'root' : folderName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "+"));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Folder);
+function errorIfBadFolderPath(path) {
+  if (path.includes('.')) {
+    throw new CustomError(`There is a '.' in the folder path. Please enter only the path of the folder, don't include any file.`);
+  }
+  if (path.includes('//')) {
+    throw new CustomError(`There is a double slash '//' in the folder path. Remove it.`);
+  }
+  if (path.includes(' ')) {
+    throw new CustomError(`Please don't include space characters in the folder path.`);
+  }
+  try {
+    const url = new URL('https://abebe.com/' + path);
+  } catch (error) {
+    throw new CustomError(`The folder path is not url safe somehow. Please modify it.`);
+  }
+}
 
 /***/ }),
 
@@ -8386,8 +8440,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Folder_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Folder.jsx */ "./src/answer-submit/components/Folder.jsx");
 
 
-function FolderTree() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+function FolderTree({
+  folderPaths,
+  setInSelectFolderMode,
+  updateData
+}) {
+  if (!folderPaths) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading folders...");
+  const sortedFolderPaths = [...folderPaths].sort((a, b) => a < b ? -1 : 1);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+    className: "m-folder-tree"
+  }, sortedFolderPaths.map(folderPath => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+    key: folderPath
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    folderPath: folderPath,
+    onSelect: () => updateData({
+      folderPath
+    }),
+    onNewFolder: () => setInSelectFolderMode(true)
+  }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FolderTree);
 
@@ -8421,6 +8491,120 @@ function LabelledInput({
 
 /***/ }),
 
+/***/ "./src/answer-submit/determine-file-name.js":
+/*!**************************************************!*\
+  !*** ./src/answer-submit/determine-file-name.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ determineFileName)
+/* harmony export */ });
+/* harmony import */ var _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/web-scrape.js */ "./src/utils/web-scrape.js");
+/* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
+
+
+function determineFileName(filePaths) {
+  let fileNames = filePaths.map(pathToFileName);
+  fileNames = new Set(fileNames);
+  const fileName = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_0__.getQuestionName)(window.location.href);
+  if (!fileNames.has(fileName)) {
+    return fileName;
+  }
+  for (let i = 1; i <= 100; i++) {
+    const tweakedFileName = `${fileName}-${i}`;
+    if (!fileNames.has(tweakedFileName)) {
+      return tweakedFileName;
+    }
+  }
+  throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_1__.CustomError(`Oh boy! you have too many files simmilarly named to '${fileName}' in your repo. Make sure to name your file differently.`);
+}
+function pathToFileName(path) {
+  const nodes = path.split('/');
+  const fileNameWithExtension = nodes[nodes.length - 1];
+  const segments = fileNameWithExtension.split('.');
+  const hasNoDot = segments.length === 1;
+  if (hasNoDot) return segments[0];
+  segments.pop(); //take abc.def of abc.def.py
+  return segments.join('');
+}
+
+/***/ }),
+
+/***/ "./src/answer-submit/fetch-repo.js":
+/*!*****************************************!*\
+  !*** ./src/answer-submit/fetch-repo.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ fetchRepo)
+/* harmony export */ });
+/* harmony import */ var _utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/robust-fetch.js */ "./src/utils/robust-fetch.js");
+
+
+//node dto-ish hint
+/*
+  mode: "100644"
+  path: "dummy/count-number-of-maximum-bitwise-or-subsets_5.py"
+  sha: "213b70e355e6368293fbb61026acc65eaea86aea"
+  size: 509
+  type: "blob" or "tree"
+  url: "https://api.github.com/repos/yonatan-h/competitive-programming/git/blobs/213b70e355e6368293fbb61026acc65eaea86aea"
+*/
+
+async function fetchRepo() {
+  const fetchOptions = await makeFetchOptions();
+  const sha = await getSha(fetchOptions);
+  const tree = await getTree(sha, fetchOptions);
+  const folderPaths = [];
+  const filePaths = [];
+  for (const node of tree) {
+    if (node.type === 'blob') filePaths.push(node.path);else if (node.type === 'tree') folderPaths.push(node.path);
+  }
+  return {
+    folderPaths,
+    filePaths
+  };
+}
+async function makeFetchOptions() {
+  const {
+    token
+  } = await chrome.storage.local.get('token');
+  const fetchOptions = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: `Bearer ${token}`
+    }
+  };
+  return fetchOptions;
+}
+async function getSha(fetchOptions) {
+  const {
+    userName,
+    repoName
+  } = await chrome.storage.local.get(['userName', 'repoName']);
+  const url = `https://api.github.com/repos/${userName}/${repoName}/commits/main`;
+  const data = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(url, fetchOptions);
+  return data.sha;
+}
+async function getTree(sha, fetchOptions) {
+  const {
+    userName,
+    repoName
+  } = await chrome.storage.local.get(['userName', 'repoName']);
+  const treeUrl = `https://api.github.com/repos/${userName}/${repoName}/git/trees/${sha}?recursive=1`;
+  const {
+    tree
+  } = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(treeUrl, fetchOptions);
+  return tree;
+}
+
+/***/ }),
+
 /***/ "./src/answer-submit/wait-to-load.js":
 /*!*******************************************!*\
   !*** ./src/answer-submit/wait-to-load.js ***!
@@ -8440,16 +8624,34 @@ async function waitToLoad() {
   const intervalTime = 500;
 
   //ASSUMPTION: if answer code has loaded, every thing else that's needed from the page is loaded
-
   return new Promise((resolve, reject) => {
-    const intervalId = setInterval(() => (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentCode)() && resolve(), intervalTime);
+    const intervalId = setInterval(() => {
+      if (isLoaded()) {
+        clearInterval(intervalId);
+        resolve();
+      }
+    }, intervalTime);
     setTimeout(() => {
       clearInterval(intervalId);
-      reject(new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError('Time Out. The page took too long to load. Try refreshing the page'));
+      reject(new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.DisablingError('Page took too long to load. Try refreshing it.'));
     }, maxTime);
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (waitToLoad);
+function isLoaded() {
+  const mode = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getViewMode)();
+  const submissionSpans = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getSubmissionSpans)();
+  const codeLoaded = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentCode)() !== undefined;
+  if (mode === _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.READ_MODE) {
+    //There MUST be a submission for READ_MODE
+    if (codeLoaded && submissionSpans.length) return true;
+  } else if (mode === _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.EDIT_MODE) {
+    //There may or may not be a submission for EDIT_MODE
+    if (codeLoaded && submissionSpans.length) return true;
+    if (codeLoaded && (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.saysNoSubmissions)()) return true;
+  }
+  return false;
+}
 
 /***/ }),
 
@@ -8569,14 +8771,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
 /* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
 /* harmony export */   "CustomError": () => (/* binding */ CustomError),
+/* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
 /* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
 /* harmony export */   "NetworkError": () => (/* binding */ NetworkError)
 /* harmony export */ });
 class CustomError extends Error {
-  constructor(descriptionAndSolution, errorAsString = "") {
+  constructor(descriptionAndSolution, errorAsString = '') {
     super(`Custom Error: \n- ${descriptionAndSolution}\n- ${errorAsString}\n`);
     this.descriptionAndSolution = descriptionAndSolution;
     this.errorAsString = errorAsString;
+  }
+}
+class DisablingError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
   }
 }
 class NetworkError extends CustomError {
@@ -8589,7 +8797,7 @@ class NetworkError extends CustomError {
       name,
       message
     });
-    super("Weak connection? Please try again later.", errorAsString);
+    super('Weak connection? Please try again later.', errorAsString);
   }
 }
 class BadStatusError extends CustomError {
@@ -8606,7 +8814,7 @@ class BadStatusError extends CustomError {
       statusText,
       url
     });
-    super("Http response not ok. Try avoiding vpn or try again later.", errorAsString);
+    super('Http response not ok. Try avoiding vpn or try again later.', errorAsString);
   }
 }
 class BadUrlError extends CustomError {
@@ -8708,6 +8916,38 @@ function mapUrl(url) {
 
 /***/ }),
 
+/***/ "./src/utils/robust-fetch.js":
+/*!***********************************!*\
+  !*** ./src/utils/robust-fetch.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./custom-errors.js */ "./src/utils/custom-errors.js");
+
+async function robustFetch(url, options) {
+  try {
+    const fetchPromise = options ? fetch(url, options) : fetch(url);
+    const response = await fetchPromise;
+    if (!response.ok) {
+      throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.BadStatusError(response);
+    }
+    const data = await response.json();
+    if (data.error) {
+      throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.AppScriptError(data);
+    }
+    return data;
+  } catch (error) {
+    if (error instanceof TypeError) throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.NetworkError(error);else throw error;
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (robustFetch);
+
+/***/ }),
+
 /***/ "./src/utils/web-scrape.js":
 /*!*********************************!*\
   !*** ./src/utils/web-scrape.js ***!
@@ -8724,10 +8964,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getCurrentFileExtension": () => (/* binding */ getCurrentFileExtension),
 /* harmony export */   "getQuestionName": () => (/* binding */ getQuestionName),
 /* harmony export */   "getSubmissionSpans": () => (/* binding */ getSubmissionSpans),
-/* harmony export */   "getViewMode": () => (/* binding */ getViewMode)
+/* harmony export */   "getViewMode": () => (/* binding */ getViewMode),
+/* harmony export */   "saysNoSubmissions": () => (/* binding */ saysNoSubmissions)
 /* harmony export */ });
 function getQuestionName(link) {
-  const match = /.*\/problems\/.*\/*.*/.exec(link);
+  //*/problems/*/*
+  const match = /.*\/problems\/([^\/]+)\/.*/.exec(link);
   if (!match) {
     throw new Error(`Question name could not be extracted from link (${link})`);
   }
@@ -8748,9 +8990,9 @@ function getSubmissionSpans() {
 }
 function getViewMode() {
   const url = window.location.href;
-  if (url.match(/submissions[\/]?$/)) {
+  if (url.match(/submissions\/$/)) {
     return EDIT_MODE;
-  } else if (url.match(/submissions\/[^\/]+[\/]?/)) {
+  } else if (url.match(/submissions\/[^\/]+\//)) {
     return READ_MODE;
   } else {
     throw Error('the url is niether */submissions/* nor */submissions/');
@@ -8759,12 +9001,10 @@ function getViewMode() {
 function getCurrentCode() {
   if (getViewMode() === EDIT_MODE) {
     const editor = document.querySelector('div.view-lines');
-    const isLoaded = editor !== null;
-    return isLoaded ? editor.textContent : null;
+    return editor?.textContent;
   } else {
     const codeReader = document.querySelector('pre code');
-    const isLoaded = codeReader !== null;
-    return isLoaded ? codeReader.textContent : null;
+    return codeReader?.textContent;
   }
 }
 function getCurrentFileExtension() {
@@ -8822,6 +9062,15 @@ function acceptedSubmissionExists() {
   }
   return false;
 }
+function saysNoSubmissions() {
+  const nullImageExists = document.querySelector('img[alt="数据为空"]') !== null;
+  if (nullImageExists) return true;
+  const noDataCandidateDivs = document.querySelectorAll('div.text-label-3');
+  for (const div of noDataCandidateDivs) {
+    if (div.textContent.toLowerCase() === 'no data') return true;
+  }
+  return false;
+}
 
 
 /***/ }),
@@ -8845,7 +9094,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n  /* color: var(--m-dark-grey-color); */\n  color: black  ;\n}\n\n.m-submit-card input {\n  padding: 0.5rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n  width: 100%;\n  margin-bottom: 1rem;\n  background: transparent;\n}\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 20rem;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  bottom: 30%;\n\n  background-color: white;\n\n  width: var(--width);\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-drawer-button img {\n  width: 100%;\n  object-fit: contain;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n}\n\n.m-spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1 {\n  flex: 1;\n}\n\n.m-flex-2 {\n  flex: 2;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n  /* color: var(--m-dark-grey-color); */\n  color: black;\n}\n\n.m-submit-card input {\n  padding: 0.5rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n  width: 100%;\n  margin-bottom: 1rem;\n  background: transparent;\n}\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 20rem;\n  width: var(--width);\n  max-height: 60vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  bottom: 30%;\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-drawer-button img {\n  width: 100%;\n  object-fit: contain;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n}\n\n.m-spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1 {\n  flex: 1;\n}\n\n.m-flex-2 {\n  flex: 2;\n}\n\n.m-folder-tree{\n  max-height: 10vh;\n  overflow: auto;\n  background-color: red;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8871,7 +9120,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.8rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8897,7 +9146,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-timer-playing::before,\n.m-timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.m-timer-playing::before {\n  background-color: var(--m-secondary-color);\n  animation: m-resize-animation 0.5s linear infinite alternate;\n}\n@keyframes m-resize-animation {\n  0% {\n    opacity: 0.5;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n.m-timer-paused::before {\n  background-color: lightgrey;\n}\n\n.m-timer-playing,\n.m-timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-play-pause-button {\n  /* looks  */\n  --size: var(--m-medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.m-play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-timer * {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\n.m-timer button {\n  border: none;\n  background: none;\n}\n\n.m-timer {\n  /* size  */\n  padding: 0rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 30%;\n  z-index: 1000;\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n  font-family: var(--m-font-family);\n\n  /* border */\n  border: var(--m-border);\n  border-top: none;\n  --br: var(--m-border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-timer-playing::before,\n.m-timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.m-timer-playing::before {\n  background-color: var(--m-secondary-color);\n  animation: m-resize-animation 0.5s linear infinite alternate;\n}\n@keyframes m-resize-animation {\n  0% {\n    opacity: 0.3;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n.m-timer-paused::before {\n  background-color: lightgrey;\n}\n\n.m-timer-playing,\n.m-timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-play-pause-button {\n  /* looks  */\n  --size: var(--m-medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.m-play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-timer * {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\n.m-timer button {\n  border: none;\n  background: none;\n}\n\n.m-timer {\n  /* size  */\n  padding: 0rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 50%;\n  z-index: 1000;\n  transform: translateX(-50%);\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n  font-family: var(--m-font-family);\n\n  /* border */\n  border: var(--m-border);\n  border-top: none;\n  --br: var(--m-border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9462,7 +9711,9 @@ function ViewSelector() {
     inView: currentPage === QUESTION_PAGE
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: currentPage === SUBMISSION_PAGE ? '' : 'm-d-none'
-  }));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_answer_submit_SubmitCard_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    inView: currentPage === SUBMISSION_PAGE
+  })));
 }
 function matchesSubmissionPage(url) {
   //https://leetcode.com/problems/two-sum/submissions/54654

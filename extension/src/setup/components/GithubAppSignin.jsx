@@ -7,7 +7,7 @@ import removeExcessSlash from '../../utils/excess-slash.js';
 
 function GithubAppSignin({
   data,
-  setDatum,
+  updateData,
   runBeforeNext,
   nextIsDisabled,
   goPrevious,
@@ -29,7 +29,7 @@ function GithubAppSignin({
       throw error;
     }
 
-    setDatum('token', token);
+    updateData({ token });
   };
 
   return (

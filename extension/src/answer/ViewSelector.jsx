@@ -35,7 +35,7 @@ function ViewSelector() {
         <Timer inView={currentPage === QUESTION_PAGE} />
       </div>
       <div className={currentPage === SUBMISSION_PAGE ? '' : 'm-d-none'}>
-        {/* <SubmitCard inView={currentPage === SUBMISSION_PAGE} /> */}
+        <SubmitCard inView={currentPage === SUBMISSION_PAGE} />
       </div>
     </>
   );

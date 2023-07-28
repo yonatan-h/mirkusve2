@@ -115,14 +115,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
 /* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
 /* harmony export */   "CustomError": () => (/* binding */ CustomError),
+/* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
 /* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
 /* harmony export */   "NetworkError": () => (/* binding */ NetworkError)
 /* harmony export */ });
 class CustomError extends Error {
-  constructor(descriptionAndSolution, errorAsString = "") {
+  constructor(descriptionAndSolution, errorAsString = '') {
     super(`Custom Error: \n- ${descriptionAndSolution}\n- ${errorAsString}\n`);
     this.descriptionAndSolution = descriptionAndSolution;
     this.errorAsString = errorAsString;
+  }
+}
+class DisablingError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
   }
 }
 class NetworkError extends CustomError {
@@ -135,7 +141,7 @@ class NetworkError extends CustomError {
       name,
       message
     });
-    super("Weak connection? Please try again later.", errorAsString);
+    super('Weak connection? Please try again later.', errorAsString);
   }
 }
 class BadStatusError extends CustomError {
@@ -152,7 +158,7 @@ class BadStatusError extends CustomError {
       statusText,
       url
     });
-    super("Http response not ok. Try avoiding vpn or try again later.", errorAsString);
+    super('Http response not ok. Try avoiding vpn or try again later.', errorAsString);
   }
 }
 class BadUrlError extends CustomError {

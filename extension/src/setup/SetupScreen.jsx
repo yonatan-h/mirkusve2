@@ -45,17 +45,17 @@ function SetupScreen() {
     setScreenIndex(screenIndex - 1);
   };
 
-  const setDatum = (key, value) => {
+  const updateData = (updated) => {
     //user is taking action to correct the error
     setCustomError(undefined);
-    setData({ ...data, [key]: value });
+    setData({ ...data, ...updated });
   };
 
   //all screens created here so that num of use[hook] calls are the same for every render
   const screens = screenFunctions.map((screenFunction) =>
     screenFunction({
       data,
-      setDatum,
+      updateData,
       runBeforeNext,
       nextIsDisabled,
       goPrevious, //optional

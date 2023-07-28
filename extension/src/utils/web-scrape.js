@@ -1,5 +1,6 @@
 function getQuestionName(link) {
-  const match = /.*\/problems\/.*\/*.*/.exec(link);
+  //*/problems/*/*
+  const match = /.*\/problems\/([^\/]+)\/.*/.exec(link);
   if (!match) {
     throw new Error(`Question name could not be extracted from link (${link})`);
   }
@@ -26,9 +27,9 @@ function getSubmissionSpans() {
 
 function getViewMode() {
   const url = window.location.href;
-  if (url.match(/submissions[\/]?$/)) {
+  if (url.match(/submissions\/$/)) {
     return EDIT_MODE;
-  } else if (url.match(/submissions\/[^\/]+[\/]?/)) {
+  } else if (url.match(/submissions\/[^\/]+\//)) {
     return READ_MODE;
   } else {
     throw Error('the url is niether */submissions/* nor */submissions/');
@@ -38,12 +39,10 @@ function getViewMode() {
 function getCurrentCode() {
   if (getViewMode() === EDIT_MODE) {
     const editor = document.querySelector('div.view-lines');
-    const isLoaded = editor !== null;
-    return isLoaded ? editor.textContent : null;
+    return editor?.textContent;
   } else {
     const codeReader = document.querySelector('pre code');
-    const isLoaded = codeReader !== null;
-    return isLoaded ? codeReader.textContent : null;
+    return codeReader?.textContent;
   }
 }
 
@@ -107,6 +106,19 @@ function acceptedSubmissionExists() {
   return false;
 }
 
+function saysNoSubmissions() {
+  const nullImageExists =
+    document.querySelector('img[alt="数据为空"]') !== null;
+  if (nullImageExists) return true;
+
+  const noDataCandidateDivs = document.querySelectorAll('div.text-label-3');
+  for (const div of noDataCandidateDivs) {
+    if (div.textContent.toLowerCase() === 'no data') return true;
+  }
+
+  return false;
+}
+
 export {
   EDIT_MODE,
   READ_MODE,
@@ -117,4 +129,5 @@ export {
   getCurrentFileExtension,
   currentCodeIsAccepted,
   acceptedSubmissionExists,
+  saysNoSubmissions,
 };

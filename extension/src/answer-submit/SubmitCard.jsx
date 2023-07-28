@@ -1,3 +1,6 @@
+// 0||undefined is undefined
+//but 0??undefined is 0
+
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import FolderTree from './components/FolderTree.jsx';
@@ -8,6 +11,9 @@ import CustomErrorView from './components/CustomErrorView.jsx';
 import { CustomError, EmptyInputError } from '../utils/custom-errors';
 import waitToLoad from './wait-to-load.js';
 import autoFill from './auto-fill';
+import fetchFilesAndFolders from './fetch-repo.js';
+import determineFileName from './determine-file-name.js';
+import { getSubmissionSpans } from '../utils/web-scrape';
 
 const cancelIcon = mapUrl('/media/icons/cancel.svg');
 const folderIcon = mapUrl('/media/icons/folder.svg');
@@ -18,13 +24,14 @@ const sendIcon = mapUrl('/media/icons/send.svg');
 const timeIcon = mapUrl('/media/icons/time.svg');
 const tryIcon = mapUrl('/media/icons/try.svg');
 
-function SubmitCard() {
+function SubmitCard({ inView }) {
   const [isHidden, setIsHidden] = useState(false);
   const [url, setUrl] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [customError, setCustomError] = useState(undefined);
   const [data, setData] = useState({});
-  const setDatum = (name, value) => setData({ ...data, [name]: value });
+  const [inSelectFolderMode, setInSelectFolderMode] = useState(true);
+  const updateData = (newData) => setData({ ...data, ...newData });
 
   const runAndHandleCustomError = async (task) => {
     try {
@@ -42,18 +49,29 @@ function SubmitCard() {
   }, []);
 
   useEffect(() => {
+    if (!inView) return;
+    let collected = {};
+    const collectData = (updated) => (collected = { ...collected, ...updated });
+
     runAndHandleCustomError(async () => {
       await waitToLoad();
-      await autoFill(setDatum);
-      alert(JSON.stringify(data));
+
+      await Promise.all([
+        autoFill(collectData),
+        fetchFilesAndFolders().then(collectData),
+      ]);
+
+      collectData({ fileName: determineFileName(collected.filePaths) });
+      setData(collected);
     });
-  }, [window.location.href]);
+  }, [inView, url]);
 
   const onInputChange = (event) => {
     const target = event.target;
     const name = target.name;
-    const value = target.value || target.innerText;
-    setDatum(name, value);
+    const value = target.value ?? target.innerText;
+    updateData({ [name]: value });
+    console.log(name, value);
   };
 
   return (
@@ -80,7 +98,7 @@ function SubmitCard() {
                   className="m-flex-1"
                   onChange={onInputChange}
                   required={true}
-                  value={data.submissions || ''}
+                  value={data.submissions ?? ''}
                 />
               }
               label="Tries"
@@ -94,7 +112,7 @@ function SubmitCard() {
                   name="minutes"
                   onChange={onInputChange}
                   required={true}
-                  value={data.minutes || ''}
+                  value={data.minutes ?? ''}
                 />
               }
               label="Minutes"
@@ -109,7 +127,7 @@ function SubmitCard() {
                   name="fileName"
                   onChange={onInputChange}
                   required={true}
-                  value={data.fileName || ''}
+                  value={data.fileName ?? ''}
                 />
               }
               label="Filename"
@@ -122,16 +140,22 @@ function SubmitCard() {
                   name="fileExtension"
                   onChange={onInputChange}
                   required={true}
-                  value={data.fileExtension || ''}
+                  value={data.fileExtension ?? ''}
                 />
               }
               label="Extension"
               className="m-flex-1"
             />
           </div>
-
-          <FolderTree />
-          <CreateNewFolder />
+          {inSelectFolderMode ? (
+            <FolderTree
+              folderPaths={data.folderPaths}
+              setInSelectFolderMode={setInSelectFolderMode}
+              updateData={updateData}
+            />
+          ) : (
+            <CreateNewFolder />
+          )}
 
           <button type="submit" onClick={(e) => 1 + 1}>
             Submit

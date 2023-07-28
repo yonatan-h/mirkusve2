@@ -8211,7 +8211,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function GithubAppSignin({
   data,
-  setDatum,
+  updateData,
   runBeforeNext,
   nextIsDisabled,
   goPrevious
@@ -8231,7 +8231,9 @@ function GithubAppSignin({
       }
       throw error;
     }
-    setDatum('token', token);
+    updateData({
+      token
+    });
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Sign In"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-small-top"
@@ -8425,20 +8427,24 @@ __webpack_require__.r(__webpack_exports__);
 
 function NameAndGroup({
   data,
-  setDatum,
+  updateData,
   runBeforeNext,
   nextIsDisabled
 }) {
   const setNameAndGroup = async () => {
     if (!data.name) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_2__.EmptyInputError('name');
     const groupUrl = await fetchGroupUrl(data.name);
-    setDatum('groupUrl', groupUrl);
+    updateData({
+      groupUrl
+    });
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Write your name exactly as in the A2SV sheets"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     placeholder: "eg) Abebe Kebede",
     className: "m-small-top w-100",
-    onChange: event => setDatum('name', event.target.value)
+    onChange: event => updateData({
+      name: event.target.value
+    })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
     onClick: () => runBeforeNext(setNameAndGroup),
     nextIsDisabled: nextIsDisabled
@@ -8504,7 +8510,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Repo({
   data,
-  setDatum,
+  updateData,
   runBeforeNext,
   nextIsDisabled
 }) {
@@ -8524,8 +8530,10 @@ function Repo({
     errorIfRepoMissing(response, userName, repoName);
     await errorIfTooManyTries(response);
     if (!response.ok) throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.BadStatusError(response);
-    setDatum('userName', userName);
-    setDatum('repoName', repoName);
+    updateData({
+      userName,
+      repoName
+    });
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: "m-big-fs"
@@ -8536,7 +8544,9 @@ function Repo({
   }, "eg) https://github.com/abebe-kebede/competitive-programming"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     className: "w-100  m-small-top",
     placeholder: "A2SV repo",
-    onChange: event => setDatum('repoLink', event.target.value)
+    onChange: event => updateData({
+      repoLink: event.target.value
+    })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
     onClick: () => runBeforeNext(setRepoInfo),
     nextIsDisabled: nextIsDisabled
@@ -8687,14 +8697,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
 /* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
 /* harmony export */   "CustomError": () => (/* binding */ CustomError),
+/* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
 /* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
 /* harmony export */   "NetworkError": () => (/* binding */ NetworkError)
 /* harmony export */ });
 class CustomError extends Error {
-  constructor(descriptionAndSolution, errorAsString = "") {
+  constructor(descriptionAndSolution, errorAsString = '') {
     super(`Custom Error: \n- ${descriptionAndSolution}\n- ${errorAsString}\n`);
     this.descriptionAndSolution = descriptionAndSolution;
     this.errorAsString = errorAsString;
+  }
+}
+class DisablingError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
   }
 }
 class NetworkError extends CustomError {
@@ -8707,7 +8723,7 @@ class NetworkError extends CustomError {
       name,
       message
     });
-    super("Weak connection? Please try again later.", errorAsString);
+    super('Weak connection? Please try again later.', errorAsString);
   }
 }
 class BadStatusError extends CustomError {
@@ -8724,7 +8740,7 @@ class BadStatusError extends CustomError {
       statusText,
       url
     });
-    super("Http response not ok. Try avoiding vpn or try again later.", errorAsString);
+    super('Http response not ok. Try avoiding vpn or try again later.', errorAsString);
   }
 }
 class BadUrlError extends CustomError {
@@ -8857,7 +8873,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.8rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9403,19 +9419,19 @@ function SetupScreen() {
   const goPrevious = () => {
     setScreenIndex(screenIndex - 1);
   };
-  const setDatum = (key, value) => {
+  const updateData = updated => {
     //user is taking action to correct the error
     setCustomError(undefined);
     setData({
       ...data,
-      [key]: value
+      ...updated
     });
   };
 
   //all screens created here so that num of use[hook] calls are the same for every render
   const screens = screenFunctions.map(screenFunction => screenFunction({
     data,
-    setDatum,
+    updateData,
     runBeforeNext,
     nextIsDisabled,
     goPrevious //optional
