@@ -91,11 +91,14 @@
   border: none;
 }
 
+.m-d-none {
+  display: none;
+}
 
 /* for testing  */
-.m-bg-red{
+.m-bg-red {
   background-color: red;
 }
-.m-bg-blue{
+.m-bg-blue {
   background-color: blue;
 }

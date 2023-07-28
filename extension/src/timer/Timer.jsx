@@ -67,10 +67,11 @@ function Timer() {
               <img src={playIcon} alt="play" />
             </button>
           )}
-          <p className="m-secondary-underline">
-            <span className="m-large-fs "> {calculateMinutes(duration)} </span>
-            min
-          </p>
+
+          <div>
+            <span className="m-medium-fs "> {calculateMinutes(duration)} </span>
+            <span className="m-small-fs">min</span>
+          </div>
         </div>
       </div>
     </div>

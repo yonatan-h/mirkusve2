@@ -7,22 +7,18 @@ import '../assets/style.css';
 
 function ViewSelector() {
   //enumish
-  const PageStates = {
-    inQuestionPage: 'in-question-page',
-    inSubmissionsPage: 'in-submissions-page',
-    inNietherPage: 'in-niether-page',
-  };
-  const [currentPage, setCurrentPage] = useState(PageStates.inNietherPage);
+  const QUESTION_PAGE = 'question-page';
+  const SUBMISSION_PAGE = 'answer-page';
+  const [currentPage, setCurrentPage] = useState(null);
 
   useEffect(() => {
-    console.log('use-effect-view-selector');
     const setPage = (url) => {
       if (matchesQuestionPage(url)) {
-        setCurrentPage(PageStates.inQuestionPage);
+        setCurrentPage(QUESTION_PAGE);
       } else if (matchesSubmissionPage(url)) {
-        setCurrentPage(PageStates.inSubmissionsPage);
+        setCurrentPage(SUBMISSION_PAGE);
       } else {
-        setCurrentPage(PageStates.inSubmissionsPage);
+        setCurrentPage(undefined);
       }
     };
     setPage(window.location.href);
@@ -30,14 +26,17 @@ function ViewSelector() {
       setPage(event.destination.url)
     );
   }, []);
-
-  if (currentPage == PageStates.inQuestionPage) {
-    return <Timer />;
-  } else if (currentPage == PageStates.inSubmissionsPage) {
-    return <SubmitCard />;
-  } else {
-    return null;
-  }
+  return (
+    <>
+      <div className={currentPage === QUESTION_PAGE ? '' : 'm-d-none'}>
+        {/* more convinient if it counts only in the question page  */}
+        <Timer key={Math.random()} />
+      </div>
+      <div className={currentPage === SUBMISSION_PAGE ? '' : 'm-d-none'}>
+        <SubmitCard />
+      </div>
+    </>
+  );
 }
 
 function matchesSubmissionPage(url) {

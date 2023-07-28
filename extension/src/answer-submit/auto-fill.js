@@ -12,7 +12,7 @@ export default async function autoFill(setDatum) {
   if (!currentCodeIsAccepted()) {
     if (acceptedSubmissionExists()) {
       throw new CustomError(
-        `You can't submit an unaccepted answer. Please VIEW an accepted answer.`
+        `You can't submit an unaccepted answer. Please select/view an accepted answer.`
       );
     } else {
       throw new CustomError(

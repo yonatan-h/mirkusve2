@@ -4,7 +4,7 @@
 }
 
 .m-play-pause-button {
-  --size: 1.75rem;
+  --size: 1.5rem;
   width: var(--size);
   height: var(--size);
   border-radius: 100%;
@@ -62,8 +62,8 @@
 
   /*shape*/
   --br: var(--m-border-radius);
-  width: 10rem;
-  height: 3rem;
+  width: 8rem;
+  height: 2rem;
 
   border-bottom-left-radius: var(--br);
   border-bottom-right-radius: var(--br);
@@ -83,8 +83,8 @@
 .m-timer {
   /*content alignment*/
   display: flex;
-  align-items: center;
   gap: 1rem;
+  align-items: center;
 
   /*justin case*/
   box-sizing: border-box;
