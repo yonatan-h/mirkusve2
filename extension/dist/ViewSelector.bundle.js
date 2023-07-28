@@ -8485,7 +8485,6 @@ const playIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/
 function Timer({
   inView
 }) {
-  console.log(`timer-is-in-view==${inView}`);
   //assuming load duration and store duration are almost instantanous
   //other wise, load, and store race conditions can happen
   const [countingState, setCountingState] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -8499,7 +8498,6 @@ function Timer({
     const oldDurationPromise = (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_3__.getQuestionName)(window.location.href)).then(duration => duration || 0); //incase it's the first time it's running
 
     const updateTime = async () => {
-      console.log('updating-time');
       const duration = (await oldDurationPromise) + Date.now() - startTime;
       setDuration(duration);
       (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.storeDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_3__.getQuestionName)(window.location.href), duration);
@@ -8512,24 +8510,22 @@ function Timer({
     };
   }, [countingState]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const helpUser = () => {
-      //Timer playing when not visible is danger
-      if (!inView && countingState.isCounting) {
-        setCountingState({
-          isCounting: false,
-          byUser: false
-        });
-      }
+    console.log(inView, countingState);
+    //Timer playing when not visible is danger
+    if (!inView && countingState.isCounting) {
+      setCountingState({
+        isCounting: false,
+        byUser: false
+      });
+    }
 
-      //Let the automatically paused timer resume
-      if (inView && !countingState.isCounting && !countingState.byUser) {
-        setCountingState({
-          isCounting: true,
-          byUser: false
-        });
-      }
-    };
-    helpUser();
+    //Let the automatically paused timer resume
+    if (inView && !countingState.isCounting && !countingState.byUser) {
+      setCountingState({
+        isCounting: true,
+        byUser: false
+      });
+    }
   }, [inView]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "m-timer "
