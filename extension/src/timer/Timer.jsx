@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import mapUrl from '../utils/mapUrl.js';
 import './style.css';
 
-import getQuestionName from '../utils/get-question-name.js';
+import { getQuestionName } from '../utils/web-scrape.js';
 import {
   loadDuration,
   storeDuration,
@@ -17,14 +17,18 @@ const playIcon = mapUrl('/media/play.svg');
 // const getQuestionName = () => 'abebe';
 // const calculateMinutes = (x) => x % 100;
 
-function Timer() {
+function Timer({ inView }) {
+  console.log(`timer-is-in-view==${inView}`);
   //assuming load duration and store duration are almost instantanous
   //other wise, load, and store race conditions can happen
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [countingState, setCountingState] = useState({
+    isCounting: false,
+    byUser: false,
+  });
   const [duration, setDuration] = useState(0);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!countingState.isCounting) return;
 
     const startTime = Date.now();
     const oldDurationPromise = loadDuration(
@@ -32,6 +36,7 @@ function Timer() {
     ).then((duration) => duration || 0); //incase it's the first time it's running
 
     const updateTime = async () => {
+      console.log('updating-time');
       const duration = (await oldDurationPromise) + Date.now() - startTime;
       setDuration(duration);
       storeDuration(getQuestionName(window.location.href), duration);
@@ -44,21 +49,46 @@ function Timer() {
       clearInterval(intervalId);
       updateTime();
     };
-  }, [isPlaying]);
+  }, [countingState]);
+
+  useEffect(() => {
+    const helpUser = () => {
+      //Timer playing when not visible is danger
+      if (!inView && countingState.isCounting) {
+        setCountingState({ isCounting: false, byUser: false });
+      }
+
+      //Let the automatically paused timer resume
+      if (inView && !countingState.isCounting && !countingState.byUser) {
+        setCountingState({ isCounting: true, byUser: false });
+      }
+    };
+    helpUser();
+  }, [inView]);
 
   return (
     <div className="m-timer ">
-      {isPlaying ? (
+      {countingState.isCounting ? (
         <button
           className="m-play-pause-button m-timer-playing"
-          onClick={() => setIsPlaying(false)}
+          onClick={() =>
+            setCountingState({
+              isCounting: false,
+              byUser: true,
+            })
+          }
         >
           <img src={pauseIcon} alt="pause" />
         </button>
       ) : (
         <button
           className="m-play-pause-button m-timer-paused"
-          onClick={() => setIsPlaying(true)}
+          onClick={() =>
+            setCountingState({
+              isCounting: true,
+              byUser: true,
+            })
+          }
         >
           <img src={playIcon} alt="play" />
         </button>

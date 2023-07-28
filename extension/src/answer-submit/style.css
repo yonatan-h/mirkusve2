@@ -4,6 +4,8 @@
   padding: 0;
   box-sizing: border-box;
   font-family: var(--m-font-family);
+  /* color: var(--m-dark-grey-color); */
+  color: black  ;
 }
 
 .m-submit-card input {
@@ -12,6 +14,7 @@
   border: 1px solid var(--m-grey-color);
   width: 100%;
   margin-bottom: 1rem;
+  background: transparent;
 }
 .m-submit-card {
   /* size */
@@ -80,15 +83,15 @@
   background-color: white;
 }
 
-.m-spaced-flex{
+.m-spaced-flex {
   display: flex;
   gap: 0.5rem;
 }
 
-.m-flex-1{
+.m-flex-1 {
   flex: 1;
 }
 
-.m-flex-2{
+.m-flex-2 {
   flex: 2;
 }

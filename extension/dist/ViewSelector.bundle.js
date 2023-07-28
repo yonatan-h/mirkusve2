@@ -8132,6 +8132,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/mapUrl.js */ "./src/utils/mapUrl.js");
 /* harmony import */ var _components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/CustomErrorView.jsx */ "./src/answer-submit/components/CustomErrorView.jsx");
 /* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
+/* harmony import */ var _wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./wait-to-load.js */ "./src/answer-submit/wait-to-load.js");
+/* harmony import */ var _auto_fill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./auto-fill */ "./src/answer-submit/auto-fill.js");
+
+
 
 
 
@@ -8150,19 +8154,34 @@ const timeIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/
 const tryIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/try.svg');
 function SubmitCard() {
   const [isHidden, setIsHidden] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const url = window.location.href;
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const load = async () => {};
-    load();
-  }, [url]);
   const setDatum = (name, value) => setData({
     ...data,
     [name]: value
   });
-  const onChange = event => {
+  const runAndHandleCustomError = async task => {
+    try {
+      await task();
+    } catch (error) {
+      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw error;
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const changeUrl = event => setUrl(event.destination.url);
+    navigation.addEventListener('navigate', changeUrl);
+    return () => navigation.removeEventListener('navigate', changeUrl);
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    runAndHandleCustomError(async () => {
+      await (0,_wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
+      await (0,_auto_fill__WEBPACK_IMPORTED_MODULE_9__["default"])(setDatum);
+      alert(JSON.stringify(data));
+    });
+  }, [window.location.href]);
+  const onInputChange = event => {
     const target = event.target;
     const name = target.name;
     const value = target.value || target.innerText;
@@ -8189,7 +8208,7 @@ function SubmitCard() {
       min: "0",
       name: "submissions",
       className: "m-flex-1",
-      onChange: onChange,
+      onChange: onInputChange,
       required: true,
       value: data.submissions || ''
     }),
@@ -8200,7 +8219,7 @@ function SubmitCard() {
       type: "number",
       min: "0",
       name: "minutes",
-      onChange: onChange,
+      onChange: onInputChange,
       required: true,
       value: data.minutes || ''
     }),
@@ -8212,7 +8231,7 @@ function SubmitCard() {
     input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
       type: "text",
       name: "fileName",
-      onChange: onChange,
+      onChange: onInputChange,
       required: true,
       value: data.fileName || ''
     }),
@@ -8222,7 +8241,7 @@ function SubmitCard() {
     input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
       type: "text",
       name: "fileExtension",
-      onChange: onChange,
+      onChange: onInputChange,
       required: true,
       value: data.fileExtension || ''
     }),
@@ -8234,6 +8253,51 @@ function SubmitCard() {
   }, "Submit"))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SubmitCard);
+
+/***/ }),
+
+/***/ "./src/answer-submit/auto-fill.js":
+/*!****************************************!*\
+  !*** ./src/answer-submit/auto-fill.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
+/* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/custom-errors.js */ "./src/utils/custom-errors.js");
+/* harmony import */ var _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/web-scrape.js */ "./src/utils/web-scrape.js");
+
+
+
+
+async function autoFill(setDatum) {
+  if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length) {
+    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError('No answer has been submitted so far. There is nothing to submit.');
+  }
+  if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.currentCodeIsAccepted)()) {
+    if ((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.acceptedSubmissionExists)()) {
+      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(`You can't submit an unaccepted answer. Please select/view an accepted answer.`);
+    } else {
+      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(`Try more and have an accepted answer! Unaccepted answers can not be submitted.`);
+    }
+  }
+  const url = window.location.href;
+  console.log(JSON.stringify({
+    submissions: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length,
+    minutes: (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.calculateMinutes)(await (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionName)(url))),
+    fileExtension: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentFileExtension)(),
+    file: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentCode)()
+  }));
+  setDatum('submissions', (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length);
+  setDatum('minutes', await (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionName)(url)));
+  // setDatum('fileName', getQuestionName(url));
+  setDatum('fileExtension', (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentFileExtension)());
+  setDatum('file', (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentCode)());
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (autoFill);
 
 /***/ }),
 
@@ -8357,6 +8421,38 @@ function LabelledInput({
 
 /***/ }),
 
+/***/ "./src/answer-submit/wait-to-load.js":
+/*!*******************************************!*\
+  !*** ./src/answer-submit/wait-to-load.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/custom-errors.js */ "./src/utils/custom-errors.js");
+/* harmony import */ var _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/web-scrape.js */ "./src/utils/web-scrape.js");
+
+
+async function waitToLoad() {
+  const maxTime = 10000;
+  const intervalTime = 500;
+
+  //ASSUMPTION: if answer code has loaded, every thing else that's needed from the page is loaded
+
+  return new Promise((resolve, reject) => {
+    const intervalId = setInterval(() => (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentCode)() && resolve(), intervalTime);
+    setTimeout(() => {
+      clearInterval(intervalId);
+      reject(new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.CustomError('Time Out. The page took too long to load. Try refreshing the page'));
+    }, maxTime);
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (waitToLoad);
+
+/***/ }),
+
 /***/ "./src/timer/Timer.jsx":
 /*!*****************************!*\
   !*** ./src/timer/Timer.jsx ***!
@@ -8371,7 +8467,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/mapUrl.js */ "./src/utils/mapUrl.js");
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.css */ "./src/timer/style.css");
-/* harmony import */ var _utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/get-question-name.js */ "./src/utils/get-question-name.js");
+/* harmony import */ var _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/web-scrape.js */ "./src/utils/web-scrape.js");
 /* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
 
 
@@ -8386,20 +8482,27 @@ const playIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/
 // const getQuestionName = () => 'abebe';
 // const calculateMinutes = (x) => x % 100;
 
-function Timer() {
+function Timer({
+  inView
+}) {
+  console.log(`timer-is-in-view==${inView}`);
   //assuming load duration and store duration are almost instantanous
   //other wise, load, and store race conditions can happen
-  const [isPlaying, setIsPlaying] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [countingState, setCountingState] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    isCounting: false,
+    byUser: false
+  });
   const [duration, setDuration] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (!isPlaying) return;
+    if (!countingState.isCounting) return;
     const startTime = Date.now();
-    const oldDurationPromise = (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.loadDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_3__["default"])(window.location.href)).then(duration => duration || 0); //incase it's the first time it's running
+    const oldDurationPromise = (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_3__.getQuestionName)(window.location.href)).then(duration => duration || 0); //incase it's the first time it's running
 
     const updateTime = async () => {
+      console.log('updating-time');
       const duration = (await oldDurationPromise) + Date.now() - startTime;
       setDuration(duration);
-      (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.storeDuration)((0,_utils_get_question_name_js__WEBPACK_IMPORTED_MODULE_3__["default"])(window.location.href), duration);
+      (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.storeDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_3__.getQuestionName)(window.location.href), duration);
     };
     updateTime();
     const intervalId = setInterval(updateTime, 1000);
@@ -8407,18 +8510,44 @@ function Timer() {
       clearInterval(intervalId);
       updateTime();
     };
-  }, [isPlaying]);
+  }, [countingState]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const helpUser = () => {
+      //Timer playing when not visible is danger
+      if (!inView && countingState.isCounting) {
+        setCountingState({
+          isCounting: false,
+          byUser: false
+        });
+      }
+
+      //Let the automatically paused timer resume
+      if (inView && !countingState.isCounting && !countingState.byUser) {
+        setCountingState({
+          isCounting: true,
+          byUser: false
+        });
+      }
+    };
+    helpUser();
+  }, [inView]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "m-timer "
-  }, isPlaying ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, countingState.isCounting ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "m-play-pause-button m-timer-playing",
-    onClick: () => setIsPlaying(false)
+    onClick: () => setCountingState({
+      isCounting: false,
+      byUser: true
+    })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: pauseIcon,
     alt: "pause"
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "m-play-pause-button m-timer-paused",
-    onClick: () => setIsPlaying(true)
+    onClick: () => setCountingState({
+      isCounting: true,
+      byUser: true
+    })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: playIcon,
     alt: "play"
@@ -8560,28 +8689,6 @@ function calculateMinutes(duration) {
 
 /***/ }),
 
-/***/ "./src/utils/get-question-name.js":
-/*!****************************************!*\
-  !*** ./src/utils/get-question-name.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-function getQuestionName(link) {
-  // -> /*/problems/*withoutslash/*;
-  const match = /.*\/problems\/([^/.]*)\/*.*/.exec(link);
-  if (!match) {
-    throw new Error(`Question name could not be extracted from link (${link})`);
-  }
-  return match[1];
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getQuestionName);
-
-/***/ }),
-
 /***/ "./src/utils/mapUrl.js":
 /*!*****************************!*\
   !*** ./src/utils/mapUrl.js ***!
@@ -8605,6 +8712,124 @@ function mapUrl(url) {
 
 /***/ }),
 
+/***/ "./src/utils/web-scrape.js":
+/*!*********************************!*\
+  !*** ./src/utils/web-scrape.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "EDIT_MODE": () => (/* binding */ EDIT_MODE),
+/* harmony export */   "READ_MODE": () => (/* binding */ READ_MODE),
+/* harmony export */   "acceptedSubmissionExists": () => (/* binding */ acceptedSubmissionExists),
+/* harmony export */   "currentCodeIsAccepted": () => (/* binding */ currentCodeIsAccepted),
+/* harmony export */   "getCurrentCode": () => (/* binding */ getCurrentCode),
+/* harmony export */   "getCurrentFileExtension": () => (/* binding */ getCurrentFileExtension),
+/* harmony export */   "getQuestionName": () => (/* binding */ getQuestionName),
+/* harmony export */   "getSubmissionSpans": () => (/* binding */ getSubmissionSpans),
+/* harmony export */   "getViewMode": () => (/* binding */ getViewMode)
+/* harmony export */ });
+function getQuestionName(link) {
+  const match = /.*\/problems\/.*\/*.*/.exec(link);
+  if (!match) {
+    throw new Error(`Question name could not be extracted from link (${link})`);
+  }
+  return match[1];
+}
+
+//Ways of viewing submitted leetcode answers
+
+// eg) When first time submitting, code shown is still editable. In .../submissions/
+const EDIT_MODE = 'edit-mode';
+//eg) When visiting old submissions, code shown is not editable. In .../submissions/.../
+const READ_MODE = 'view-mode';
+function getSubmissionSpans() {
+  const acceptedSelector = 'div.cursor-pointer span.text-green-s';
+  const nonAcceptedSelector = 'div.cursor-pointer span.text-red-s';
+  const submissionSpans = document.querySelectorAll(`${acceptedSelector}, ${nonAcceptedSelector}`);
+  return submissionSpans;
+}
+function getViewMode() {
+  const url = window.location.href;
+  if (url.match(/submissions[\/]?$/)) {
+    return EDIT_MODE;
+  } else if (url.match(/submissions\/[^\/]+[\/]?/)) {
+    return READ_MODE;
+  } else {
+    throw Error('the url is niether */submissions/* nor */submissions/');
+  }
+}
+function getCurrentCode() {
+  if (getViewMode() === EDIT_MODE) {
+    const editor = document.querySelector('div.view-lines');
+    const isLoaded = editor !== null;
+    return isLoaded ? editor.textContent : null;
+  } else {
+    const codeReader = document.querySelector('pre code');
+    const isLoaded = codeReader !== null;
+    return isLoaded ? codeReader.textContent : null;
+  }
+}
+function getCurrentFileExtension() {
+  const editModeMap = {
+    python3: 'py',
+    cpp: 'cpp',
+    java: 'java',
+    python: 'py',
+    c: 'c',
+    csharp: 'cs',
+    javascript: 'js',
+    ruby: 'rb',
+    swift: 'swift',
+    golang: 'go',
+    scala: 'sc',
+    kotlin: 'kt',
+    rust: 'rs',
+    php: 'php',
+    typescript: 'ts',
+    racket: 'rkt',
+    erlang: 'erl',
+    elixir: 'exs',
+    dart: 'dart'
+  };
+  const readModeMap = {
+    'language-python': 'py',
+    'language-javascript': 'js',
+    'language-cpp': 'cpp',
+    'language-java': 'java',
+    'language-dart': 'dart'
+  };
+  if (getViewMode() === EDIT_MODE) {
+    const key = document.querySelector('div[data-mode-id]').dataset.modeId;
+    return editModeMap[key] || 'txt';
+  } else {
+    const key = document.querySelector('pre code').className;
+    return readModeMap[key] || 'txt';
+  }
+}
+function currentCodeIsAccepted() {
+  if (getViewMode() === EDIT_MODE) {
+    const spans = getSubmissionSpans();
+    if (!spans.length) return false;
+    return spans[0].className.match(/green/) != null;
+  } else {
+    const chart = document.querySelector('rect.highcharts-background');
+    return chart != null;
+  }
+}
+function acceptedSubmissionExists() {
+  for (const span of getSubmissionSpans()) {
+    if (span.className.match(/green/)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/answer-submit/style.css":
 /*!***************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/answer-submit/style.css ***!
@@ -8624,7 +8849,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n}\n\n.m-submit-card input {\n  padding: 0.5rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n  width: 100%;\n  margin-bottom: 1rem;\n}\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 20rem;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  bottom: 30%;\n\n  background-color: white;\n\n  width: var(--width);\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-drawer-button img {\n  width: 100%;\n  object-fit: contain;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n}\n\n.m-spaced-flex{\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1{\n  flex: 1;\n}\n\n.m-flex-2{\n  flex: 2;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n  /* color: var(--m-dark-grey-color); */\n  color: black  ;\n}\n\n.m-submit-card input {\n  padding: 0.5rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n  width: 100%;\n  margin-bottom: 1rem;\n  background: transparent;\n}\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 20rem;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  bottom: 30%;\n\n  background-color: white;\n\n  width: var(--width);\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-drawer-button img {\n  width: 100%;\n  object-fit: contain;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n}\n\n.m-spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1 {\n  flex: 1;\n}\n\n.m-flex-2 {\n  flex: 2;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8676,7 +8901,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-timer-playing::before,\n.m-timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.m-timer-playing::before {\n  background-color: var(--m-secondary-color);\n}\n.m-timer-paused::before {\n  background-color: lightgrey;\n}\n\n.m-timer-playing,\n.m-timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-play-pause-button {\n  /* looks  */\n  --size: var(--m-medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.m-play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-timer * {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\n.m-timer button {\n  border: none;\n  background: none;\n}\n\n.m-timer {\n  /* size  */\n  padding: 0rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 30%;\n  z-index: 1000;\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n  font-family: var(--m-font-family);\n\n  /* border */\n  border: var(--m-border);\n  border-top: none;\n  --br: var(--m-border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-timer-playing::before,\n.m-timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.m-timer-playing::before {\n  background-color: var(--m-secondary-color);\n  animation: m-resize-animation 0.5s linear infinite alternate;\n}\n@keyframes m-resize-animation {\n  0% {\n    opacity: 0.5;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n.m-timer-paused::before {\n  background-color: lightgrey;\n}\n\n.m-timer-playing,\n.m-timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-play-pause-button {\n  /* looks  */\n  --size: var(--m-medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.m-play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-timer * {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\n.m-timer button {\n  border: none;\n  background: none;\n}\n\n.m-timer {\n  /* size  */\n  padding: 0rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 30%;\n  z-index: 1000;\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n  font-family: var(--m-font-family);\n\n  /* border */\n  border: var(--m-border);\n  border-top: none;\n  --br: var(--m-border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9230,16 +9455,18 @@ function ViewSelector() {
         setCurrentPage(QUESTION_PAGE);
       }
     };
+    const setPageFromEvent = event => setPage(event.destination.url);
+    navigation.addEventListener('navigate', setPageFromEvent);
     setPage(window.location.href);
-    navigation.addEventListener('navigate', event => setPage(event.destination.url));
+    return () => navigator.removeEventListener('navigate', setPageFromEvent);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: currentPage === QUESTION_PAGE ? '' : 'm-d-none'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_timer_Timer_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    key: Math.random()
+    inView: currentPage === QUESTION_PAGE
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: currentPage === SUBMISSION_PAGE ? '' : 'm-d-none'
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_answer_submit_SubmitCard_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  }));
 }
 function matchesSubmissionPage(url) {
   //https://leetcode.com/problems/two-sum/submissions/54654

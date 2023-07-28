@@ -13,7 +13,18 @@
 
 .m-timer-playing::before {
   background-color: var(--m-secondary-color);
+  animation: m-resize-animation 0.5s linear infinite alternate;
 }
+@keyframes m-resize-animation {
+  0% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .m-timer-paused::before {
   background-color: lightgrey;
 }

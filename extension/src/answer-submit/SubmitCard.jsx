@@ -5,7 +5,9 @@ import CreateNewFolder from './components/CreateNewFolder.jsx';
 import LabelledInput from './components/LabelledInput.jsx';
 import mapUrl from '../utils/mapUrl.js';
 import CustomErrorView from './components/CustomErrorView.jsx';
-import { EmptyInputError } from '../utils/custom-errors';
+import { CustomError, EmptyInputError } from '../utils/custom-errors';
+import waitToLoad from './wait-to-load.js';
+import autoFill from './auto-fill';
 
 const cancelIcon = mapUrl('/media/icons/cancel.svg');
 const folderIcon = mapUrl('/media/icons/folder.svg');
@@ -18,18 +20,36 @@ const tryIcon = mapUrl('/media/icons/try.svg');
 
 function SubmitCard() {
   const [isHidden, setIsHidden] = useState(false);
+  const [url, setUrl] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [customError, setCustomError] = useState(undefined);
   const [data, setData] = useState({});
-  const url = window.location.href;
+  const setDatum = (name, value) => setData({ ...data, [name]: value });
+
+  const runAndHandleCustomError = async (task) => {
+    try {
+      await task();
+    } catch (error) {
+      if (error instanceof CustomError) setCustomError(error);
+      else throw error;
+    }
+  };
 
   useEffect(() => {
-    const load = async () => {};
-    load();
-  }, [url]);
+    const changeUrl = (event) => setUrl(event.destination.url);
+    navigation.addEventListener('navigate', changeUrl);
+    return () => navigation.removeEventListener('navigate', changeUrl);
+  }, []);
 
-  const setDatum = (name, value) => setData({ ...data, [name]: value });
-  const onChange = (event) => {
+  useEffect(() => {
+    runAndHandleCustomError(async () => {
+      await waitToLoad();
+      await autoFill(setDatum);
+      alert(JSON.stringify(data));
+    });
+  }, [window.location.href]);
+
+  const onInputChange = (event) => {
     const target = event.target;
     const name = target.name;
     const value = target.value || target.innerText;
@@ -58,7 +78,7 @@ function SubmitCard() {
                   min="0"
                   name="submissions"
                   className="m-flex-1"
-                  onChange={onChange}
+                  onChange={onInputChange}
                   required={true}
                   value={data.submissions || ''}
                 />
@@ -72,7 +92,7 @@ function SubmitCard() {
                   type="number"
                   min="0"
                   name="minutes"
-                  onChange={onChange}
+                  onChange={onInputChange}
                   required={true}
                   value={data.minutes || ''}
                 />
@@ -87,7 +107,7 @@ function SubmitCard() {
                 <input
                   type="text"
                   name="fileName"
-                  onChange={onChange}
+                  onChange={onInputChange}
                   required={true}
                   value={data.fileName || ''}
                 />
@@ -100,7 +120,7 @@ function SubmitCard() {
                 <input
                   type="text"
                   name="fileExtension"
-                  onChange={onChange}
+                  onChange={onInputChange}
                   required={true}
                   value={data.fileExtension || ''}
                 />

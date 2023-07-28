@@ -21,19 +21,21 @@ function ViewSelector() {
         setCurrentPage(QUESTION_PAGE);
       }
     };
+    const setPageFromEvent = (event) => setPage(event.destination.url);
+
+    navigation.addEventListener('navigate', setPageFromEvent);
     setPage(window.location.href);
-    navigation.addEventListener('navigate', (event) =>
-      setPage(event.destination.url)
-    );
+
+    return () => navigator.removeEventListener('navigate', setPageFromEvent);
   }, []);
+
   return (
     <>
       <div className={currentPage === QUESTION_PAGE ? '' : 'm-d-none'}>
-        {/* more convinient if it counts only in the question page  */}
-        <Timer key={Math.random()} />
+        <Timer inView={currentPage === QUESTION_PAGE} />
       </div>
       <div className={currentPage === SUBMISSION_PAGE ? '' : 'm-d-none'}>
-        <SubmitCard />
+        {/* <SubmitCard inView={currentPage === SUBMISSION_PAGE} /> */}
       </div>
     </>
   );
