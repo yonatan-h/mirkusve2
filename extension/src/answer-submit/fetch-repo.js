@@ -14,7 +14,7 @@ export default async function fetchRepo() {
   const fetchOptions = await makeFetchOptions();
   const sha = await getSha(fetchOptions);
   const tree = await getTree(sha, fetchOptions);
-  const folderPaths = [];
+  const folderPaths = ['/'];
   const filePaths = [];
 
   for (const node of tree) {

@@ -58,6 +58,11 @@
   font-size: var(--m-medium-fs);
 }
 
+img.m-medium-icon {
+  width: var(--m-medium-fs);
+  height: var(--m-medium-fs);
+}
+
 .m-large-fs {
   font-size: var(--m-large-fs);
 }
@@ -93,6 +98,9 @@
 
 .m-d-none {
   display: none;
+}
+.m-d-flex{
+  display: flex;
 }
 
 /* for testing  */

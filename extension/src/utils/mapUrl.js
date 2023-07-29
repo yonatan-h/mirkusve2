@@ -6,6 +6,6 @@ export default function mapUrl(url) {
   if (inContentScript) {
     return chrome.runtime.getURL(url);
   } else {
-    return './' + url;
+    return '/dist' + url;
   }
 }

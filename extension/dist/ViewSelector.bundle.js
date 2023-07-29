@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/css-loader/dist/runtime/api.js":
@@ -8,6 +7,7 @@
   \*****************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /*
@@ -102,6 +102,7 @@ module.exports = function (cssWithMappingToString) {
   \**************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 module.exports = function (i) {
@@ -116,6 +117,7 @@ module.exports = function (i) {
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
+"use strict";
 /**
  * @license React
  * react-dom.development.js
@@ -5072,6 +5074,7 @@ console.info('%cDownload the React DevTools '+'for a better development experien
   \******************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
+"use strict";
 
 
 var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -5103,6 +5106,7 @@ if (false) {} else {
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 function checkDCE() {
@@ -5141,6 +5145,7 @@ if (false) {} else {
   \*****************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
+"use strict";
 /* module decorator */ module = __webpack_require__.nmd(module);
 /**
  * @license React
@@ -7552,6 +7557,7 @@ if (true) {
   \*************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 if (false) {} else {
@@ -7566,6 +7572,7 @@ if (false) {} else {
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
+"use strict";
 /**
  * @license React
  * scheduler.development.js
@@ -8105,6 +8112,7 @@ if (true) {
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 if (false) {} else {
@@ -8119,6 +8127,7 @@ if (false) {} else {
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8169,7 +8178,6 @@ function SubmitCard({
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const [inSelectFolderMode, setInSelectFolderMode] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const updateData = newData => setData({
     ...data,
     ...newData
@@ -8224,7 +8232,7 @@ function SubmitCard({
     className: "m-flex-1"
   }, customError ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
     customError: customError
-  }) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "m-spaced-flex"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
     input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
@@ -8271,11 +8279,11 @@ function SubmitCard({
     }),
     label: "Extension",
     className: "m-flex-1"
-  })), inSelectFolderMode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
     folderPaths: data.folderPaths,
-    setInSelectFolderMode: setInSelectFolderMode,
+    folderPath: data.folderPath,
     updateData: updateData
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CreateNewFolder_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
     onClick: e => 1 + 1
   }, "Submit"))));
@@ -8290,6 +8298,7 @@ function SubmitCard({
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8332,17 +8341,55 @@ async function autoFill(updateData) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_mapUrl__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/mapUrl */ "./src/utils/mapUrl.js");
+/* harmony import */ var _FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FolderTree.jsx */ "./src/answer-submit/components/FolderTree.jsx");
 
-function CreateNewFolder() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "eg) abebe/kebede/chala"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "text"
-  }));
+
+
+const cancelIcon = (0,_utils_mapUrl__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/cancel.svg');
+function CreateNewFolder({
+  updateData,
+  setInNewFolderMode,
+  folderPath
+}) {
+  const [path, setPath] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const onChange = event => {
+    const value = event.target.value;
+    // updateData({ folderPath: value });
+    setPath(value);
+  };
+  const onCancel = () => {
+    updateData({
+      folderPath: ''
+    });
+    setInNewFolderMode(false);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "eg) abebe/kebede/chala"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "m-spaced-flex"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "text",
+    className: "m-flex-1",
+    onChange: onChange,
+    value: [path]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "m-cancel-new-folder",
+    onClick: onCancel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: cancelIcon,
+    alt: "cancel"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    folderPaths: [path],
+    folderPath: undefined,
+    setInNewFolderMode: () => {},
+    updateData: () => {}
+  })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CreateNewFolder);
 
@@ -8354,6 +8401,7 @@ function CreateNewFolder() {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8380,48 +8428,9 @@ function CustomErrorView({
 /*!*************************************************!*\
   !*** ./src/answer-submit/components/Folder.jsx ***!
   \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-function Folder({
-  folderPath,
-  onSelect,
-  onNewFolder
-}) {
-  const nodes = folderPath.split('/');
-  //assuming they are not named abc/
-  const folderName = nodes[nodes.length - 1];
-  const indents = nodes.length - 1;
-  const style = {
-    marginLeft: `${0.5 * indents}rem`
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    style: style
-  }, folderName === '' ? 'root' : folderName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "+"));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Folder);
-function errorIfBadFolderPath(path) {
-  if (path.includes('.')) {
-    throw new CustomError(`There is a '.' in the folder path. Please enter only the path of the folder, don't include any file.`);
-  }
-  if (path.includes('//')) {
-    throw new CustomError(`There is a double slash '//' in the folder path. Remove it.`);
-  }
-  if (path.includes(' ')) {
-    throw new CustomError(`Please don't include space characters in the folder path.`);
-  }
-  try {
-    const url = new URL('https://abebe.com/' + path);
-  } catch (error) {
-    throw new CustomError(`The folder path is not url safe somehow. Please modify it.`);
-  }
-}
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/src/answer-submit/components/Folder.jsx: Unexpected token (51:46)\n\n\u001b[0m \u001b[90m 49 |\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 50 |\u001b[39m       {isNew \u001b[33m&&\u001b[39m newFolderName \u001b[33m?\u001b[39m \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 51 |\u001b[39m         \u001b[33m<\u001b[39m\u001b[33minput\u001b[39m type\u001b[33m=\u001b[39m\u001b[32m\"text\"\u001b[39m onChange\u001b[33m=\u001b[39m{(event)\u001b[33m=>\u001b[39m} \u001b[33m/\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 52 |\u001b[39m       \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m}\u001b[0m\n\u001b[0m \u001b[90m 53 |\u001b[39m     \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 54 |\u001b[39m   )\u001b[33m;\u001b[39m\u001b[0m\n    at instantiate (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:63:32)\n    at constructor (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:358:12)\n    at JSXParserMixin.raise (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:3255:19)\n    at JSXParserMixin.unexpected (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:3285:16)\n    at JSXParserMixin.parseExprAtom (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:11284:16)\n    at JSXParserMixin.parseExprAtom (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6974:20)\n    at JSXParserMixin.parseExprSubscripts (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10890:23)\n    at JSXParserMixin.parseUpdate (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10873:21)\n    at JSXParserMixin.parseMaybeUnary (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10849:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10687:61)\n    at JSXParserMixin.parseExprOps (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10692:23)\n    at JSXParserMixin.parseMaybeConditional (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10669:23)\n    at JSXParserMixin.parseMaybeAssign (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10630:21)\n    at JSXParserMixin.parseFunctionBody (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:11940:24)\n    at JSXParserMixin.parseArrowExpression (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:11922:10)\n    at JSXParserMixin.parseParenAndDistinguishExpression (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:11525:12)\n    at JSXParserMixin.parseExprAtom (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:11164:23)\n    at JSXParserMixin.parseExprAtom (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6974:20)\n    at JSXParserMixin.parseExprSubscripts (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10890:23)\n    at JSXParserMixin.parseUpdate (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10873:21)\n    at JSXParserMixin.parseMaybeUnary (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10849:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10687:61)\n    at JSXParserMixin.parseExprOps (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10692:23)\n    at JSXParserMixin.parseMaybeConditional (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10669:23)\n    at JSXParserMixin.parseMaybeAssign (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10630:21)\n    at JSXParserMixin.parseExpressionBase (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10584:23)\n    at /home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10580:39\n    at JSXParserMixin.allowInAnd (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:12280:12)\n    at JSXParserMixin.parseExpression (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10580:17)\n    at JSXParserMixin.jsxParseExpressionContainer (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6834:31)\n    at JSXParserMixin.jsxParseAttributeValue (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6802:21)\n    at JSXParserMixin.jsxParseAttribute (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6855:38)\n    at JSXParserMixin.jsxParseOpeningElementAfterName (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6869:28)\n    at JSXParserMixin.jsxParseOpeningElementAt (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6864:17)\n    at JSXParserMixin.jsxParseElementAt (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6888:33)\n    at JSXParserMixin.jsxParseElementAt (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6900:32)\n    at JSXParserMixin.jsxParseElement (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6957:17)\n    at JSXParserMixin.parseExprAtom (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:6969:19)\n    at JSXParserMixin.parseExprSubscripts (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10890:23)\n    at JSXParserMixin.parseUpdate (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10873:21)\n    at JSXParserMixin.parseMaybeUnary (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10849:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10687:61)\n    at JSXParserMixin.parseExprOps (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10692:23)\n    at JSXParserMixin.parseMaybeConditional (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10669:23)\n    at JSXParserMixin.parseMaybeAssign (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10630:21)\n    at /home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10600:39\n    at JSXParserMixin.allowInAnd (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:12280:12)\n    at JSXParserMixin.parseMaybeAssignAllowIn (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10600:17)\n    at JSXParserMixin.parseConditional (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10679:30)\n    at JSXParserMixin.parseMaybeConditional (/home/yonatan/Desktop/javoby2/jsfo1/mirkusve2/extension/node_modules/@babel/parser/lib/index.js:10673:17)");
 
 /***/ }),
 
@@ -8431,6 +8440,7 @@ function errorIfBadFolderPath(path) {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8441,25 +8451,56 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function FolderTree({
-  folderPaths,
-  setInSelectFolderMode,
+  folderPaths: existingFolderPaths,
+  folderPath: selectedFolderPath,
   updateData
 }) {
-  if (!folderPaths) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Loading folders...");
-  const sortedFolderPaths = [...folderPaths].sort((a, b) => a < b ? -1 : 1);
+  if (!existingFolderPaths) return null;
+  const [newFolderPaths, setNewFolderPaths] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(['abebe/sancho']);
+  const existingFolders = existingFolderPaths.map(path => ({
+    path,
+    isNew: false
+  }));
+  const newFolders = newFolderPaths.map(path => ({
+    path,
+    isNew: true
+  }));
+  const allFolders = sortFolders([...existingFolders, ...newFolders]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
     className: "m-folder-tree"
-  }, sortedFolderPaths.map(folderPath => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-    key: folderPath
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    folderPath: folderPath,
+  }, allFolders.map(({
+    path,
+    isNew
+  }) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+    key: path
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Folder_jsx__WEBPACK_IMPORTED_MODULE_1__["default"]
+  //options for both old and new
+  , {
+    folderPath: path,
     onSelect: () => updateData({
-      folderPath
+      path
     }),
-    onNewFolder: () => setInSelectFolderMode(true)
+    onNewFolder: () => setInNewFolderMode(true),
+    isSelected: selectedFolderPath === path
+
+    //new folder options
+    ,
+    isNew: isNew,
+    onDelete: () => {},
+    isUnique: path => {}
   }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FolderTree);
+function sortFolders(folders) {
+  folders.sort((folder1, folder2) => {
+    if (folder1.path < folder2.path) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+  return folders;
+}
 
 /***/ }),
 
@@ -8469,6 +8510,7 @@ function FolderTree({
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8497,6 +8539,7 @@ function LabelledInput({
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ determineFileName)
@@ -8538,6 +8581,7 @@ function pathToFileName(path) {
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ fetchRepo)
@@ -8559,7 +8603,7 @@ async function fetchRepo() {
   const fetchOptions = await makeFetchOptions();
   const sha = await getSha(fetchOptions);
   const tree = await getTree(sha, fetchOptions);
-  const folderPaths = [];
+  const folderPaths = ['/'];
   const filePaths = [];
   for (const node of tree) {
     if (node.type === 'blob') filePaths.push(node.path);else if (node.type === 'tree') folderPaths.push(node.path);
@@ -8611,6 +8655,7 @@ async function getTree(sha, fetchOptions) {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8661,6 +8706,7 @@ function isLoaded() {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8765,6 +8811,7 @@ function Timer({
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppScriptError": () => (/* binding */ AppScriptError),
@@ -8844,6 +8891,7 @@ class EmptyInputError extends CustomError {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "calculateMinutes": () => (/* binding */ calculateMinutes),
@@ -8899,6 +8947,7 @@ function calculateMinutes(duration) {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ mapUrl)
@@ -8910,7 +8959,7 @@ function mapUrl(url) {
   if (inContentScript) {
     return chrome.runtime.getURL(url);
   } else {
-    return './' + url;
+    return '/dist' + url;
   }
 }
 
@@ -8922,6 +8971,7 @@ function mapUrl(url) {
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -8954,6 +9004,7 @@ async function robustFetch(url, options) {
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "EDIT_MODE": () => (/* binding */ EDIT_MODE),
@@ -9081,6 +9132,7 @@ function saysNoSubmissions() {
   \***************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -9094,7 +9146,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n  /* color: var(--m-dark-grey-color); */\n  color: black;\n}\n\n.m-submit-card input {\n  padding: 0.5rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n  width: 100%;\n  margin-bottom: 1rem;\n  background: transparent;\n}\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 20rem;\n  width: var(--width);\n  max-height: 60vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  bottom: 30%;\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-drawer-button img {\n  width: 100%;\n  object-fit: contain;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n}\n\n.m-spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1 {\n  flex: 1;\n}\n\n.m-flex-2 {\n  flex: 2;\n}\n\n.m-folder-tree{\n  max-height: 10vh;\n  overflow: auto;\n  background-color: red;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n  /* color: var(--m-dark-grey-color); */\n  color: black;\n}\n.m-submit-card img {\n  width: 100%;\n  object-fit: contain;\n  opacity: 0.6;\n}\n\n.m-submit-card input {\n  height: var(--m-large-fs);\n  border-radius: var(--m-border-radius);\n  border: 1px solid lightgrey;\n  width: 100%;\n  background: transparent;\n}\n\n.m-submit-card input:focus {\n  outline: 1px solid grey;\n}\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 20rem;\n  width: var(--width);\n  max-height: 60vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  bottom: 30%;\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-80%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n}\n\n.m-spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1 {\n  flex: 1;\n}\n\n.m-flex-2 {\n  flex: 2;\n}\n\n.m-folder-tree {\n  overflow: auto;\n  border-top: 1px solid lightgrey;\n  border-bottom: 1px solid lightgrey;\n  padding: 0.5rem 0;\n\n  display: flex;\n  flex-direction: column;\n  gap: 0.25rem;\n}\n\n.m-folder {\n  display: flex;\n  gap: 0.25rem;\n}\n\n.m-folder-label {\n  position: relative;\n  padding: 0 0.25rem;\n\n  background: white;\n  border: none;\n  border: 1px solid lightgrey;\n  border-radius: 0.2rem;\n  color: var(--m-dark-grey-color);\n\n  overflow: hidden;\n  z-index: 3;\n  cursor: pointer;\n}\n\n.m-selected-folder-label {\n  /* border: 1px solid var(--m-primary-color); */\n  background-color: var(--m-secondary-color);\n  color: black;\n}\n\n.m-new-folder-button,\n.m-cancel-new-folder {\n  border-radius: 33%;\n  border: none;\n  background: none;\n  border: 1px solid lightgrey;\n  background: white;\n  cursor: pointer;\n}\n\n\n\n.m-new-folder-button {\n  width: var(--m-medium-fs);\n  height: var(--m-medium-fs);\n}\n\n.m-cancel-new-folder {\n  width: var(--m-large-fs);\n  height: var(--m-large-fs);\n  padding: 0.3em;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9107,6 +9159,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n 
   \********************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -9120,7 +9173,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\nimg.m-medium-icon {\n  width: var(--m-medium-fs);\n  height: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n.m-d-flex{\n  display: flex;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9133,6 +9186,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  
   \*******************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -9159,6 +9213,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".m-timer-playing::before,\n.m-timer-pa
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -9213,6 +9268,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -9267,6 +9323,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -9321,6 +9378,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
   \****************************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 var stylesInDOM = [];
@@ -9414,6 +9472,7 @@ module.exports = function (list, options) {
   \********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 var memo = {};
@@ -9457,6 +9516,7 @@ module.exports = insertBySelector;
   \**********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -9476,6 +9536,7 @@ module.exports = insertStyleElement;
   \**********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -9495,6 +9556,7 @@ module.exports = setAttributesWithoutAttributes;
   \***************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -9565,6 +9627,7 @@ module.exports = domAPI;
   \*********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -9668,8 +9731,9 @@ module.exports = styleTagTransform;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
 /*!*************************************!*\
   !*** ./src/answer/ViewSelector.jsx ***!
   \*************************************/

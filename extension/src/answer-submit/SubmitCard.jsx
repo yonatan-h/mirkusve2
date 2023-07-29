@@ -30,7 +30,6 @@ function SubmitCard({ inView }) {
   const [isLoading, setIsLoading] = useState(true);
   const [customError, setCustomError] = useState(undefined);
   const [data, setData] = useState({});
-  const [inSelectFolderMode, setInSelectFolderMode] = useState(true);
   const updateData = (newData) => setData({ ...data, ...newData });
 
   const runAndHandleCustomError = async (task) => {
@@ -87,7 +86,8 @@ function SubmitCard({ inView }) {
       <div className="m-flex-1">
         {customError ? <CustomErrorView customError={customError} /> : null}
 
-        <form>
+        <div>
+          {/* Should've been a form, but buttons were type=submit by default  */}
           <div className="m-spaced-flex">
             <LabelledInput
               input={
@@ -147,20 +147,17 @@ function SubmitCard({ inView }) {
               className="m-flex-1"
             />
           </div>
-          {inSelectFolderMode ? (
-            <FolderTree
-              folderPaths={data.folderPaths}
-              setInSelectFolderMode={setInSelectFolderMode}
-              updateData={updateData}
-            />
-          ) : (
-            <CreateNewFolder />
-          )}
+
+          <FolderTree
+            folderPaths={data.folderPaths}
+            folderPath={data.folderPath}
+            updateData={updateData}
+          />
 
           <button type="submit" onClick={(e) => 1 + 1}>
             Submit
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
