@@ -14,12 +14,12 @@ export default async function fetchRepo() {
   const fetchOptions = await makeFetchOptions();
   const sha = await getSha(fetchOptions);
   const tree = await getTree(sha, fetchOptions);
-  const folderPaths = ['/'];
+  const folderPaths = ['/']; //all start with /
   const filePaths = [];
 
   for (const node of tree) {
     if (node.type === 'blob') filePaths.push(node.path);
-    else if (node.type === 'tree') folderPaths.push(node.path);
+    else if (node.type === 'tree') folderPaths.push('/' + node.path);
   }
 
   return { folderPaths, filePaths };

@@ -50,6 +50,10 @@
   color: var(--m-dark-grey-color);
 }
 
+.m-black-color {
+  color: black;
+}
+
 .m-small-fs {
   font-size: var(--m-small-fs);
 }
@@ -58,10 +62,7 @@
   font-size: var(--m-medium-fs);
 }
 
-img.m-medium-icon {
-  width: var(--m-medium-fs);
-  height: var(--m-medium-fs);
-}
+
 
 .m-large-fs {
   font-size: var(--m-large-fs);
@@ -99,7 +100,7 @@ img.m-medium-icon {
 .m-d-none {
   display: none;
 }
-.m-d-flex{
+.m-d-flex {
   display: flex;
 }
 
@@ -109,4 +110,7 @@ img.m-medium-icon {
 }
 .m-bg-blue {
   background-color: blue;
+}
+.m-red-color {
+  color: red;
 }

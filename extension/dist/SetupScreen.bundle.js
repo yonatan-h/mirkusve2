@@ -8699,7 +8699,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CustomError": () => (/* binding */ CustomError),
 /* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
 /* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
-/* harmony export */   "NetworkError": () => (/* binding */ NetworkError)
+/* harmony export */   "InputError": () => (/* binding */ InputError),
+/* harmony export */   "NetworkError": () => (/* binding */ NetworkError),
+/* harmony export */   "ToastError": () => (/* binding */ ToastError)
 /* harmony export */ });
 class CustomError extends Error {
   constructor(descriptionAndSolution, errorAsString = '') {
@@ -8708,12 +8710,22 @@ class CustomError extends Error {
     this.errorAsString = errorAsString;
   }
 }
+class ToastError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
+  }
+}
+class InputError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
+  }
+}
 class DisablingError extends CustomError {
   constructor(descriptionAndSolution, errorAsString = '') {
     super(descriptionAndSolution, errorAsString);
   }
 }
-class NetworkError extends CustomError {
+class NetworkError extends ToastError {
   constructor(typeError) {
     const {
       name,
@@ -8726,7 +8738,7 @@ class NetworkError extends CustomError {
     super('Weak connection? Please try again later.', errorAsString);
   }
 }
-class BadStatusError extends CustomError {
+class BadStatusError extends ToastError {
   constructor(response) {
     const {
       ok,
@@ -8743,19 +8755,19 @@ class BadStatusError extends CustomError {
     super('Http response not ok. Try avoiding vpn or try again later.', errorAsString);
   }
 }
-class BadUrlError extends CustomError {
+class BadUrlError extends InputError {
   constructor(badUrl) {
     super(`${badUrl} is not a valid url`);
   }
 }
 
 //because (at least sofar) you cant send status codes in appscript responses
-class AppScriptError extends CustomError {
+class AppScriptError extends ToastError {
   constructor(responseObject) {
     super(`Message from Sheets: ${responseObject.error}`);
   }
 }
-class EmptyInputError extends CustomError {
+class EmptyInputError extends InputError {
   constructor(inputName) {
     super(`Please fill out '${inputName}'`);
   }
@@ -8873,7 +8885,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\nimg.m-medium-icon {\n  width: var(--m-medium-fs);\n  height: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n.m-d-flex{\n  display: flex;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-black-color {\n  color: black;\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n.m-d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n.m-red-color {\n  color: red;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

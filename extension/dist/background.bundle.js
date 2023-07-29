@@ -117,7 +117,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CustomError": () => (/* binding */ CustomError),
 /* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
 /* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
-/* harmony export */   "NetworkError": () => (/* binding */ NetworkError)
+/* harmony export */   "InputError": () => (/* binding */ InputError),
+/* harmony export */   "NetworkError": () => (/* binding */ NetworkError),
+/* harmony export */   "ToastError": () => (/* binding */ ToastError)
 /* harmony export */ });
 class CustomError extends Error {
   constructor(descriptionAndSolution, errorAsString = '') {
@@ -126,12 +128,22 @@ class CustomError extends Error {
     this.errorAsString = errorAsString;
   }
 }
+class ToastError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
+  }
+}
+class InputError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
+  }
+}
 class DisablingError extends CustomError {
   constructor(descriptionAndSolution, errorAsString = '') {
     super(descriptionAndSolution, errorAsString);
   }
 }
-class NetworkError extends CustomError {
+class NetworkError extends ToastError {
   constructor(typeError) {
     const {
       name,
@@ -144,7 +156,7 @@ class NetworkError extends CustomError {
     super('Weak connection? Please try again later.', errorAsString);
   }
 }
-class BadStatusError extends CustomError {
+class BadStatusError extends ToastError {
   constructor(response) {
     const {
       ok,
@@ -161,19 +173,19 @@ class BadStatusError extends CustomError {
     super('Http response not ok. Try avoiding vpn or try again later.', errorAsString);
   }
 }
-class BadUrlError extends CustomError {
+class BadUrlError extends InputError {
   constructor(badUrl) {
     super(`${badUrl} is not a valid url`);
   }
 }
 
 //because (at least sofar) you cant send status codes in appscript responses
-class AppScriptError extends CustomError {
+class AppScriptError extends ToastError {
   constructor(responseObject) {
     super(`Message from Sheets: ${responseObject.error}`);
   }
 }
-class EmptyInputError extends CustomError {
+class EmptyInputError extends InputError {
   constructor(inputName) {
     super(`Please fill out '${inputName}'`);
   }

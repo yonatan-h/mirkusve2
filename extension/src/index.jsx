@@ -6,7 +6,7 @@ import './answer-submit/style.css';
 import CreateNewFolder from './answer-submit/components/CreateNewFolder.jsx';
 
 function App() {
-  const [state, setState] = useState(0);
+  const [state, setState] = useState({ folderPath: '/' });
 
   return (
     <div className="m-submit-card m-card-exposed">
@@ -20,20 +20,22 @@ function App() {
         <CreateNewFolder />
 
         <FolderTree
+          folderPath={state.folderPath}
+          updateData={(d) => setState({ ...state, ...d })}
           folderPaths={[
             //
             '/',
-            'abebe/kebede/lemma',
-            'abebe/kebede',
-            'abebe',
-            'abe3be',
-            'abeb4e',
-            'a5bebe',
-            'ab6ebe',
-            'abe7be',
-            'abeb8e',
+            '/abebe/kebede/lemma',
+            '/abebe/kebede',
+            '/abebe/000000000000000000000000000000000000000',
+            '/abe3be',
+            '/abeb4e',
+            '/a5bebe',
+            '/ab6ebe',
+            '/abe7be',
+            '/abeb8e',
           ]}
-          data={{ folderPath: 'abebe/kebede' }}
+          data={{ folderPath: '/abebe/kebede' }}
         />
       </div>
     </div>

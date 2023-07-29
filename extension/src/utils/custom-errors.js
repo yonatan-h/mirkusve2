@@ -6,13 +6,24 @@ class CustomError extends Error {
   }
 }
 
+class ToastError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
+  }
+}
+class InputError extends CustomError {
+  constructor(descriptionAndSolution, errorAsString = '') {
+    super(descriptionAndSolution, errorAsString);
+  }
+}
+
 class DisablingError extends CustomError {
   constructor(descriptionAndSolution, errorAsString = '') {
     super(descriptionAndSolution, errorAsString);
   }
 }
 
-class NetworkError extends CustomError {
+class NetworkError extends ToastError {
   constructor(typeError) {
     const { name, message } = typeError;
     const errorAsString = JSON.stringify({ name, message });
@@ -21,7 +32,7 @@ class NetworkError extends CustomError {
   }
 }
 
-class BadStatusError extends CustomError {
+class BadStatusError extends ToastError {
   constructor(response) {
     const { ok, status, statusText, url } = response;
     const errorAsString = JSON.stringify({ ok, status, statusText, url });
@@ -33,20 +44,20 @@ class BadStatusError extends CustomError {
   }
 }
 
-class BadUrlError extends CustomError {
+class BadUrlError extends InputError {
   constructor(badUrl) {
     super(`${badUrl} is not a valid url`);
   }
 }
 
 //because (at least sofar) you cant send status codes in appscript responses
-class AppScriptError extends CustomError {
+class AppScriptError extends ToastError {
   constructor(responseObject) {
     super(`Message from Sheets: ${responseObject.error}`);
   }
 }
 
-class EmptyInputError extends CustomError {
+class EmptyInputError extends InputError {
   constructor(inputName) {
     super(`Please fill out '${inputName}'`);
   }
@@ -54,6 +65,8 @@ class EmptyInputError extends CustomError {
 
 export {
   CustomError,
+  ToastError,
+  InputError,
   DisablingError,
   NetworkError,
   BadStatusError,
