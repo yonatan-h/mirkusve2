@@ -1,4 +1,6 @@
-:root {
+
+:host {
+  all:initial; /*took blood, sweat, and tears*/
   --m-error-color: brown;
   --m-grey-color: rgb(87, 87, 87);
   --m-dark-grey-color: rgb(68, 68, 68);
@@ -62,8 +64,6 @@
   font-size: var(--m-medium-fs);
 }
 
-
-
 .m-large-fs {
   font-size: var(--m-large-fs);
 }
@@ -113,4 +113,7 @@
 }
 .m-red-color {
   color: red;
+}
+.red {
+  color: green;
 }

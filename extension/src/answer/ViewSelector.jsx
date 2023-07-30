@@ -1,9 +1,8 @@
+import '../assets/style.css';
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
 import Timer from '../timer/Timer.jsx';
 import SubmitCard from '../answer-submit/SubmitCard.jsx';
 
-import '../assets/style.css';
 
 function ViewSelector() {
   //enumish
@@ -57,9 +56,4 @@ function matchesQuestionPage(url) {
   return url.match(questionPageRegex) != null;
 }
 
-//add to leetcode page
-const div = document.createElement('div');
-document.body.appendChild(div);
-
-const root = createRoot(div);
-root.render(<ViewSelector />);
+export default ViewSelector;

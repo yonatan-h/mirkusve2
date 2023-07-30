@@ -3,9 +3,9 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    ViewSelector: './src/answer/ViewSelector.jsx',
+    answer: './src/answer/answer.js',
     index: './src/index.jsx',
-    SetupScreen: './src/setup/SetupScreen.jsx',
+    setup: './src/setup/setup.js',
     background: './src/background/background.js',
     // setup: './src/setup/setup.js',
     popup: './src/popup/popup.js',
@@ -20,7 +20,20 @@ module.exports = {
     rules: [
       { test: /\.(js|jsx)$/, use: 'babel-loader' },
       { test: /\.html$/, use: 'html-loader' },
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              insert: (style) =>
+                document.querySelector('#mirkusve-shadow-host').shadowRoot
+                .appendChild(style),
+            },
+          },
+          'css-loader',
+        ],
+      },
     ],
   },
   plugins: [

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
 
 import { CustomError } from '../utils/custom-errors';
 import '../assets/style.css';
@@ -86,5 +85,4 @@ function SetupScreen() {
   );
 }
 
-const root = createRoot(document.getElementById('root'));
-root.render(<SetupScreen />);
+export default SetupScreen;
