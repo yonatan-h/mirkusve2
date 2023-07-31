@@ -8,10 +8,10 @@ const mirkusveLogo = '/media/mirkusve-logo.svg';
 const sheetsLogo = '/media/sheets-logo.png';
 
 function Welcome() {
-  const pClass = 'm-dark-grey-color ';
+  const pClass = 'dark-grey-color ';
   return (
     <div className="welcome-width">
-      <p className="m-very-large-fs m-top">
+      <p className="very-large-fs m-top">
         A Little Help of a{' '}
         <span className="hoverable">
           <span className="hover-appetizer">Mirkuz </span>
@@ -26,7 +26,7 @@ function Welcome() {
         submit your answers in 2 clicks.
       </p>
       <div>
-        <button className="m-secondary-button m-small-top">Watch Demo</button>
+        <button className="secondary-button m-small-top">Watch Demo</button>
       </div>
       <div>
         <div className="image-text-grid m-top">

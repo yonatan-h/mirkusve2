@@ -8149,14 +8149,14 @@ function CreateNewFolder({
     setInNewFolderMode(false);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "eg) abebe/kebede/chala"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-spaced-flex"
+    className: "spaced-flex"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    className: "m-flex-1",
+    className: "flex-1",
     onChange: onChange,
     value: [path]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-cancel-new-folder",
+    className: "cancel-new-folder",
     onClick: onCancel
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: cancelIcon,
@@ -8247,11 +8247,11 @@ function Folder({
   const indents = isRoot ? 0 : nodes.length - 1;
 
   //dont forget ' thespaces '
-  let labelClassName = ' m-folder-label m-spaced-flex ';
-  if (isSelected) labelClassName += ' m-selected-folder-label ';
-  if (isNew && !isOnSelectedPath) labelClassName += ' m-less-opacity ';
+  let labelClassName = ' folder-label spaced-flex ';
+  if (isSelected) labelClassName += ' selected-folder-label ';
+  if (isNew && !isOnSelectedPath) labelClassName += ' less-opacity ';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-folder"
+    className: "folder"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => onSelect(),
     style: {
@@ -8260,16 +8260,16 @@ function Folder({
     className: labelClassName
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: folderIcon,
-    className: "m-medium-icon"
+    className: "mediuicon"
   }), folderName), isNew ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => onDelete(),
-    className: "m-folder-icon-button"
+    className: "folder-icon-button"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: deleteIcon,
     alt: "delete folder"
   })) : null, inNewFolderMode ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => setNewFolderName(''),
-    className: "m-folder-icon-button"
+    className: "folder-icon-button"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: addIcon,
     alt: "add new folder"
@@ -8277,20 +8277,20 @@ function Folder({
     style: {
       marginLeft: `${indents + 1}rem`
     },
-    className: "m-spaced-flex m-align-center"
+    className: "spaced-flex align-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     onChange: onChange,
     value: newFolderName,
     className: "flex-1"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-folder-icon-button",
+    className: "folder-icon-button",
     onClick: () => onSave()
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: doneIcon,
     alt: "save this new folder"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-folder-icon-button",
+    className: "folder-icon-button",
     onClick: () => setNewFolderName(undefined)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: cancelIcon,
@@ -8315,9 +8315,6 @@ function errorIfPathProblem({
   }
   if (newFolderName.includes('/')) {
     throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_2__.InputError(`There is slash '/' in '${newFolderName}', Please Remove it.`);
-  }
-  if (newFolderName.includes(' ')) {
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_2__.InputError(`Please don't include space characters in the folder '${newFolderName}'.`);
   }
   try {
     const url = new URL('https://abebe.com/' + newFolderName);
@@ -8367,7 +8364,7 @@ function FolderTree({
   }));
   const allFolders = sortFolders([...existingFolders, ...newFolders]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
-    className: "m-folder-tree"
+    className: "folder-tree"
   }, allFolders.map(({
     path,
     isNew
@@ -8542,9 +8539,9 @@ function removeExcessSlash(url) {
     throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.BadUrlError(url);
   }
   let path = urlObj.pathname;
-  path = path.split("/");
-  path = path.filter(node => node !== "");
-  path = path.join("/");
+  path = path.split('/');
+  path = path.filter(node => node !== '');
+  path = path.join('/');
   urlObj.pathname = path;
   return urlObj.href;
 }
@@ -8626,7 +8623,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n  /*  */\n}\n\n.m-submit-card img {\n  display: inline;\n  opacity: 0.6;\n}\n.m-card-title {\n  font-size: var(--m-large-fs);\n  color: var(--m-dark-grey-color) !important;\n}\n\n.m-submit-card input {\n  height: var(--m-large-fs);\n  border-radius: var(--m-border-radius);\n  border: 1px solid lightgrey;\n  padding-left: 0.5rem;\n\n  width: 100%;\n  background: transparent;\n  color: var(--m-dark-grey-color);\n}\n\n.m-submit-card input:focus {\n  outline: 1px solid grey;\n}\n\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 30rem;\n  width: var(--width);\n  max-height: 80vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  top: 50%;\n  transform: translateY(-50%);\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n  color: var(--m-grey-color);\n}\n.m-vertical-spaced-flex {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.m-gap-1 {\n  gap: 1.5rem;\n}\n.m-spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1 {\n  flex: 1;\n}\n\n.m-flex-2 {\n  flex: 2;\n}\n\n.m-folder-tree {\n  overflow: auto;\n\n  width: calc(var(--width) * 0.8);\n  border-top: 1px solid lightgrey;\n  border-bottom: 1px solid lightgrey;\n  padding: 0.5rem 0;\n\n  display: flex;\n  flex-direction: column;\n  gap: 0.25rem;\n}\n\n.m-folder {\n  display: flex;\n  align-items: center;\n  gap: 0.25rem;\n}\n\n.m-folder-label {\n  display: flex;\n  align-items: center;\n  padding: 0 0.25rem;\n\n  color: var(--m-dark-grey-color);\n  border: none;\n  border: 1px solid lightgrey;\n  border-radius: 0.2rem;\n\n  font-size: var(--m-medium-fs);\n  cursor: pointer;\n}\n.m-folder-label img {\n  width: var(--m-medium-fs);\n  height: var(--m-medium-fs);\n}\n\n.m-folder-label:hover {\n  border: 1px solid var(--m-secondary-color);\n}\n\n.m-less-opacity {\n  opacity: 0.6;\n}\n\n.m-selected-folder-label {\n  /* border: 1px solid var(--m-primary-color); */\n  background-color: var(--m-secondary-color);\n  color: black;\n}\n\n.m-folder-icon-button {\n  border-radius: 33%;\n  border: none;\n  background: none;\n\n  border: 1px solid lightgrey;\n  background: white;\n  cursor: pointer;\n\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.m-folder-icon-button img,\n#arumba {\n  padding: 0.15rem;\n  --size: var(--m-medium-fs);\n  width: var(--size)!important;\n  height: var(--size)!important;\n}\n\n.m-align-center {\n  align-items: center;\n}\n\n.m-appear-animattion {\n  animation: m-appear 0.5s;\n}\n\n@keyframes m-appear {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n/* misc  */\n.m-mw-2-inputs {\n  max-width: 20rem;\n}\n.m-submit-button-width {\n  width: 20rem;\n}\n.m-pad-right {\n  padding-right: 1rem;\n}\n\n.magic {\n  width: min-content;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.submit-card img {\n  display: inline;\n  opacity: 0.6;\n}\n.card-title {\n  font-size: var(--large-fs);\n  color: var(--dark-grey-color) !important;\n}\n\n.submit-card input {\n  height: var(--large-fs);\n  border-radius: var(--border-radius);\n  border: 1px solid lightgrey;\n  padding-left: 0.5rem;\n\n  width: 100%;\n  background: transparent;\n  color: var(--dark-grey-color);\n}\n\n.submit-card input:focus {\n  outline: 1px solid grey;\n}\n\n.submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 30rem;\n  width: var(--width);\n  max-height: 80vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  top: 50%;\n  transform: translateY(-50%);\n\n  /* shape */\n  border: var(--border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.card-exposed {\n  right: -2px;\n}\n\n.vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--very-small-fs);\n  background-color: white;\n  color: var(--grey-color);\n}\n.vertical-spaced-flex {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.gap-1 {\n  gap: 1.5rem;\n}\n.spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.folder-tree {\n  overflow: auto;\n\n  width: calc(var(--width) * 0.8);\n  border-top: 1px solid lightgrey;\n  border-bottom: 1px solid lightgrey;\n  padding: 0.5rem 0;\n\n  display: flex;\n  flex-direction: column;\n  gap: 0.25rem;\n}\n\n.folder {\n  display: flex;\n  align-items: center;\n  gap: 0.25rem;\n}\n\n.folder-label {\n  display: flex;\n  align-items: center;\n  padding: 0 0.25rem;\n\n  color: var(--dark-grey-color);\n  border: none;\n  border: 1px solid lightgrey;\n  border-radius: 0.2rem;\n\n  font-size: var(--medium-fs);\n  cursor: pointer;\n}\n.folder-label img {\n  width: var(--medium-fs);\n  height: var(--medium-fs);\n}\n\n.folder-label:hover {\n  border: 1px solid var(--secondary-color);\n}\n\n.less-opacity {\n  opacity: 0.6;\n}\n\n.selected-folder-label {\n  /* border: 1px solid var(--primary-color); */\n  background-color: var(--secondary-color);\n  color: black;\n}\n\n.folder-icon-button {\n  border-radius: 33%;\n  border: none;\n  background: none;\n\n  border: 1px solid lightgrey;\n  background: white;\n  cursor: pointer;\n\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.folder-icon-button img,\n#arumba {\n  padding: 0.15rem;\n  --size: var(--medium-fs);\n  width: var(--size) !important;\n  height: var(--size) !important;\n}\n\n.align-center {\n  align-items: center;\n}\n\n.appear-animattion {\n  animation: appear 0.5s;\n}\n\n@keyframes appear {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n/* misc  */\n.mw-2-inputs {\n  max-width: 20rem;\n}\n.submit-button-width {\n  width: 20rem;\n}\n.pad-right {\n  padding-right: 1rem;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8652,7 +8649,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n:host {\n  all:initial; /*took blood, sweat, and tears*/\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-black-color {\n  color: black;\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n.m-d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n.m-red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":host,\n:root {\n  all: initial; /*took blood, sweat, and tears*/\n  --error-color: brown;\n  --grey-color: rgb(87, 87, 87);\n  --dark-grey-color: rgb(68, 68, 68);\n  --border-radius: 5px;\n  --border: 2px solid black;\n  --primary-color: darkgreen;\n  --secondary-color: rgb(170, 251, 170);\n  --disabled-color: lightgrey;\n\n  --very-small-fs: 0.6rem;\n  --small-fs: 0.8rem;\n  --medium-fs: 1rem;\n  --large-fs: 1.5rem;\n  --very-large-fs: 3rem;\n\n  --font-family: sans-serif;\n  --glass-bg: rgba(255, 255, 255, 0.9);\n  font-size: var(--medium-fs);\n}\n:host *,\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--font-family);\n}\n\n.ff {\n  font-family: var(--font-family);\n}\n\n.error-color {\n  color: var(--error-color);\n  animation: error-fade-in 0.5s;\n}\n@keyframes error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.grey-color {\n  color: var(--grey-color);\n}\n\n.primary-color {\n  color: var(--primary-color);\n}\n\n.secondary-color {\n  color: var(--secondary-color);\n}\n\n.dark-grey-color {\n  color: var(--dark-grey-color);\n}\n\n.black-color {\n  color: black;\n}\n\n.small-fs {\n  font-size: var(--small-fs);\n}\n\n.medium-fs {\n  font-size: var(--medium-fs);\n}\n\n.large-fs {\n  font-size: var(--large-fs);\n}\n\n.very-large-fs {\n  font-size: var(--very-large-fs);\n}\n\n.primary-button {\n  background-color: var(--primary-color);\n  border: var(--border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.primary-button:hover {\n  cursor: pointer;\n}\n\n.secondary-button {\n  background-color: var(--secondary-color);\n  border: var(--border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.disabled-button {\n  pointer-events: none;\n  background-color: var(--disabled-color);\n  border: none;\n}\n\n.d-none {\n  display: none;\n}\n.d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.bg-red {\n  background-color: red;\n}\n.bg-blue {\n  background-color: blue;\n}\n.red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8695,9 +8692,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
@@ -8747,9 +8748,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
@@ -9097,9 +9102,9 @@ function App() {
     folderPath: '/'
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-submit-card m-card-exposed"
+    className: "submit-card card-exposed"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "sdf"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-flex-1"
+    className: "flex-1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "adsf"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "adsf"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "adsf"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "adsf"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_answer_submit_components_CreateNewFolder_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_answer_submit_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
     folderPath: state.folderPath,
     updateData: d => setState({

@@ -22,7 +22,7 @@ function FolderTree({
 
   const allFolders = sortFolders([...existingFolders, ...newFolders]);
   return (
-    <ul className="m-folder-tree">
+    <ul className="folder-tree">
       {allFolders.map(({ path, isNew }) => (
         <li key={path}>
           <Folder

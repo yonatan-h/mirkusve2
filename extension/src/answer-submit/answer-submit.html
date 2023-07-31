@@ -1,4 +1,4 @@
-<div class="m-submit">
+<div class="submit">
   <div class="window-bar">
     <button id="minimize-button">🗕</button>
     <button id="maximize-button">🗖</button>
@@ -15,15 +15,10 @@
         type="text"
         name="submissions"
         placeholder="?"
-        class="m-thin-input"
+        class="thin-input"
       />
       submissions &
-      <input
-        type="text"
-        name="minutes"
-        placeholder="?"
-        class="m-thin-input"
-      />
+      <input type="text" name="minutes" placeholder="?" class="thin-input" />
       minutes
     </p>
     <p>
@@ -34,15 +29,11 @@
         placeholder="question-name"
         hidden
       />
-      <input
-        type="text"
-        name="fileName"
-        placeholder="file-name"
-      />.<input
+      <input type="text" name="fileName" placeholder="file-name" />.<input
         type="text"
         name="fileExtension"
         placeholder="file extension"
-        class="m-thin-input"
+        class="thin-input"
       />
       <br />
       <textarea
@@ -52,19 +43,19 @@
         hidden
       ></textarea>
     </p>
-    <div class="m-spacer"></div>
+    <div class="spacer"></div>
 
     <div>
-      <div id="folder-prompt-container" class="m-scroll"></div>
+      <div id="folder-prompt-container" class="scroll"></div>
       <input
         type="text"
         name="folderPath"
         placeholder="something/something"
-        class="m-visible-only"
+        class="visible-only"
         hidden
       />
     </div>
-    <div class="m-spacer"></div>
-    <input type="submit" value="Submit" class="m-submit-button" />
+    <div class="spacer"></div>
+    <input type="submit" value="Submit" class="submit-button" />
   </form>
 </div>

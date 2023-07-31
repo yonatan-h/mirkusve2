@@ -18,19 +18,24 @@ function CreateNewFolder({ updateData, setInNewFolderMode, folderPath }) {
   return (
     <div>
       <p>eg) abebe/kebede/chala</p>
-      <div className="m-spaced-flex">
+      <div className="spaced-flex">
         <input
           type="text"
-          className="m-flex-1"
+          className="flex-1"
           onChange={onChange}
           value={[path]}
         />
-        <button className="m-cancel-new-folder" onClick={onCancel}>
+        <button className="cancel-new-folder" onClick={onCancel}>
           <img src={cancelIcon} alt="cancel" />
         </button>
       </div>
       <div>
-        <FolderTree folderPaths={[path]} folderPath={undefined  }  setInNewFolderMode={()=>{}} updateData={()=>{}}/>
+        <FolderTree
+          folderPaths={[path]}
+          folderPath={undefined}
+          setInNewFolderMode={() => {}}
+          updateData={() => {}}
+        />
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ function getQuestionName(link) {
 // eg) When first time submitting, code shown is still editable. In .../submissions/
 const EDIT_MODE = 'edit-mode';
 //eg) When visiting old submissions, code shown is not editable. In .../submissions/.../
-const READ_MODE = 'view-mode';
+const READ_MODE = 'read-mode';
 
 function getSubmissionSpans() {
   const acceptedSelector = 'div.cursor-pointer span.text-green-s';
@@ -90,7 +90,7 @@ function currentCodeIsAccepted() {
   if (getViewMode() === EDIT_MODE) {
     const spans = getSubmissionSpans();
     if (!spans.length) return false;
-    return spans[0].className.match(/green/) != null;
+    return spans[0].className.match(/green/) !== null;
   } else {
     const chart = document.querySelector('rect.highcharts-background');
     return chart != null;

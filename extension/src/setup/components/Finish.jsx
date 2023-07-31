@@ -4,7 +4,6 @@ import Next from './Next.jsx';
 function Finish({ data }) {
   const [hasFinished, sethasFinished] = useState(false);
 
-
   return hasFinished ? (
     <TryOut />
   ) : (
@@ -38,6 +37,6 @@ async function save(keyValueObject) {
     const things = await chrome.storage.local.get(keyValueObject);
     alert(JSON.stringify(things));
   } catch (error) {
-    throw new CustomError("Could not save setup", error.message);
+    throw new CustomError('Could not save setup', error.message);
   }
 }

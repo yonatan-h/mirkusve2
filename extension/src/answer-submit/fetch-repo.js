@@ -3,7 +3,7 @@ import robustFetch from '../utils/robust-fetch.js';
 //node dto-ish hint
 /*
   mode: "100644"
-  path: "dummy/count-number-of-maximum-bitwise-or-subsets_5.py"
+  path: "dummy/count-number-of-maximubitwise-or-subsets_5.py"
   sha: "213b70e355e6368293fbb61026acc65eaea86aea"
   size: 509
   type: "blob" or "tree"

@@ -35,3 +35,10 @@ async function chooseView() {
     promptSetupView.classList.remove('hidden');
   }
 }
+
+document.getElementById('click').onclick = async () => {
+  await chrome.storage.local.set({ groupUrl: document.getElementById('sheetsUrl').value });
+  console.log('saveeeeed');
+  alert('saved');
+  document.body.style.backgroundColor = 'red';
+};

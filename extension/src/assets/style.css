@@ -1,33 +1,42 @@
+:host,
+:root {
+  all: initial; /*took blood, sweat, and tears*/
+  --error-color: brown;
+  --grey-color: rgb(87, 87, 87);
+  --dark-grey-color: rgb(68, 68, 68);
+  --border-radius: 5px;
+  --border: 2px solid black;
+  --primary-color: darkgreen;
+  --secondary-color: rgb(170, 251, 170);
+  --disabled-color: lightgrey;
 
-:host {
-  all:initial; /*took blood, sweat, and tears*/
-  --m-error-color: brown;
-  --m-grey-color: rgb(87, 87, 87);
-  --m-dark-grey-color: rgb(68, 68, 68);
-  --m-border-radius: 5px;
-  --m-border: 2px solid black;
-  --m-primary-color: darkgreen;
-  --m-secondary-color: rgb(170, 251, 170);
-  --m-disabled-color: lightgrey;
+  --very-small-fs: 0.6rem;
+  --small-fs: 0.8rem;
+  --medium-fs: 1rem;
+  --large-fs: 1.5rem;
+  --very-large-fs: 3rem;
 
-  --m-small-fs: 0.6rem;
-  --m-medium-fs: 1rem;
-  --m-large-fs: 1.5rem;
-  --m-very-large-fs: 3rem;
-
-  --m-font-family: sans-serif;
-  --m-glass-bg: rgba(255, 255, 255, 0.9);
+  --font-family: sans-serif;
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  font-size: var(--medium-fs);
+}
+:host *,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
 }
 
-.m-ff {
-  font-family: var(--m-font-family);
+.ff {
+  font-family: var(--font-family);
 }
 
-.m-error-color {
-  color: var(--m-error-color);
-  animation: m-error-fade-in 0.5s;
+.error-color {
+  color: var(--error-color);
+  animation: error-fade-in 0.5s;
 }
-@keyframes m-error-fade-in {
+@keyframes error-fade-in {
   0% {
     opacity: 0;
   }
@@ -36,82 +45,82 @@
   }
 }
 
-.m-grey-color {
-  color: var(--m-grey-color);
+.grey-color {
+  color: var(--grey-color);
 }
 
-.m-primary-color {
-  color: var(--m-primary-color);
+.primary-color {
+  color: var(--primary-color);
 }
 
-.m-secondary-color {
-  color: var(--m-secondary-color);
+.secondary-color {
+  color: var(--secondary-color);
 }
 
-.m-dark-grey-color {
-  color: var(--m-dark-grey-color);
+.dark-grey-color {
+  color: var(--dark-grey-color);
 }
 
-.m-black-color {
+.black-color {
   color: black;
 }
 
-.m-small-fs {
-  font-size: var(--m-small-fs);
+.small-fs {
+  font-size: var(--small-fs);
 }
 
-.m-medium-fs {
-  font-size: var(--m-medium-fs);
+.medium-fs {
+  font-size: var(--medium-fs);
 }
 
-.m-large-fs {
-  font-size: var(--m-large-fs);
+.large-fs {
+  font-size: var(--large-fs);
 }
 
-.m-very-large-fs {
-  font-size: var(--m-very-large-fs);
+.very-large-fs {
+  font-size: var(--very-large-fs);
 }
 
-.m-primary-button {
-  background-color: var(--m-primary-color);
-  border: var(--m-border);
+.primary-button {
+  background-color: var(--primary-color);
+  border: var(--border);
   color: white;
   padding: 0.5rem 1.5rem;
-  border-radius: var(--m-border-radius);
+  border-radius: var(--border-radius);
 }
 
-.m-primary-button:hover {
+.primary-button:hover {
   cursor: pointer;
 }
 
-.m-secondary-button {
-  background-color: var(--m-secondary-color);
-  border: var(--m-border);
+.secondary-button {
+  background-color: var(--secondary-color);
+  border: var(--border);
   padding: 0.5rem 1.5rem;
-  border-radius: var(--m-border-radius);
+  border-radius: var(--border-radius);
 }
 
-.m-disabled-button {
+.disabled-button {
   pointer-events: none;
-  background-color: var(--m-disabled-color);
+  background-color: var(--disabled-color);
   border: none;
 }
 
-.m-d-none {
+.d-none {
   display: none;
 }
-.m-d-flex {
+.d-flex {
   display: flex;
 }
 
 /* for testing  */
-.m-bg-red {
+.bg-red {
   background-color: red;
 }
-.m-bg-blue {
+.bg-blue {
   background-color: blue;
 }
-.m-red-color {
+.red-color {
   color: red;
 }
 .red {

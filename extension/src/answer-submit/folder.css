@@ -1,4 +1,4 @@
-.m-folder {
+.folder {
   color: black;
 
   margin-top: 2px;
@@ -11,21 +11,21 @@
   align-items: center;
 }
 
-.m-folder-btn {
+.folder-btn {
   padding: 1px;
   border-radius: 0.25rem;
   background-color: rgba(255, 255, 255, 0.5);
 }
-.m-folder-btn:hover {
+.folder-btn:hover {
   background-color: darkgreen;
 }
 
-.m-folder-btn__selected {
+.folder-btn__selected {
   background-color: darkgreen;
   color: white;
 }
 
-.m-new-folder-btn {
+.new-folder-btn {
   color: black;
   border: 1px solid grey;
 
@@ -39,24 +39,24 @@
   border-radius: 100%;
 }
 
-.m-hidden {
+.hidden {
   display: none;
 }
 
-.m-hint {
+.hint {
   color: rgb(62, 62, 62) !important;
 }
 
-.m-new-folder-bar {
+.new-folder-bar {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.m-new-folder-bar input {
+.new-folder-bar input {
   flex: 1;
 }
 
-.m-new-folder-bar #new-folder-cancel {
+.new-folder-bar #new-folder-cancel {
   color: white;
   background: brown;
   /* to center the x sign */

@@ -26,9 +26,13 @@ module.exports = {
           {
             loader: 'style-loader',
             options: {
-              insert: (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style),
+              insert: (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              },
             },
           },
           'css-loader',

@@ -1,40 +1,40 @@
-import makeHandler from "../lib/handle-custom-error.js";
-import { CustomError } from "../lib/custom-errors.js";
-import { getSelectedDiv } from "./submission-spans.js";
-import fillInputs from "./fill-inputs.js";
-import showFolderPrompt from "./folder.js";
-import sendAnswer from "./send-answer.js";
-import afterSubmit from "./after-submit.js";
+import makeHandler from '../lib/handle-custom-error.js';
+import { CustomError } from '../lib/custom-errors.js';
+import { getSelectedDiv } from './submission-spans.js';
+import fillInputs from './fill-inputs.js';
+import showFolderPrompt from './folder.js';
+import sendAnswer from './send-answer.js';
+import afterSubmit from './after-submit.js';
 
-import html from "./answer-submit.html";
-import "./answer-submit.css";
+import html from './answer-submit.html';
+import './answer-submit.css';
 
 const container = createUi();
 document.body.appendChild(container);
 
-const window = container.querySelector(".m-submit");
-const minimizeButton = container.querySelector("#minimize-button");
-const maximizeButton = container.querySelector("#maximize-button");
+const window = container.querySelector('.submit');
+const minimizeButton = container.querySelector('#minimize-button');
+const maximizeButton = container.querySelector('#maximize-button');
 
-const errorBox = container.querySelector("#error-box");
-const errorParagraph = errorBox.querySelector("p");
-const errorCode = errorBox.querySelector("code");
+const errorBox = container.querySelector('#error-box');
+const errorParagraph = errorBox.querySelector('p');
+const errorCode = errorBox.querySelector('code');
 
 const handleCustomError = makeHandler(errorParagraph, errorCode);
 
 const folderPathInput = container.querySelector('[name="folderPath"]');
 const folderPromptContainer = container.querySelector(
-  "#folder-prompt-container"
+  '#folder-prompt-container'
 );
-const form = container.querySelector("form");
+const form = container.querySelector('form');
 const submitButton = form.querySelector('[type="submit"]');
 
 minimizeButton.onclick = () => {
-  form.classList.add("hidden");
+  form.classList.add('hidden');
 };
 
 maximizeButton.onclick = () => {
-  form.classList.remove("hidden");
+  form.classList.remove('hidden');
 };
 
 form.onsubmit = async (event) => {
@@ -54,13 +54,13 @@ form.onsubmit = async (event) => {
 };
 
 function clearError() {
-  errorParagraph.textContent = "";
-  errorCode.textContent = "";
+  errorParagraph.textContent = '';
+  errorCode.textContent = '';
 }
 
 async function show() {
   clearError();
-  container.classList.remove("hidden");
+  container.classList.remove('hidden');
   enableForm();
   showLoading();
 
@@ -83,11 +83,11 @@ async function show() {
 }
 
 function hide() {
-  container.classList.add("hidden");
+  container.classList.add('hidden');
 }
 
 function createUi() {
-  const container = document.createElement("div");
+  const container = document.createElement('div');
   container.innerHTML = html;
   return container;
 }
@@ -99,7 +99,7 @@ async function waitForLoad() {
   const numPolls = 20;
 
   for (let i = 0; i < numPolls; i++) {
-    const codes = document.querySelectorAll("code");
+    const codes = document.querySelectorAll('code');
     //error box has code too
     if (selected !== getSelectedDiv() && codes.length >= 2) {
       return;
@@ -108,42 +108,42 @@ async function waitForLoad() {
     await new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  const message = "Page has not loaded, try refreshing the page";
+  const message = 'Page has not loaded, try refreshing the page';
   throw new CustomError(message);
 }
 
 function showSuccessfulSubmit() {
-  errorParagraph.textContent = "";
-  errorCode.textContent = "";
-  submitButton.setAttribute("disabled", "disabled");
-  submitButton.classList.add("m-success-button");
-  submitButton.value = "Submitted!";
+  errorParagraph.textContent = '';
+  errorCode.textContent = '';
+  submitButton.setAttribute('disabled', 'disabled');
+  submitButton.classList.add('success-button');
+  submitButton.value = 'Submitted!';
 }
 
 function disableForm() {
-  submitButton.setAttribute("disabled", "disabled");
-  submitButton.classList.add("m-grey-button");
-  form.classList.add("m-disabled-form");
-  window.classList.add("m-disabled");
+  submitButton.setAttribute('disabled', 'disabled');
+  submitButton.classList.add('grey-button');
+  form.classList.add('disabled-form');
+  window.classList.add('disabled');
 }
 
 function enableForm() {
-  submitButton.removeAttribute("disabled", "disabled");
-  submitButton.classList.remove("m-grey-button");
-  form.classList.remove("m-disabled-form");
-  window.classList.remove("m-disabled");
+  submitButton.removeAttribute('disabled', 'disabled');
+  submitButton.classList.remove('grey-button');
+  form.classList.remove('disabled-form');
+  window.classList.remove('disabled');
 }
 
 function showLoading() {
-  submitButton.setAttribute("disabled", "disabled");
-  submitButton.classList.add("m-grey-button");
-  window.classList.add("m-loading");
+  submitButton.setAttribute('disabled', 'disabled');
+  submitButton.classList.add('grey-button');
+  window.classList.add('loading');
 }
 
 function stopShowingLoading() {
-  submitButton.removeAttribute("disabled");
-  submitButton.classList.remove("m-grey-button");
-  window.classList.remove("m-loading");
+  submitButton.removeAttribute('disabled');
+  submitButton.classList.remove('grey-button');
+  window.classList.remove('loading');
 }
 
 export { show, hide };

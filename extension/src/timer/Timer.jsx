@@ -63,10 +63,10 @@ function Timer({ inView }) {
   }, [inView]);
 
   return (
-    <div className="m-timer ">
+    <div className="timer ">
       {countingState.isCounting ? (
         <button
-          className="m-play-pause-button m-timer-playing"
+          className="play-pause-button timer-playing"
           onClick={() =>
             setCountingState({
               isCounting: false,
@@ -78,7 +78,7 @@ function Timer({ inView }) {
         </button>
       ) : (
         <button
-          className="m-play-pause-button m-timer-paused"
+          className="play-pause-button timer-paused"
           onClick={() =>
             setCountingState({
               isCounting: true,
@@ -90,8 +90,8 @@ function Timer({ inView }) {
         </button>
       )}
       <div>
-        <span className="m-medium-fs "> {calculateMinutes(duration)} </span>
-        <span className="m-small-fs">min</span>
+        <span className="medium-fs dark-grey-color"> {calculateMinutes(duration)} </span>
+        <span className="small-fs dark-grey-color">min</span>
       </div>
     </div>
   );

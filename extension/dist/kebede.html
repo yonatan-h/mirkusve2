@@ -4,20 +4,87 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
-    <style>
-      :root {
-        color: blue;
-      }
-
-      .red {
-        color: red;
-      }
-    </style>
   </head>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+    }
+
+    .ripple {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      border-radius: 100%;
+
+      animation: ripple 2s ease-out  infinite;
+    }
+
+    .delay-1 {
+      animation-delay: -200ms;
+    }
+    .delay-2 {
+      animation-delay: -400ms;
+    }
+    .delay-3 {
+      animation-delay: -600ms;
+    }
+    .delay-4 {
+      animation-delay: -800ms;
+    }
+    .delay-5 {
+      animation-delay: -1000ms;
+    }
+    .delay-6 {
+      animation-delay: -1200ms;
+    }
+    .delay-7 {
+      animation-delay: -1400ms;
+    }
+    .delay-8 {
+      animation-delay: -1600ms;
+    }
+    .delay-9 {
+      animation-delay: -1800ms;
+    }
+    .delay-10 {
+      animation-delay: -2000ms;
+    }
+
+
+    @keyframes ripple {
+      0% {
+        outline-offset: 5px;
+        outline: 1px solid white;
+        opacity: 0;
+      }
+
+      90%{
+        opacity: 1;
+      }
+
+
+      100% {
+        outline-offset: 200px;
+        outline: 3px solid white;
+        opacity: 0;
+        
+      }
+    }
+  </style>
   <body>
-    <p>asdf</p>
-    <p class="red">class</p>
-    <script src="./answer.bundle.js"></script>
+    <div class="ripple delay-1"></div>
+    <div class="ripple delay-2"></div>
+    <div class="ripple delay-3"></div>
+    <div class="ripple delay-4"></div>
+    <div class="ripple delay-5"></div>
+    <div class="ripple delay-6"></div>
+    <div class="ripple delay-7"></div>
+    <div class="ripple delay-8"></div>
+    <div class="ripple delay-9"></div>
+    <div class="ripple delay-10"></div>
   </body>
 </html>

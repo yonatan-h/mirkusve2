@@ -1,7 +1,7 @@
-import { CustomError } from "../lib/custom-errors.js";
-import robustFetch from "../lib/robust-fetch.js";
-import "./folder.css";
-import folderPrompt from "./folder.html";
+import { CustomError } from '../lib/custom-errors.js';
+import robustFetch from '../lib/robust-fetch.js';
+import './folder.css';
+import folderPrompt from './folder.html';
 
 async function showFolderPrompt({
   promptContainer,
@@ -30,9 +30,9 @@ function setupNewFolderView(
   handleCustomError,
   clearError
 ) {
-  const newFolderView = promptContainer.querySelector("#new-folder-view");
+  const newFolderView = promptContainer.querySelector('#new-folder-view');
   const input = newFolderView.querySelector('[type="text"]');
-  const cancelButton = newFolderView.querySelector("#new-folder-cancel");
+  const cancelButton = newFolderView.querySelector('#new-folder-cancel');
 
   input.oninput = () => {
     const value = input.value;
@@ -46,33 +46,33 @@ function setupNewFolderView(
   };
 
   cancelButton.onclick = () => {
-    promptContainer.querySelector("#tree-view").classList.remove("hidden");
-    newFolderView.classList.add("hidden");
-    folderPathInput.value = "";
+    promptContainer.querySelector('#tree-view').classList.remove('hidden');
+    newFolderView.classList.add('hidden');
+    folderPathInput.value = '';
   };
 }
 
 function errorIfBadFolderPath(path) {
-  if (path.includes(".")) {
+  if (path.includes('.')) {
     throw new CustomError(
       `There is a '.' in the folder path. Please enter only the path of the folder, don't include any file.`
     );
   }
 
-  if (path.includes("//")) {
+  if (path.includes('//')) {
     throw new CustomError(
       `There is a double slash '//' in the folder path. Remove it.`
     );
   }
 
-  if (path.includes(" ")) {
+  if (path.includes(' ')) {
     throw new CustomError(
       `Please don't include space characters in the folder path.`
     );
   }
 
   try {
-    const url = new URL("https://abebe.com/" + path);
+    const url = new URL('https://abebe.com/' + path);
   } catch (error) {
     throw new CustomError(
       `The folder path is not url safe somehow. Please modify it.`
@@ -81,12 +81,12 @@ function errorIfBadFolderPath(path) {
 }
 
 async function getFetchOptions() {
-  const { token } = await chrome.storage.local.get("token");
+  const { token } = await chrome.storage.local.get('token');
 
   const fetchOptions = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Accept: "application/vnd.github+json",
+      Accept: 'application/vnd.github+json',
       Authorization: `Bearer ${token}`,
     },
   };
@@ -96,8 +96,8 @@ async function getFetchOptions() {
 
 async function getSha(fetchOptions) {
   const { userName, repoName } = await chrome.storage.local.get([
-    "userName",
-    "repoName",
+    'userName',
+    'repoName',
   ]);
 
   const url = `https://api.github.com/repos/${userName}/${repoName}/commits/main`;
@@ -107,23 +107,23 @@ async function getSha(fetchOptions) {
 
 async function getFolderPaths(sha, fetchOptions) {
   const { userName, repoName } = await chrome.storage.local.get([
-    "userName",
-    "repoName",
+    'userName',
+    'repoName',
   ]);
 
   const treeUrl = `https://api.github.com/repos/${userName}/${repoName}/git/trees/${sha}?recursive=1`;
   const { tree } = await robustFetch(treeUrl, fetchOptions);
 
   const folderPaths = tree
-    .filter((node) => node.type === "tree")
+    .filter((node) => node.type === 'tree')
     .map((folder) => folder.path);
 
-  folderPaths.push("/");
+  folderPaths.push('/');
   return folderPaths;
 }
 
 function createTreeView(folderPaths, promptContainer, folderPathInput) {
-  const treeView = promptContainer.querySelector("#tree-view");
+  const treeView = promptContainer.querySelector('#tree-view');
   folderPaths.sort(); // same parents together
 
   for (const path of folderPaths) {
@@ -137,38 +137,38 @@ function createTreeView(folderPaths, promptContainer, folderPathInput) {
 }
 
 function createFolderElement({ path, folderPathInput, promptContainer }) {
-  const nodes = path.split("/").filter((node) => node !== "");
+  const nodes = path.split('/').filter((node) => node !== '');
   const length = nodes.length;
-  const name = length ? nodes[length - 1] : "root";
+  const name = length ? nodes[length - 1] : 'root';
 
-  const element = document.createElement("div");
-  element.classList.add("m-folder");
+  const element = document.createElement('div');
+  element.classList.add('folder');
   element.style.marginLeft = `${15 * length}px`;
 
-  const folderButton = document.createElement("button");
-  folderButton.textContent = "📁" + name;
-  folderButton.classList.add("m-folder-btn");
-  folderButton.setAttribute("type", "button");
+  const folderButton = document.createElement('button');
+  folderButton.textContent = '📁' + name;
+  folderButton.classList.add('folder-btn');
+  folderButton.setAttribute('type', 'button');
 
   folderButton.onclick = () => {
     const selectedButton = promptContainer.querySelector(
-      ".m-folder-btn__selected"
+      '.folder-btn__selected'
     );
-    selectedButton?.classList.remove("m-folder-btn__selected");
-    folderButton.classList.add("m-folder-btn__selected");
+    selectedButton?.classList.remove('folder-btn__selected');
+    folderButton.classList.add('folder-btn__selected');
     folderPathInput.value = path;
   };
 
-  const newFolderButton = document.createElement("button");
-  newFolderButton.textContent = "+";
-  newFolderButton.classList.add("m-new-folder-btn");
-  newFolderButton.setAttribute("type", "button");
+  const newFolderButton = document.createElement('button');
+  newFolderButton.textContent = '+';
+  newFolderButton.classList.add('new-folder-btn');
+  newFolderButton.setAttribute('type', 'button');
 
   newFolderButton.onclick = (e) => {
-    promptContainer.querySelector("#tree-view").classList.add("hidden");
-    const newFolderView = promptContainer.querySelector("#new-folder-view");
+    promptContainer.querySelector('#tree-view').classList.add('hidden');
+    const newFolderView = promptContainer.querySelector('#new-folder-view');
 
-    newFolderView.classList.remove("hidden");
+    newFolderView.classList.remove('hidden');
     newFolderView.querySelector('[type="text"]').value = path;
     folderPathInput.value = path;
   };

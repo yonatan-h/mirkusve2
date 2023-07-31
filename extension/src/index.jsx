@@ -9,9 +9,9 @@ function App() {
   const [state, setState] = useState({ folderPath: '/' });
 
   return (
-    <div className="m-submit-card m-card-exposed">
+    <div className="submit-card card-exposed">
       <div>sdf</div>
-      <div className="m-flex-1">
+      <div className="flex-1">
         <p>adsf</p>
         <p>adsf</p>
         <p>adsf</p>

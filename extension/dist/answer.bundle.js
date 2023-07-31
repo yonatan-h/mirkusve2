@@ -8142,12 +8142,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/CustomErrorView.jsx */ "./src/answer-submit/components/CustomErrorView.jsx");
 /* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
 /* harmony import */ var _wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./wait-to-load.js */ "./src/answer-submit/wait-to-load.js");
-/* harmony import */ var _auto_fill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./auto-fill */ "./src/answer-submit/auto-fill.js");
+/* harmony import */ var _get_scraped_data__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./get-scraped-data */ "./src/answer-submit/get-scraped-data.js");
 /* harmony import */ var _fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./fetch-repo.js */ "./src/answer-submit/fetch-repo.js");
 /* harmony import */ var _determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./determine-file-name.js */ "./src/answer-submit/determine-file-name.js");
 /* harmony import */ var _utils_web_scrape__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/web-scrape */ "./src/utils/web-scrape.js");
+/* harmony import */ var _submit_answer_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./submit-answer.js */ "./src/answer-submit/submit-answer.js");
+/* harmony import */ var _components_InputsBlock_jsx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/InputsBlock.jsx */ "./src/answer-submit/components/InputsBlock.jsx");
 // 0||undefined is undefined
 //but 0??undefined is 0
+
+
 
 
 
@@ -8176,37 +8180,67 @@ function SubmitCard({
   const [isHidden, setIsHidden] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
-  const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
-  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const isDisabled = customError && customError instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.DisablingError;
-  const updateData = newData => setData({
-    ...data,
-    ...newData
+  const [hasSubmitted, setHasSubmitted] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [custom_Error, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
+  const isDisabled = custom_Error && custom_Error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.DisablingError;
+  const [repoContent, setRepoContent] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    folderPaths: [],
+    filePaths: []
   });
+  const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    submissions: '',
+    minutes: '',
+    file: '',
+    fileName: '',
+    fileExtension: '',
+    folderPath: ''
+  });
+  const updateData = newData => {
+    if (isDisabled) return;
+    //Assuming this error is the one the user is trying to correct
+    //All unsolved errors will be reintroduced on submit
+    setCustomError(undefined);
+    setData({
+      ...data,
+      ...newData
+    });
+  };
+
+  //
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const changeUrl = event => setUrl(event.destination.url);
     navigation.addEventListener('navigate', changeUrl);
     return () => navigation.removeEventListener('navigate', changeUrl);
   }, []);
+
+  //
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!inView) return;
-    let collected = {};
-    const collectData = updated => collected = {
-      ...collected,
-      ...updated
-    };
+    if (hasSubmitted) return;
+    let collectedData = {};
+    let collectedRepo = {};
     const load = async () => {
       await (0,_wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
-      await Promise.all([(0,_auto_fill__WEBPACK_IMPORTED_MODULE_9__["default"])(collectData), (0,_fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__["default"])().then(collectData)]);
-      collectData({
-        fileName: (0,_determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__["default"])(collected.filePaths)
-      });
-      setData(collected);
+      await Promise.all([(0,_get_scraped_data__WEBPACK_IMPORTED_MODULE_9__["default"])().then(data => collectedData = data), (0,_fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__["default"])().then(content => collectedRepo = content)]);
+      collectedData.fileName = (0,_determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__["default"])(collectedRepo.filePaths);
+
+      //To not loose the keys, used to validate all inputs later
+      collectedData = {
+        ...copyWithEmptyStrings(data),
+        ...collectedData
+      };
+      setData(collectedData);
+      setRepoContent(collectedRepo);
     };
     load().catch(error => {
       if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw error;
     });
   }, [inView, url]);
+
+  //
+
   const onInputChange = event => {
     const target = event.target;
     const name = target.name;
@@ -8214,133 +8248,76 @@ function SubmitCard({
     updateData({
       [name]: value
     });
-
-    //May accidentally clear another inputs Error. Its okay, every thing is evaluated on submission
-    if (value === '') setCustomError(new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError(name));else setCustomError(undefined);
+    try {
+      errorIfIllegalInput(name, value);
+      setCustomError(undefined);
+    } catch (error) {
+      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError) setCustomError(error);else throw error;
+    }
   };
-  let cardClassName = ' m-submit-card ';
-  if (!isHidden) cardClassName += ' m-card-exposed ';
-  if (isDisabled) cardClassName += ' m-card-disabled ';
+
+  //
+
+  const onSubmit = async () => {
+    try {
+      for (const name in data) {
+        const value = data[name];
+        errorIfIllegalInput(name, value);
+      }
+      await (0,_submit_answer_js__WEBPACK_IMPORTED_MODULE_13__["default"])(data);
+    } catch (error) {
+      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw error;
+    }
+  };
+  let cardClassName = ' submit-card ';
+  if (!isHidden) cardClassName += ' card-exposed ';
+  if (isDisabled) cardClassName += ' card-disabled ';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: cardClassName
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-vertical-center"
+    className: "vertical-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-drawer-button",
+    className: "drawer-button",
     onClick: () => setIsHidden(!isHidden)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: isHidden ? leftIcon : rightIcon
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-flex-1 m-vertical-spaced-flex m-gap-1"
+    className: "flex-1 vertical-spaced-flex gap-1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    className: "m-card-title"
-  }, "Submit Via Mirkusve"), customError ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    customError: customError,
+    className: "card-title"
+  }, "Submit Via Mirkusve"), custom_Error ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    custom_Error: custom_Error,
     key: Math.random()
-  }) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-vertical-spaced-flex"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-spaced-flex m-mw-2-inputs"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-      type: "number",
-      min: "0",
-      name: "submissions",
-      className: "m-flex-1",
-      onChange: onInputChange,
-      required: true,
-      value: data.submissions ?? ''
-    }),
-    label: "Tries",
-    className: "m-flex-1"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-      type: "number",
-      min: "0",
-      name: "minutes",
-      onChange: onInputChange,
-      required: true,
-      value: data.minutes ?? ''
-    }),
-    label: "Minutes",
-    className: "m-flex-1"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-spaced-flex m-mw-2-inputs"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-      type: "text",
-      name: "fileName",
-      onChange: onInputChange,
-      required: true,
-      value: data.fileName ?? ''
-    }),
-    label: "Filename",
-    className: "m-flex-2"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-      type: "text",
-      name: "fileExtension",
-      onChange: onInputChange,
-      required: true,
-      value: data.fileExtension ?? ''
-    }),
-    label: "Extension",
-    className: "m-flex-1"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    folderPaths: data.folderPaths,
+  }) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_InputsBlock_jsx__WEBPACK_IMPORTED_MODULE_14__["default"], {
+    data: data,
+    onInputChange: onInputChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    folderPaths: repoContent.folderPaths,
     folderPath: data.folderPath,
     updateData: updateData,
     setCustomError: setCustomError
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit",
-    className: "m-primary-button m-submit-button-width",
-    onClick: e => 1 + 1
+    className: "primary-button submit-button-width",
+    onClick: () => onSubmit()
   }, "Submit")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SubmitCard);
-
-/***/ }),
-
-/***/ "./src/answer-submit/auto-fill.js":
-/*!****************************************!*\
-  !*** ./src/answer-submit/auto-fill.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
-/* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/custom-errors.js */ "./src/utils/custom-errors.js");
-/* harmony import */ var _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/web-scrape.js */ "./src/utils/web-scrape.js");
-
-
-
-
-async function autoFill(updateData) {
-  if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length) {
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError('No answer has been submitted so far. There is nothing to submit.');
+function errorIfIllegalInput(name, value) {
+  if (value === 0) return;
+  if (!value && name === 'folderPath') {
+    throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`Please select a folder to upload your file to!`);
   }
-  if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.currentCodeIsAccepted)()) {
-    if ((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.acceptedSubmissionExists)()) {
-      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError(`You can't submit an unaccepted answer. Please select/view an accepted answer.`);
-    } else {
-      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError(`Try more and have an accepted answer! Unaccepted answers can not be submitted.`);
-    }
+  if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError(name);
+  if (name !== 'folderPath' && name !== 'file' && `${value}`.includes('/')) {
+    throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`please remove / from input ${name}`);
   }
-  const url = window.location.href;
-  const duration = (await (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.loadDuration)((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionName)(url))) || 0;
-  const data = {
-    submissions: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length,
-    fileExtension: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentFileExtension)(),
-    file: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentCode)(),
-    minutes: (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.calculateMinutes)(duration)
-  };
-  updateData(data);
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (autoFill);
+function copyWithEmptyStrings(object) {
+  const copied = {};
+  for (const key in object) copied[key] = '';
+  return copied;
+}
 
 /***/ }),
 
@@ -8381,14 +8358,14 @@ function CreateNewFolder({
     setInNewFolderMode(false);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "eg) abebe/kebede/chala"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-spaced-flex"
+    className: "spaced-flex"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
-    className: "m-flex-1",
+    className: "flex-1",
     onChange: onChange,
     value: [path]
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-cancel-new-folder",
+    className: "cancel-new-folder",
     onClick: onCancel
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: cancelIcon,
@@ -8419,15 +8396,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 function CustomErrorView({
-  customError
+  custom_Error
 }) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-appear-animation"
+    className: "appear-animation"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-error-color"
-  }, customError.descriptionAndSolution), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", {
-    className: "m-error-color"
-  }, customError.errorAsString));
+    className: "error-color"
+  }, custom_Error.descriptionAndSolution), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", {
+    className: "error-color"
+  }, custom_Error.errorAsString));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomErrorView);
 
@@ -8509,11 +8486,11 @@ function Folder({
   const indents = isRoot ? 0 : nodes.length - 1;
 
   //dont forget ' thespaces '
-  let labelClassName = ' m-folder-label m-spaced-flex ';
-  if (isSelected) labelClassName += ' m-selected-folder-label ';
-  if (isNew && !isOnSelectedPath) labelClassName += ' m-less-opacity ';
+  let labelClassName = ' folder-label spaced-flex ';
+  if (isSelected) labelClassName += ' selected-folder-label ';
+  if (isNew && !isOnSelectedPath) labelClassName += ' less-opacity ';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-folder"
+    className: "folder"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => onSelect(),
     style: {
@@ -8522,16 +8499,16 @@ function Folder({
     className: labelClassName
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: folderIcon,
-    className: "m-medium-icon"
+    className: "mediuicon"
   }), folderName), isNew ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => onDelete(),
-    className: "m-folder-icon-button"
+    className: "folder-icon-button"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: deleteIcon,
     alt: "delete folder"
   })) : null, inNewFolderMode ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => setNewFolderName(''),
-    className: "m-folder-icon-button"
+    className: "folder-icon-button"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: addIcon,
     alt: "add new folder"
@@ -8539,20 +8516,20 @@ function Folder({
     style: {
       marginLeft: `${indents + 1}rem`
     },
-    className: "m-spaced-flex m-align-center"
+    className: "spaced-flex align-center"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "text",
     onChange: onChange,
     value: newFolderName,
     className: "flex-1"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-folder-icon-button",
+    className: "folder-icon-button",
     onClick: () => onSave()
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: doneIcon,
     alt: "save this new folder"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-folder-icon-button",
+    className: "folder-icon-button",
     onClick: () => setNewFolderName(undefined)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: cancelIcon,
@@ -8577,9 +8554,6 @@ function errorIfPathProblem({
   }
   if (newFolderName.includes('/')) {
     throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_2__.InputError(`There is slash '/' in '${newFolderName}', Please Remove it.`);
-  }
-  if (newFolderName.includes(' ')) {
-    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_2__.InputError(`Please don't include space characters in the folder '${newFolderName}'.`);
   }
   try {
     const url = new URL('https://abebe.com/' + newFolderName);
@@ -8630,7 +8604,7 @@ function FolderTree({
   }));
   const allFolders = sortFolders([...existingFolders, ...newFolders]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
-    className: "m-folder-tree"
+    className: "folder-tree"
   }, allFolders.map(({
     path,
     isNew
@@ -8695,6 +8669,81 @@ function removeFolderWithChildren(removedPath, paths) {
 
 /***/ }),
 
+/***/ "./src/answer-submit/components/InputsBlock.jsx":
+/*!******************************************************!*\
+  !*** ./src/answer-submit/components/InputsBlock.jsx ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LabelledInput.jsx */ "./src/answer-submit/components/LabelledInput.jsx");
+
+
+function InputsBlock({
+  data,
+  onInputChange
+}) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "vertical-spaced-flex"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "spaced-flex mw-2-inputs"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "number",
+      min: "0",
+      name: "submissions",
+      className: "flex-1",
+      onChange: onInputChange,
+      required: true,
+      value: data.submissions
+    }),
+    label: "Submissions",
+    className: "flex-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "number",
+      min: "0",
+      name: "minutes",
+      onChange: onInputChange,
+      required: true,
+      value: data.minutes
+    }),
+    label: "Minutes",
+    className: "flex-1"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "spaced-flex mw-2-inputs"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "text",
+      name: "fileName",
+      onChange: onInputChange,
+      required: true,
+      value: data.fileName
+    }),
+    label: "Filename",
+    className: "flex-2"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "text",
+      name: "fileExtension",
+      onChange: onInputChange,
+      required: true,
+      value: data.fileExtension
+    }),
+    label: "Extension",
+    className: "flex-1"
+  })));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InputsBlock);
+
+/***/ }),
+
 /***/ "./src/answer-submit/components/LabelledInput.jsx":
 /*!********************************************************!*\
   !*** ./src/answer-submit/components/LabelledInput.jsx ***!
@@ -8715,9 +8764,9 @@ function LabelledInput({
   className
 }) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: `m-labelled-input-container ${className || ''}`
+    className: `labelled-input-container ${className || ''}`
   }, input, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "m-label m-top-left-label"
+    className: "label m-top-left-label"
   }, label));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LabelledInput);
@@ -8746,7 +8795,7 @@ function determineFileName(filePaths) {
   if (!fileNames.has(fileName)) {
     return fileName;
   }
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 2; i <= 100; i++) {
     const tweakedFileName = `${fileName}-${i}`;
     if (!fileNames.has(tweakedFileName)) {
       return tweakedFileName;
@@ -8783,7 +8832,7 @@ __webpack_require__.r(__webpack_exports__);
 //node dto-ish hint
 /*
   mode: "100644"
-  path: "dummy/count-number-of-maximum-bitwise-or-subsets_5.py"
+  path: "dummy/count-number-of-maximubitwise-or-subsets_5.py"
   sha: "213b70e355e6368293fbb61026acc65eaea86aea"
   size: 509
   type: "blob" or "tree"
@@ -8837,6 +8886,169 @@ async function getTree(sha, fetchOptions) {
   } = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(treeUrl, fetchOptions);
   return tree;
 }
+
+/***/ }),
+
+/***/ "./src/answer-submit/get-scraped-data.js":
+/*!***********************************************!*\
+  !*** ./src/answer-submit/get-scraped-data.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils_duration_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/duration.js */ "./src/utils/duration.js");
+/* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/custom-errors.js */ "./src/utils/custom-errors.js");
+/* harmony import */ var _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/web-scrape.js */ "./src/utils/web-scrape.js");
+
+
+
+
+async function getScrapedData() {
+  if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length) {
+    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError('No answer has been submitted so far. There is nothing to submit.');
+  }
+  if (!(0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.currentCodeIsAccepted)()) {
+    if ((0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.acceptedSubmissionExists)()) {
+      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError(`You can't submit an unaccepted answer. Please select/view an accepted answer.`);
+    } else {
+      throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.DisablingError(`Try more and have an accepted answer! Unaccepted answers can not be submitted.`);
+    }
+  }
+  const url = window.location.href;
+  const questionName = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionName)(url);
+  const duration = (await (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.loadDuration)(questionName)) || 0;
+  const data = {
+    submissions: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getSubmissionSpans)().length,
+    fileExtension: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentFileExtension)(),
+    file: (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_2__.getCurrentCode)(),
+    minutes: (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_0__.calculateMinutes)(duration),
+    questionName: questionName
+  };
+  return data;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getScrapedData);
+
+/***/ }),
+
+/***/ "./src/answer-submit/submit-answer.js":
+/*!********************************************!*\
+  !*** ./src/answer-submit/submit-answer.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/robust-fetch.js */ "./src/utils/robust-fetch.js");
+/* harmony import */ var _utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/excess-slash.js */ "./src/utils/excess-slash.js");
+/* harmony import */ var _utils_keys_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/keys.js */ "./src/utils/keys.js");
+/* harmony import */ var _utils_join_path_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/join-path.js */ "./src/utils/join-path.js");
+/* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/custom-errors.js */ "./src/utils/custom-errors.js");
+
+
+
+
+
+async function submitAnswer({
+  folderPath,
+  questionName,
+  fileName,
+  fileExtension,
+  file,
+  submissions,
+  minutes
+}) {
+  errorIfQuestionNotInSheets(questionName);
+  const filePath = (0,_utils_join_path_js__WEBPACK_IMPORTED_MODULE_3__["default"])(folderPath, fileName + '.' + fileExtension);
+  const uploadResponse = await uploadFileResponse(filePath, file);
+  errorIfFileExists(uploadResponse, filePath);
+  errorIfBadStatus(uploadResponse);
+  const fileLink = await getFileLink(uploadResponse);
+  await submitToSheets({
+    submissions,
+    minutes,
+    questionName,
+    fileLink
+  });
+}
+async function errorIfQuestionNotInSheets(questionName) {
+  const {
+    name
+  } = await chrome.storage.local.get();
+  const questionExistsUrl = await (0,_utils_keys_js__WEBPACK_IMPORTED_MODULE_2__.getQuestionExistsUrl)();
+  let url = questionExistsUrl;
+  url += `&questionName=${questionName}`;
+  const {
+    exists
+  } = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])((0,_utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_1__["default"])(url));
+  if (exists === false) {
+    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_4__.DisablingError(`Question ${questionName} does'nt exist in sheets`);
+  }
+}
+async function uploadFileResponse(filePath, file) {
+  const {
+    userName,
+    repoName,
+    token
+  } = await chrome.storage.local.get();
+  let fileUrl = `https://api.github.com/repos/${userName}/${repoName}/contents/${filePath}`;
+  fileUrl = (0,_utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_1__["default"])(fileUrl);
+  const response = await fetch(fileUrl, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      message: 'Uploaded By Mirkusve',
+      content: btoa(file) //binary to ascii
+    })
+  });
+
+  return response;
+}
+function errorIfFileExists(response, filePath) {
+  if (response.status === 422) {
+    //discovered 422 from trail and error
+    const message = `${filePath} already exists in your repo. Please choose a different file name or folder.`;
+    throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_4__.CustomError(message);
+  }
+}
+function errorIfBadStatus(response) {
+  if (!response.ok) throw new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_4__.BadStatusError(response);
+}
+async function getFileLink(response) {
+  const data = await response.json();
+  return data['content']['html_url'];
+}
+async function submitToSheets({
+  submissions,
+  minutes,
+  questionName,
+  fileLink
+}) {
+  const {
+    name
+  } = await chrome.storage.local.get();
+  const submitAnswerUrl = await (0,_utils_keys_js__WEBPACK_IMPORTED_MODULE_2__.getAnswerSubmitUrl)();
+  let url = submitAnswerUrl;
+  url += `&name=${name}`;
+  url += `&questionName=${questionName}`;
+  url += `&submissions=${submissions}`;
+  url += `&time=${minutes}`;
+  url += `&fileLink=${fileLink}`;
+  url = (0,_utils_excess_slash_js__WEBPACK_IMPORTED_MODULE_1__["default"])(url);
+  const data = await (0,_utils_robust_fetch_js__WEBPACK_IMPORTED_MODULE_0__["default"])(url, {
+    method: 'POST'
+  });
+  return data.success === true;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (submitAnswer);
 
 /***/ }),
 
@@ -8932,11 +9144,11 @@ function ViewSelector() {
     return () => navigator.removeEventListener('navigate', setPageFromEvent);
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: currentPage === QUESTION_PAGE ? '' : 'm-d-none'
+    className: currentPage === QUESTION_PAGE ? '' : 'd-none'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_timer_Timer_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
     inView: currentPage === QUESTION_PAGE
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: currentPage === SUBMISSION_PAGE ? '' : 'm-d-none'
+    className: currentPage === SUBMISSION_PAGE ? '' : 'd-none'
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_answer_submit_SubmitCard_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
     inView: currentPage === SUBMISSION_PAGE
   })));
@@ -9051,9 +9263,9 @@ function Timer({
     }
   }, [inView]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "m-timer "
+    className: "timer "
   }, countingState.isCounting ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-play-pause-button m-timer-playing",
+    className: "play-pause-button timer-playing",
     onClick: () => setCountingState({
       isCounting: false,
       byUser: true
@@ -9062,7 +9274,7 @@ function Timer({
     src: pauseIcon,
     alt: "pause"
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-play-pause-button m-timer-paused",
+    className: "play-pause-button timer-paused",
     onClick: () => setCountingState({
       isCounting: true,
       byUser: true
@@ -9071,9 +9283,9 @@ function Timer({
     src: playIcon,
     alt: "play"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "m-medium-fs "
+    className: "medium-fs dark-grey-color"
   }, " ", (0,_utils_duration_js__WEBPACK_IMPORTED_MODULE_4__.calculateMinutes)(duration), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "m-small-fs"
+    className: "small-fs dark-grey-color"
   }, "min")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Timer);
@@ -9248,9 +9460,9 @@ function removeExcessSlash(url) {
     throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.BadUrlError(url);
   }
   let path = urlObj.pathname;
-  path = path.split("/");
-  path = path.filter(node => node !== "");
-  path = path.join("/");
+  path = path.split('/');
+  path = path.filter(node => node !== '');
+  path = path.join('/');
   urlObj.pathname = path;
   return urlObj.href;
 }
@@ -9288,6 +9500,45 @@ function joinWithPath(path1, path2) {
   return path1 + '/' + path2;
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (joinWithPath);
+
+/***/ }),
+
+/***/ "./src/utils/keys.js":
+/*!***************************!*\
+  !*** ./src/utils/keys.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clientId": () => (/* binding */ clientId),
+/* harmony export */   "codeForTokenUrl": () => (/* binding */ codeForTokenUrl),
+/* harmony export */   "getAnswerSubmitUrl": () => (/* binding */ getAnswerSubmitUrl),
+/* harmony export */   "getQuestionExistsUrl": () => (/* binding */ getQuestionExistsUrl),
+/* harmony export */   "githubAppId": () => (/* binding */ githubAppId),
+/* harmony export */   "githubAppLink": () => (/* binding */ githubAppLink),
+/* harmony export */   "groupFinderUrl": () => (/* binding */ groupFinderUrl)
+/* harmony export */ });
+const clientId = 'Iv1.0c9196e6fcd3647a';
+const githubAppId = 356032; //the github apps
+const githubAppLink = 'https://github.com/apps/mirkusve/installations/new';
+const mainWebappUrl = 'https://script.google.com/macros/s/AKfycbwztq78Ffh6hPaXVHECZloSnIDnSZ0CJYzjTy96KJ0prxna96NwSO1HoUs8XKIDuIRt/exec';
+const codeForTokenUrl = mainWebappUrl + '?path=tokens';
+const groupFinderUrl = mainWebappUrl + '?path=group-urls';
+const getGroupWebappUrl = async () => {
+  const {
+    groupUrl
+  } = await chrome.storage.local.get(['groupUrl']);
+  return groupUrl;
+};
+const getAnswerSubmitUrl = async () => {
+  return (await getGroupWebappUrl()) + '?path=answers';
+};
+const getQuestionExistsUrl = async () => {
+  return (await getGroupWebappUrl()) + '?path=questions';
+};
+
 
 /***/ }),
 
@@ -9382,7 +9633,7 @@ function getQuestionName(link) {
 // eg) When first time submitting, code shown is still editable. In .../submissions/
 const EDIT_MODE = 'edit-mode';
 //eg) When visiting old submissions, code shown is not editable. In .../submissions/.../
-const READ_MODE = 'view-mode';
+const READ_MODE = 'read-mode';
 function getSubmissionSpans() {
   const acceptedSelector = 'div.cursor-pointer span.text-green-s';
   const nonAcceptedSelector = 'div.cursor-pointer span.text-red-s';
@@ -9449,7 +9700,7 @@ function currentCodeIsAccepted() {
   if (getViewMode() === EDIT_MODE) {
     const spans = getSubmissionSpans();
     if (!spans.length) return false;
-    return spans[0].className.match(/green/) != null;
+    return spans[0].className.match(/green/) !== null;
   } else {
     const chart = document.querySelector('rect.highcharts-background');
     return chart != null;
@@ -9496,7 +9747,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-submit-card,\n.m-submit-card * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--m-font-family);\n  /*  */\n}\n\n.m-submit-card img {\n  display: inline;\n  opacity: 0.6;\n}\n.m-card-title {\n  font-size: var(--m-large-fs);\n  color: var(--m-dark-grey-color) !important;\n}\n\n.m-submit-card input {\n  height: var(--m-large-fs);\n  border-radius: var(--m-border-radius);\n  border: 1px solid lightgrey;\n  padding-left: 0.5rem;\n\n  width: 100%;\n  background: transparent;\n  color: var(--m-dark-grey-color);\n}\n\n.m-submit-card input:focus {\n  outline: 1px solid grey;\n}\n\n.m-submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 30rem;\n  width: var(--width);\n  max-height: 80vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  top: 50%;\n  transform: translateY(-50%);\n\n  /* shape */\n  border: var(--m-border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.m-card-exposed {\n  right: -2px;\n}\n\n.m-vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.m-drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.m-labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.m-label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--m-small-fs);\n  background-color: white;\n  color: var(--m-grey-color);\n}\n.m-vertical-spaced-flex {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.m-gap-1 {\n  gap: 1.5rem;\n}\n.m-spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.m-flex-1 {\n  flex: 1;\n}\n\n.m-flex-2 {\n  flex: 2;\n}\n\n.m-folder-tree {\n  overflow: auto;\n\n  width: calc(var(--width) * 0.8);\n  border-top: 1px solid lightgrey;\n  border-bottom: 1px solid lightgrey;\n  padding: 0.5rem 0;\n\n  display: flex;\n  flex-direction: column;\n  gap: 0.25rem;\n}\n\n.m-folder {\n  display: flex;\n  align-items: center;\n  gap: 0.25rem;\n}\n\n.m-folder-label {\n  display: flex;\n  align-items: center;\n  padding: 0 0.25rem;\n\n  color: var(--m-dark-grey-color);\n  border: none;\n  border: 1px solid lightgrey;\n  border-radius: 0.2rem;\n\n  font-size: var(--m-medium-fs);\n  cursor: pointer;\n}\n.m-folder-label img {\n  width: var(--m-medium-fs);\n  height: var(--m-medium-fs);\n}\n\n.m-folder-label:hover {\n  border: 1px solid var(--m-secondary-color);\n}\n\n.m-less-opacity {\n  opacity: 0.6;\n}\n\n.m-selected-folder-label {\n  /* border: 1px solid var(--m-primary-color); */\n  background-color: var(--m-secondary-color);\n  color: black;\n}\n\n.m-folder-icon-button {\n  border-radius: 33%;\n  border: none;\n  background: none;\n\n  border: 1px solid lightgrey;\n  background: white;\n  cursor: pointer;\n\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.m-folder-icon-button img,\n#arumba {\n  padding: 0.15rem;\n  --size: var(--m-medium-fs);\n  width: var(--size)!important;\n  height: var(--size)!important;\n}\n\n.m-align-center {\n  align-items: center;\n}\n\n.m-appear-animattion {\n  animation: m-appear 0.5s;\n}\n\n@keyframes m-appear {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n/* misc  */\n.m-mw-2-inputs {\n  max-width: 20rem;\n}\n.m-submit-button-width {\n  width: 20rem;\n}\n.m-pad-right {\n  padding-right: 1rem;\n}\n\n.magic {\n  width: min-content;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.submit-card img {\n  display: inline;\n  opacity: 0.6;\n}\n.card-title {\n  font-size: var(--large-fs);\n  color: var(--dark-grey-color) !important;\n}\n\n.submit-card input {\n  height: var(--large-fs);\n  border-radius: var(--border-radius);\n  border: 1px solid lightgrey;\n  padding-left: 0.5rem;\n\n  width: 100%;\n  background: transparent;\n  color: var(--dark-grey-color);\n}\n\n.submit-card input:focus {\n  outline: 1px solid grey;\n}\n\n.submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 30rem;\n  width: var(--width);\n  max-height: 80vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  top: 50%;\n  transform: translateY(-50%);\n\n  /* shape */\n  border: var(--border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.card-exposed {\n  right: -2px;\n}\n\n.vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--very-small-fs);\n  background-color: white;\n  color: var(--grey-color);\n}\n.vertical-spaced-flex {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.gap-1 {\n  gap: 1.5rem;\n}\n.spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.folder-tree {\n  overflow: auto;\n\n  width: calc(var(--width) * 0.8);\n  border-top: 1px solid lightgrey;\n  border-bottom: 1px solid lightgrey;\n  padding: 0.5rem 0;\n\n  display: flex;\n  flex-direction: column;\n  gap: 0.25rem;\n}\n\n.folder {\n  display: flex;\n  align-items: center;\n  gap: 0.25rem;\n}\n\n.folder-label {\n  display: flex;\n  align-items: center;\n  padding: 0 0.25rem;\n\n  color: var(--dark-grey-color);\n  border: none;\n  border: 1px solid lightgrey;\n  border-radius: 0.2rem;\n\n  font-size: var(--medium-fs);\n  cursor: pointer;\n}\n.folder-label img {\n  width: var(--medium-fs);\n  height: var(--medium-fs);\n}\n\n.folder-label:hover {\n  border: 1px solid var(--secondary-color);\n}\n\n.less-opacity {\n  opacity: 0.6;\n}\n\n.selected-folder-label {\n  /* border: 1px solid var(--primary-color); */\n  background-color: var(--secondary-color);\n  color: black;\n}\n\n.folder-icon-button {\n  border-radius: 33%;\n  border: none;\n  background: none;\n\n  border: 1px solid lightgrey;\n  background: white;\n  cursor: pointer;\n\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.folder-icon-button img,\n#arumba {\n  padding: 0.15rem;\n  --size: var(--medium-fs);\n  width: var(--size) !important;\n  height: var(--size) !important;\n}\n\n.align-center {\n  align-items: center;\n}\n\n.appear-animattion {\n  animation: appear 0.5s;\n}\n\n@keyframes appear {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n/* misc  */\n.mw-2-inputs {\n  max-width: 20rem;\n}\n.submit-button-width {\n  width: 20rem;\n}\n.pad-right {\n  padding-right: 1rem;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9523,7 +9774,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n:host {\n  all:initial; /*took blood, sweat, and tears*/\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-black-color {\n  color: black;\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n.m-d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n.m-red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":host,\n:root {\n  all: initial; /*took blood, sweat, and tears*/\n  --error-color: brown;\n  --grey-color: rgb(87, 87, 87);\n  --dark-grey-color: rgb(68, 68, 68);\n  --border-radius: 5px;\n  --border: 2px solid black;\n  --primary-color: darkgreen;\n  --secondary-color: rgb(170, 251, 170);\n  --disabled-color: lightgrey;\n\n  --very-small-fs: 0.6rem;\n  --small-fs: 0.8rem;\n  --medium-fs: 1rem;\n  --large-fs: 1.5rem;\n  --very-large-fs: 3rem;\n\n  --font-family: sans-serif;\n  --glass-bg: rgba(255, 255, 255, 0.9);\n  font-size: var(--medium-fs);\n}\n:host *,\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--font-family);\n}\n\n.ff {\n  font-family: var(--font-family);\n}\n\n.error-color {\n  color: var(--error-color);\n  animation: error-fade-in 0.5s;\n}\n@keyframes error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.grey-color {\n  color: var(--grey-color);\n}\n\n.primary-color {\n  color: var(--primary-color);\n}\n\n.secondary-color {\n  color: var(--secondary-color);\n}\n\n.dark-grey-color {\n  color: var(--dark-grey-color);\n}\n\n.black-color {\n  color: black;\n}\n\n.small-fs {\n  font-size: var(--small-fs);\n}\n\n.medium-fs {\n  font-size: var(--medium-fs);\n}\n\n.large-fs {\n  font-size: var(--large-fs);\n}\n\n.very-large-fs {\n  font-size: var(--very-large-fs);\n}\n\n.primary-button {\n  background-color: var(--primary-color);\n  border: var(--border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.primary-button:hover {\n  cursor: pointer;\n}\n\n.secondary-button {\n  background-color: var(--secondary-color);\n  border: var(--border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.disabled-button {\n  pointer-events: none;\n  background-color: var(--disabled-color);\n  border: none;\n}\n\n.d-none {\n  display: none;\n}\n.d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.bg-red {\n  background-color: red;\n}\n.bg-blue {\n  background-color: blue;\n}\n.red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9550,7 +9801,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".m-timer-playing::before,\n.m-timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.m-timer-playing::before {\n  background-color: var(--m-secondary-color);\n  animation: m-resize-animation 0.5s linear infinite alternate;\n}\n@keyframes m-resize-animation {\n  0% {\n    opacity: 0.3;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n.m-timer-paused::before {\n  background-color: lightgrey;\n}\n\n.m-timer-playing,\n.m-timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-play-pause-button {\n  /* looks  */\n  --size: var(--m-medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.m-play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.m-play-pause-button:hover {\n  cursor: pointer;\n}\n\n.m-timer * {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}\n\n.m-timer button {\n  border: none;\n  background: none;\n}\n\n.m-timer {\n  /* size  */\n  padding: 0rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 50%;\n  z-index: 1000;\n  transform: translateX(-50%);\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--m-medium-fs);\n  font-family: var(--m-font-family);\n\n  /* border */\n  border: var(--m-border);\n  border-top: none;\n  --br: var(--m-border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".timer-playing::before,\n.timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.timer-playing::before {\n  background-color: var(--secondary-color);\n  animation: resize-animation 0.5s linear infinite alternate;\n}\n@keyframes resize-animation {\n  0% {\n    opacity: 0.3;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n.timer-paused::before {\n  background-color: lightgrey;\n}\n\n.timer-playing,\n.timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.play-pause-button {\n  /* looks  */\n  --size: var(--medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.play-pause-button:hover {\n  cursor: pointer;\n}\n\n\n\n.timer button {\n  border: none;\n  background: none;\n}\n\n.timer {\n  /* size  */\n  padding: 0.25rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 50%;\n  z-index: 1000;\n  transform: translateX(-50%);\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--medium-fs);\n  font-family: var(--font-family);\n\n  /* border */\n  border: var(--border);\n  border-top: none;\n  --br: var(--border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9594,9 +9845,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
@@ -9647,9 +9902,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
@@ -9700,9 +9959,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 

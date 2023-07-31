@@ -37,7 +37,7 @@ function InstallGithubApp({ runBeforeNext, nextIsDisabled }) {
       ) : null}
 
       <button
-        className="m-secondary-button m-small-top"
+        className="secondary-button m-small-top"
         onClick={() => {
           setHasClickedInstall(true);
           openInstallLink();
@@ -47,7 +47,7 @@ function InstallGithubApp({ runBeforeNext, nextIsDisabled }) {
       </button>
 
       <Next
-        onClick={() => runBeforeNext(()=>{})}
+        onClick={() => runBeforeNext(() => {})}
         nextIsDisabled={nextIsDisabled}
       />
     </div>

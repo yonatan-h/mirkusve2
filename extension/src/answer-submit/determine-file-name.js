@@ -9,8 +9,8 @@ export default function determineFileName(filePaths) {
   if (!fileNames.has(fileName)) {
     return fileName;
   }
-  
-  for (let i = 1; i <= 100; i++) {
+
+  for (let i = 2; i <= 100; i++) {
     const tweakedFileName = `${fileName}-${i}`;
     if (!fileNames.has(tweakedFileName)) {
       return tweakedFileName;

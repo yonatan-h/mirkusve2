@@ -26,11 +26,11 @@ function Repo({ data, updateData, runBeforeNext, nextIsDisabled }) {
   };
   return (
     <div>
-      <h2 className="m-big-fs">A2SV Repo</h2>
+      <h2 className="big-fs">A2SV Repo</h2>
       <p className="m-small-top">
         Copy-Paste the link of your A2SV github repository
       </p>
-      <p className="m-small-fs">
+      <p className="small-fs">
         eg) https://github.com/abebe-kebede/competitive-programming
       </p>
       <input

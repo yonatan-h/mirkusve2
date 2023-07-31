@@ -18,8 +18,8 @@ async function getRedirectedUrl(name) {
     return { redirectedUrl };
   } catch (error) {
     const message = 'You canceled the sign in? Please sign in to github.';
-    const customError = new CustomError(message, error.message);
-    return { error: customError };
+    const custom_Error = new CustomError(message, error.message);
+    return { error: custom_Error };
   }
 }
 

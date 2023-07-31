@@ -1,37 +1,29 @@
-.m-submit-card,
-.m-submit-card * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--m-font-family);
-  /*  */
-}
 
-.m-submit-card img {
+.submit-card img {
   display: inline;
   opacity: 0.6;
 }
-.m-card-title {
-  font-size: var(--m-large-fs);
-  color: var(--m-dark-grey-color) !important;
+.card-title {
+  font-size: var(--large-fs);
+  color: var(--dark-grey-color) !important;
 }
 
-.m-submit-card input {
-  height: var(--m-large-fs);
-  border-radius: var(--m-border-radius);
+.submit-card input {
+  height: var(--large-fs);
+  border-radius: var(--border-radius);
   border: 1px solid lightgrey;
   padding-left: 0.5rem;
 
   width: 100%;
   background: transparent;
-  color: var(--m-dark-grey-color);
+  color: var(--dark-grey-color);
 }
 
-.m-submit-card input:focus {
+.submit-card input:focus {
   outline: 1px solid grey;
 }
 
-.m-submit-card {
+.submit-card {
   /* size */
   --drawer-button-width: 1.5rem;
   --width: 30rem;
@@ -45,7 +37,7 @@
   transform: translateY(-50%);
 
   /* shape */
-  border: var(--m-border);
+  border: var(--border);
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   background-color: white;
@@ -59,17 +51,17 @@
   transition: right 0.5s ease-in;
 }
 
-.m-card-exposed {
+.card-exposed {
   right: -2px;
 }
 
-.m-vertical-center {
+.vertical-center {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.m-drawer-button {
+.drawer-button {
   width: var(--drawer-button-width);
   background: none;
   border: none;
@@ -78,44 +70,44 @@
   cursor: pointer;
 }
 
-.m-labelled-input-container {
+.labelled-input-container {
   position: relative;
 }
 /* for labelled input */
-.m-label {
+.label {
   pointer-events: none;
 
   position: absolute;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 
-  font-size: var(--m-small-fs);
+  font-size: var(--very-small-fs);
   background-color: white;
-  color: var(--m-grey-color);
+  color: var(--grey-color);
 }
-.m-vertical-spaced-flex {
+.vertical-spaced-flex {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.m-gap-1 {
+.gap-1 {
   gap: 1.5rem;
 }
-.m-spaced-flex {
+.spaced-flex {
   display: flex;
   gap: 0.5rem;
 }
 
-.m-flex-1 {
+.flex-1 {
   flex: 1;
 }
 
-.m-flex-2 {
+.flex-2 {
   flex: 2;
 }
 
-.m-folder-tree {
+.folder-tree {
   overflow: auto;
 
   width: calc(var(--width) * 0.8);
@@ -128,45 +120,45 @@
   gap: 0.25rem;
 }
 
-.m-folder {
+.folder {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-.m-folder-label {
+.folder-label {
   display: flex;
   align-items: center;
   padding: 0 0.25rem;
 
-  color: var(--m-dark-grey-color);
+  color: var(--dark-grey-color);
   border: none;
   border: 1px solid lightgrey;
   border-radius: 0.2rem;
 
-  font-size: var(--m-medium-fs);
+  font-size: var(--medium-fs);
   cursor: pointer;
 }
-.m-folder-label img {
-  width: var(--m-medium-fs);
-  height: var(--m-medium-fs);
+.folder-label img {
+  width: var(--medium-fs);
+  height: var(--medium-fs);
 }
 
-.m-folder-label:hover {
-  border: 1px solid var(--m-secondary-color);
+.folder-label:hover {
+  border: 1px solid var(--secondary-color);
 }
 
-.m-less-opacity {
+.less-opacity {
   opacity: 0.6;
 }
 
-.m-selected-folder-label {
-  /* border: 1px solid var(--m-primary-color); */
-  background-color: var(--m-secondary-color);
+.selected-folder-label {
+  /* border: 1px solid var(--primary-color); */
+  background-color: var(--secondary-color);
   color: black;
 }
 
-.m-folder-icon-button {
+.folder-icon-button {
   border-radius: 33%;
   border: none;
   background: none;
@@ -179,23 +171,23 @@
   align-items: center;
   justify-content: center;
 }
-.m-folder-icon-button img,
+.folder-icon-button img,
 #arumba {
   padding: 0.15rem;
-  --size: var(--m-medium-fs);
-  width: var(--size)!important;
-  height: var(--size)!important;
+  --size: var(--medium-fs);
+  width: var(--size) !important;
+  height: var(--size) !important;
 }
 
-.m-align-center {
+.align-center {
   align-items: center;
 }
 
-.m-appear-animattion {
-  animation: m-appear 0.5s;
+.appear-animattion {
+  animation: appear 0.5s;
 }
 
-@keyframes m-appear {
+@keyframes appear {
   0% {
     opacity: 0;
   }
@@ -206,16 +198,13 @@
 }
 
 /* misc  */
-.m-mw-2-inputs {
+.mw-2-inputs {
   max-width: 20rem;
 }
-.m-submit-button-width {
+.submit-button-width {
   width: 20rem;
 }
-.m-pad-right {
+.pad-right {
   padding-right: 1rem;
 }
 
-.magic {
-  width: min-content;
-}

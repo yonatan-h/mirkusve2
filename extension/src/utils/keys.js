@@ -7,10 +7,17 @@ const mainWebappUrl =
 const codeForTokenUrl = mainWebappUrl + '?path=tokens';
 const groupFinderUrl = mainWebappUrl + '?path=group-urls';
 
-const getGroupWebappUrl = async () => {};
+const getGroupWebappUrl = async () => {
+  const { groupUrl } = await chrome.storage.local.get(['groupUrl']);
+  return groupUrl;
+};
 
 const getAnswerSubmitUrl = async () => {
-  return (await getGroupWebappUrl()) + '&path=answers';
+  return (await getGroupWebappUrl()) + '?path=answers';
+};
+
+const getQuestionExistsUrl = async () => {
+  return (await getGroupWebappUrl()) + '?path=questions';
 };
 
 export {
@@ -18,6 +25,7 @@ export {
   clientId,
   codeForTokenUrl,
   getAnswerSubmitUrl,
+  getQuestionExistsUrl,
   githubAppLink,
   githubAppId,
 };

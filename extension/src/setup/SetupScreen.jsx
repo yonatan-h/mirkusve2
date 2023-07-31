@@ -23,7 +23,7 @@ function SetupScreen() {
 
   const [screenIndex, setScreenIndex] = useState(0);
   const [data, setData] = useState({});
-  const [customError, setCustomError] = useState(undefined);
+  const [custom_Error, setCustomError] = useState(undefined);
   const [nextIsDisabled, setNextIsDisabled] = useState(false);
 
   const runBeforeNext = async (task) => {
@@ -62,20 +62,20 @@ function SetupScreen() {
   );
 
   return (
-    <div className="split vh-100 m-ff ">
+    <div className="split vh-100 ff ">
       <div className="container flex-2 ">
         <Welcome />
       </div>
       <div className="container flex-3 smooth-left wbg">
         <div>
-          <h2 className="m-grey-color">Setup Mirkusve</h2>
-          <p className="m-grey-color">
+          <h2 className="grey-color">Setup Mirkusve</h2>
+          <p className="grey-color">
             {screenIndex + 1}/{screenFunctions.length}
           </p>
 
-          {customError && (
+          {custom_Error && (
             //random keys to play the fade in animation again. to let users know the same error is happening again
-            <CustomErrorView customError={customError} key={Math.random()} />
+            <CustomErrorView custom_Error={custom_Error} key={Math.random()} />
           )}
           <br />
           {screens[screenIndex]}

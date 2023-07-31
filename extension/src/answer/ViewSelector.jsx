@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Timer from '../timer/Timer.jsx';
 import SubmitCard from '../answer-submit/SubmitCard.jsx';
 
-
 function ViewSelector() {
   //enumish
   const QUESTION_PAGE = 'question-page';
@@ -30,10 +29,10 @@ function ViewSelector() {
 
   return (
     <>
-      <div className={currentPage === QUESTION_PAGE ? '' : 'm-d-none'}>
+      <div className={currentPage === QUESTION_PAGE ? '' : 'd-none'}>
         <Timer inView={currentPage === QUESTION_PAGE} />
       </div>
-      <div className={currentPage === SUBMISSION_PAGE ? '' : 'm-d-none'}>
+      <div className={currentPage === SUBMISSION_PAGE ? '' : 'd-none'}>
         <SubmitCard inView={currentPage === SUBMISSION_PAGE} />
       </div>
     </>

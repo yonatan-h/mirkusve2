@@ -57,24 +57,24 @@ function Folder({
   const indents = isRoot ? 0 : nodes.length - 1;
 
   //dont forget ' thespaces '
-  let labelClassName = ' m-folder-label m-spaced-flex ';
-  if (isSelected) labelClassName += ' m-selected-folder-label ';
-  if (isNew && !isOnSelectedPath) labelClassName += ' m-less-opacity ';
+  let labelClassName = ' folder-label spaced-flex ';
+  if (isSelected) labelClassName += ' selected-folder-label ';
+  if (isNew && !isOnSelectedPath) labelClassName += ' less-opacity ';
 
   return (
     <>
-      <div className="m-folder">
+      <div className="folder">
         <button
           onClick={() => onSelect()}
           style={{ marginLeft: `${indents}rem` }}
           className={labelClassName}
         >
-          <img src={folderIcon} className="m-medium-icon" />
+          <img src={folderIcon} className="mediuicon" />
           {folderName}
         </button>
 
         {isNew ? (
-          <button onClick={() => onDelete()} className="m-folder-icon-button">
+          <button onClick={() => onDelete()} className="folder-icon-button">
             <img src={deleteIcon} alt="delete folder" />
           </button>
         ) : null}
@@ -82,7 +82,7 @@ function Folder({
         {inNewFolderMode ? null : (
           <button
             onClick={() => setNewFolderName('')}
-            className="m-folder-icon-button"
+            className="folder-icon-button"
           >
             <img src={addIcon} alt="add new folder" />
           </button>
@@ -92,7 +92,7 @@ function Folder({
       {inNewFolderMode ? (
         <div
           style={{ marginLeft: `${indents + 1}rem` }}
-          className="m-spaced-flex m-align-center"
+          className="spaced-flex align-center"
         >
           <input
             type="text"
@@ -101,12 +101,12 @@ function Folder({
             className="flex-1"
           />
 
-          <button className="m-folder-icon-button" onClick={() => onSave()}>
+          <button className="folder-icon-button" onClick={() => onSave()}>
             <img src={doneIcon} alt="save this new folder" />
           </button>
 
           <button
-            className="m-folder-icon-button"
+            className="folder-icon-button"
             onClick={() => setNewFolderName(undefined)}
           >
             <img src={cancelIcon} alt="cancel creating new folder" />
@@ -140,12 +140,6 @@ function errorIfPathProblem({ newFolderName, isUnique, folderPath }) {
   if (newFolderName.includes('/')) {
     throw new InputError(
       `There is slash '/' in '${newFolderName}', Please Remove it.`
-    );
-  }
-
-  if (newFolderName.includes(' ')) {
-    throw new InputError(
-      `Please don't include space characters in the folder '${newFolderName}'.`
     );
   }
 

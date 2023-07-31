@@ -43,8 +43,8 @@ function GithubAppSignin({
       </p>
 
       <button
-        className={`m-secondary-button m-small-top ${
-          nextIsDisabled ? 'm-disabled-button' : ''
+        className={`secondary-button m-small-top ${
+          nextIsDisabled ? 'disabled-button' : ''
         }`}
         onClick={() => nextIsDisabled && goPrevious()}
       >

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-function CustomErrorView({ customError }) {
+function CustomErrorView({ custom_Error }) {
   return (
-    <div className="m-appear-animation">
-      <p className="m-error-color">{customError.descriptionAndSolution}</p>
-      <code className="m-error-color">{customError.errorAsString}</code>
+    <div className="appear-animation">
+      <p className="error-color">{custom_Error.descriptionAndSolution}</p>
+      <code className="error-color">{custom_Error.errorAsString}</code>
     </div>
   );
 }

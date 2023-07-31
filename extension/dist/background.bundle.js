@@ -36,9 +36,9 @@ async function getRedirectedUrl(name) {
     };
   } catch (error) {
     const message = 'You canceled the sign in? Please sign in to github.';
-    const customError = new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message, error.message);
+    const custom_Error = new _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__.CustomError(message, error.message);
     return {
-      error: customError
+      error: custom_Error
     };
   }
 }
@@ -205,6 +205,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "clientId": () => (/* binding */ clientId),
 /* harmony export */   "codeForTokenUrl": () => (/* binding */ codeForTokenUrl),
 /* harmony export */   "getAnswerSubmitUrl": () => (/* binding */ getAnswerSubmitUrl),
+/* harmony export */   "getQuestionExistsUrl": () => (/* binding */ getQuestionExistsUrl),
 /* harmony export */   "githubAppId": () => (/* binding */ githubAppId),
 /* harmony export */   "githubAppLink": () => (/* binding */ githubAppLink),
 /* harmony export */   "groupFinderUrl": () => (/* binding */ groupFinderUrl)
@@ -215,9 +216,17 @@ const githubAppLink = 'https://github.com/apps/mirkusve/installations/new';
 const mainWebappUrl = 'https://script.google.com/macros/s/AKfycbwztq78Ffh6hPaXVHECZloSnIDnSZ0CJYzjTy96KJ0prxna96NwSO1HoUs8XKIDuIRt/exec';
 const codeForTokenUrl = mainWebappUrl + '?path=tokens';
 const groupFinderUrl = mainWebappUrl + '?path=group-urls';
-const getGroupWebappUrl = async () => {};
+const getGroupWebappUrl = async () => {
+  const {
+    groupUrl
+  } = await chrome.storage.local.get(['groupUrl']);
+  return groupUrl;
+};
 const getAnswerSubmitUrl = async () => {
-  return (await getGroupWebappUrl()) + '&path=answers';
+  return (await getGroupWebappUrl()) + '?path=answers';
+};
+const getQuestionExistsUrl = async () => {
+  return (await getGroupWebappUrl()) + '?path=questions';
 };
 
 

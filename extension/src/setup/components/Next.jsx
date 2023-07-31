@@ -4,9 +4,7 @@ function Next({ onClick, nextIsDisabled, content }) {
   return (
     <div className="align-end m-small-top">
       <button
-        className={`m-primary-button ${
-          nextIsDisabled ? 'm-disabled-button' : ''
-        }`}
+        className={`primary-button ${nextIsDisabled ? 'disabled-button' : ''}`}
         onClick={() => !nextIsDisabled && onClick()}
         disabled={nextIsDisabled ? true : false}
       >

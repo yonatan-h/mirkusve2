@@ -193,9 +193,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
@@ -555,6 +559,14 @@ async function chooseView() {
     promptSetupView.classList.remove('hidden');
   }
 }
+document.getElementById('click').onclick = async () => {
+  await chrome.storage.local.set({
+    groupUrl: document.getElementById('sheetsUrl').value
+  });
+  console.log('saveeeeed');
+  alert('saved');
+  document.body.style.backgroundColor = 'red';
+};
 })();
 
 /******/ })()

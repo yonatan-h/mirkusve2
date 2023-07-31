@@ -8150,7 +8150,7 @@ function SetupScreen() {
   const screenFunctions = [_components_NameAndGroup_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], _components_Repo_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], _components_InstallGithubApp_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], _components_GithubAppSignin_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _components_Finish_jsx__WEBPACK_IMPORTED_MODULE_9__["default"]];
   const [screenIndex, setScreenIndex] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
   const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const [customError, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
+  const [custom_Error, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [nextIsDisabled, setNextIsDisabled] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const runBeforeNext = async task => {
     try {
@@ -8186,20 +8186,20 @@ function SetupScreen() {
   }));
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "split vh-100 m-ff "
+    className: "split vh-100 ff "
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "container flex-2 "
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_Welcome_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "container flex-3 smooth-left wbg"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    className: "m-grey-color"
+    className: "grey-color"
   }, "Setup Mirkusve"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-grey-color"
-  }, screenIndex + 1, "/", screenFunctions.length), customError &&
+    className: "grey-color"
+  }, screenIndex + 1, "/", screenFunctions.length), custom_Error &&
   /*#__PURE__*/
   //random keys to play the fade in animation again. to let users know the same error is happening again
   react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ErrorView_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], {
-    customError: customError,
+    custom_Error: custom_Error,
     key: Math.random()
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), screens[screenIndex])));
 }
@@ -8221,15 +8221,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 function CustomErrorView({
-  customError
+  custom_Error
 }) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "error-box"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-error-color"
-  }, customError.descriptionAndSolution), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", {
-    className: "m-error-color"
-  }, customError.errorAsString));
+    className: "error-color"
+  }, custom_Error.descriptionAndSolution), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("code", {
+    className: "error-color"
+  }, custom_Error.errorAsString));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomErrorView);
 
@@ -8274,7 +8274,7 @@ async function save(keyValueObject) {
     const things = await chrome.storage.local.get(keyValueObject);
     alert(JSON.stringify(things));
   } catch (error) {
-    throw new CustomError("Could not save setup", error.message);
+    throw new CustomError('Could not save setup', error.message);
   }
 }
 
@@ -8332,7 +8332,7 @@ function GithubAppSignin({
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Sign In"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-small-top"
   }, "Sign in to Github, then authorize Mirkusve's Github app.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "We need permission so that we can upload your leetcode answer files to your repo."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: `m-secondary-button m-small-top ${nextIsDisabled ? 'm-disabled-button' : ''}`,
+    className: `secondary-button m-small-top ${nextIsDisabled ? 'disabled-button' : ''}`,
     onClick: () => nextIsDisabled && goPrevious()
   }, "Back", ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Next_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
     onClick: () => runBeforeNext(getTokenAndCheckError),
@@ -8482,7 +8482,7 @@ function InstallGithubApp({
   }, "Please ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, "only"), " enable access to your ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, " A2SV Repo"), "!")), hasClickedInstall ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "m-small-top"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "\u26A0\uFE0F If GithubApp was already installed previously , ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), " no problem, just ensure it only accesses your A2SV repo.")) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-secondary-button m-small-top",
+    className: "secondary-button m-small-top",
     onClick: () => {
       setHasClickedInstall(true);
       openInstallLink();
@@ -8576,7 +8576,7 @@ function Next({
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "align-end m-small-top"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: `m-primary-button ${nextIsDisabled ? 'm-disabled-button' : ''}`,
+    className: `primary-button ${nextIsDisabled ? 'disabled-button' : ''}`,
     onClick: () => !nextIsDisabled && onClick(),
     disabled: nextIsDisabled ? true : false
   }, content || 'Next'));
@@ -8630,11 +8630,11 @@ function Repo({
     });
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    className: "m-big-fs"
+    className: "big-fs"
   }, "A2SV Repo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-small-top"
   }, "Copy-Paste the link of your A2SV github repository"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-small-fs"
+    className: "small-fs"
   }, "eg) https://github.com/abebe-kebede/competitive-programming"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     className: "w-100  m-small-top",
     placeholder: "A2SV repo",
@@ -8731,11 +8731,11 @@ const lockImage = '/media/lock.svg';
 const mirkusveLogo = '/media/mirkusve-logo.svg';
 const sheetsLogo = '/media/sheets-logo.png';
 function Welcome() {
-  const pClass = 'm-dark-grey-color ';
+  const pClass = 'dark-grey-color ';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "welcome-width"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "m-very-large-fs m-top"
+    className: "very-large-fs m-top"
   }, "A Little Help of a", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "hoverable"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
@@ -8746,7 +8746,7 @@ function Welcome() {
   })), "on your journey to", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("b", null, " Silicon Valley")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "m-small-top"
   }, "Welcome to Mirkisve! We simplify submitting Leetcode answers to A2SV. Instead of doing the manual work of copy-pasting and typing, you can submit your answers in 2 clicks."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "m-secondary-button m-small-top"
+    className: "secondary-button m-small-top"
   }, "Watch Demo")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "image-text-grid m-top"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -8889,9 +8889,9 @@ function removeExcessSlash(url) {
     throw new _custom_errors_js__WEBPACK_IMPORTED_MODULE_0__.BadUrlError(url);
   }
   let path = urlObj.pathname;
-  path = path.split("/");
-  path = path.filter(node => node !== "");
-  path = path.join("/");
+  path = path.split('/');
+  path = path.filter(node => node !== '');
+  path = path.join('/');
   urlObj.pathname = path;
   return urlObj.href;
 }
@@ -8910,6 +8910,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "clientId": () => (/* binding */ clientId),
 /* harmony export */   "codeForTokenUrl": () => (/* binding */ codeForTokenUrl),
 /* harmony export */   "getAnswerSubmitUrl": () => (/* binding */ getAnswerSubmitUrl),
+/* harmony export */   "getQuestionExistsUrl": () => (/* binding */ getQuestionExistsUrl),
 /* harmony export */   "githubAppId": () => (/* binding */ githubAppId),
 /* harmony export */   "githubAppLink": () => (/* binding */ githubAppLink),
 /* harmony export */   "groupFinderUrl": () => (/* binding */ groupFinderUrl)
@@ -8920,9 +8921,17 @@ const githubAppLink = 'https://github.com/apps/mirkusve/installations/new';
 const mainWebappUrl = 'https://script.google.com/macros/s/AKfycbwztq78Ffh6hPaXVHECZloSnIDnSZ0CJYzjTy96KJ0prxna96NwSO1HoUs8XKIDuIRt/exec';
 const codeForTokenUrl = mainWebappUrl + '?path=tokens';
 const groupFinderUrl = mainWebappUrl + '?path=group-urls';
-const getGroupWebappUrl = async () => {};
+const getGroupWebappUrl = async () => {
+  const {
+    groupUrl
+  } = await chrome.storage.local.get(['groupUrl']);
+  return groupUrl;
+};
 const getAnswerSubmitUrl = async () => {
-  return (await getGroupWebappUrl()) + '&path=answers';
+  return (await getGroupWebappUrl()) + '?path=answers';
+};
+const getQuestionExistsUrl = async () => {
+  return (await getGroupWebappUrl()) + '?path=questions';
 };
 
 
@@ -8979,7 +8988,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n:host {\n  all:initial; /*took blood, sweat, and tears*/\n  --m-error-color: brown;\n  --m-grey-color: rgb(87, 87, 87);\n  --m-dark-grey-color: rgb(68, 68, 68);\n  --m-border-radius: 5px;\n  --m-border: 2px solid black;\n  --m-primary-color: darkgreen;\n  --m-secondary-color: rgb(170, 251, 170);\n  --m-disabled-color: lightgrey;\n\n  --m-small-fs: 0.6rem;\n  --m-medium-fs: 1rem;\n  --m-large-fs: 1.5rem;\n  --m-very-large-fs: 3rem;\n\n  --m-font-family: sans-serif;\n  --m-glass-bg: rgba(255, 255, 255, 0.9);\n}\n\n.m-ff {\n  font-family: var(--m-font-family);\n}\n\n.m-error-color {\n  color: var(--m-error-color);\n  animation: m-error-fade-in 0.5s;\n}\n@keyframes m-error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.m-grey-color {\n  color: var(--m-grey-color);\n}\n\n.m-primary-color {\n  color: var(--m-primary-color);\n}\n\n.m-secondary-color {\n  color: var(--m-secondary-color);\n}\n\n.m-dark-grey-color {\n  color: var(--m-dark-grey-color);\n}\n\n.m-black-color {\n  color: black;\n}\n\n.m-small-fs {\n  font-size: var(--m-small-fs);\n}\n\n.m-medium-fs {\n  font-size: var(--m-medium-fs);\n}\n\n.m-large-fs {\n  font-size: var(--m-large-fs);\n}\n\n.m-very-large-fs {\n  font-size: var(--m-very-large-fs);\n}\n\n.m-primary-button {\n  background-color: var(--m-primary-color);\n  border: var(--m-border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-primary-button:hover {\n  cursor: pointer;\n}\n\n.m-secondary-button {\n  background-color: var(--m-secondary-color);\n  border: var(--m-border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--m-border-radius);\n}\n\n.m-disabled-button {\n  pointer-events: none;\n  background-color: var(--m-disabled-color);\n  border: none;\n}\n\n.m-d-none {\n  display: none;\n}\n.m-d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.m-bg-red {\n  background-color: red;\n}\n.m-bg-blue {\n  background-color: blue;\n}\n.m-red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ":host,\n:root {\n  all: initial; /*took blood, sweat, and tears*/\n  --error-color: brown;\n  --grey-color: rgb(87, 87, 87);\n  --dark-grey-color: rgb(68, 68, 68);\n  --border-radius: 5px;\n  --border: 2px solid black;\n  --primary-color: darkgreen;\n  --secondary-color: rgb(170, 251, 170);\n  --disabled-color: lightgrey;\n\n  --very-small-fs: 0.6rem;\n  --small-fs: 0.8rem;\n  --medium-fs: 1rem;\n  --large-fs: 1.5rem;\n  --very-large-fs: 3rem;\n\n  --font-family: sans-serif;\n  --glass-bg: rgba(255, 255, 255, 0.9);\n  font-size: var(--medium-fs);\n}\n:host *,\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--font-family);\n}\n\n.ff {\n  font-family: var(--font-family);\n}\n\n.error-color {\n  color: var(--error-color);\n  animation: error-fade-in 0.5s;\n}\n@keyframes error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.grey-color {\n  color: var(--grey-color);\n}\n\n.primary-color {\n  color: var(--primary-color);\n}\n\n.secondary-color {\n  color: var(--secondary-color);\n}\n\n.dark-grey-color {\n  color: var(--dark-grey-color);\n}\n\n.black-color {\n  color: black;\n}\n\n.small-fs {\n  font-size: var(--small-fs);\n}\n\n.medium-fs {\n  font-size: var(--medium-fs);\n}\n\n.large-fs {\n  font-size: var(--large-fs);\n}\n\n.very-large-fs {\n  font-size: var(--very-large-fs);\n}\n\n.primary-button {\n  background-color: var(--primary-color);\n  border: var(--border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.primary-button:hover {\n  cursor: pointer;\n}\n\n.secondary-button {\n  background-color: var(--secondary-color);\n  border: var(--border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.disabled-button {\n  pointer-events: none;\n  background-color: var(--disabled-color);\n  border: none;\n}\n\n.d-none {\n  display: none;\n}\n.d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.bg-red {\n  background-color: red;\n}\n.bg-blue {\n  background-color: blue;\n}\n.red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9005,7 +9014,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nbody {\n  padding-left: 2rem;\n  min-height: 100vh;\n  background-color: var(--m-secondary-color);\n  font-size: 1rem;\n}\n#root {\n  min-height: 100vh;\n}\n\n.split {\n  display: flex;\n}\n\n.container {\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-top {\n  margin-top: 5rem;\n}\n\n.m-small-top {\n  margin-top: 1rem;\n}\n\n.w-100 {\n  width: 100%;\n}\n.welcome-width {\n  max-width: 500px;\n}\n\n.bold {\n  font-weight: bold;\n}\n\n.vh-100 {\n  min-height: 100vh;\n}\n\n.wbg {\n  background-color: white;\n}\n\n.bbg {\n  background-color: blue;\n}\n\n.rbg {\n  background-color: red;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.flex-3 {\n  flex: 3;\n}\n\ninput {\n  padding: 0.8rem;\n  border-radius: var(--m-border-radius);\n  border: 1px solid var(--m-grey-color);\n}\n\n.align-end {\n  display: flex;\n  justify-content: end;\n}\n\n.smooth-left {\n  border-top-left-radius: 5rem;\n  border-bottom-left-radius: 5rem;\n  border: var(--m-border);\n  border-right: none;\n}\n\n.error-box {\n  max-width: 500px;\n}\n\n.image-text-grid {\n  padding: 1rem;\n  display: grid;\n\n  grid-template-columns: auto 1fr;\n\n  row-gap: 2rem;\n  column-gap: 1rem;\n\n  align-items: center;\n}\n\nimg {\n  width: 100%;\n  height: 100%;\n  object-fit: contain;\n}\n\n.circular-container {\n  --size: 5rem;\n\n  width: var(--size);\n  height: var(--size);\n  border-radius: 40%;\n  background-color: rgba(255, 255, 255, 0.8);\n}\n\n.hover-appetizer {\n  font-weight: bold;\n  border-bottom: 2px dashed black;\n}\n\n.hoverable {\n  position: relative;\n}\n\n.hover-pop-image {\n  --size: 15rem;\n  height: var(--size);\n  width: var(--size);\n\n  padding: 2rem;\n  border-radius: 100%;\n  border: var(--m-border);\n\n  opacity: 0;\n  transition: opacity;\n  transition-duration: 0.5s;\n  background-color: white;\n\n  position: absolute;\n  left: 10rem;\n  bottom: 0;\n}\n\n.hoverable:hover .hover-pop-image {\n  opacity: 1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  padding-left: 2rem;\n  min-height: 100vh;\n  background-color: var(--secondary-color);\n  font-size: 1rem;\n}\n#root {\n  min-height: 100vh;\n}\n\n.split {\n  display: flex;\n}\n\n.container {\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-top {\n  margin-top: 5rem;\n}\n\n.m-small-top {\n  margin-top: 1rem;\n}\n\n.w-100 {\n  width: 100%;\n}\n.welcome-width {\n  max-width: 500px;\n}\n\n.bold {\n  font-weight: bold;\n}\n\n.vh-100 {\n  min-height: 100vh;\n}\n\n.wbg {\n  background-color: white;\n}\n\n.bbg {\n  background-color: blue;\n}\n\n.rbg {\n  background-color: red;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.flex-3 {\n  flex: 3;\n}\n\ninput {\n  padding: 0.8rem;\n  border-radius: var(--border-radius);\n  border: 1px solid var(--grey-color);\n}\n\n.align-end {\n  display: flex;\n  justify-content: end;\n}\n\n.smooth-left {\n  border-top-left-radius: 5rem;\n  border-bottom-left-radius: 5rem;\n  border: var(--border);\n  border-right: none;\n}\n\n.error-box {\n  max-width: 500px;\n}\n\n.image-text-grid {\n  padding: 1rem;\n  display: grid;\n\n  grid-template-columns: auto 1fr;\n\n  row-gap: 2rem;\n  column-gap: 1rem;\n\n  align-items: center;\n}\n\nimg {\n  width: 100%;\n  height: 100%;\n  object-fit: contain;\n}\n\n.circular-container {\n  --size: 5rem;\n\n  width: var(--size);\n  height: var(--size);\n  border-radius: 40%;\n  background-color: rgba(255, 255, 255, 0.8);\n}\n\n.hover-appetizer {\n  font-weight: bold;\n  border-bottom: 2px dashed black;\n}\n\n.hoverable {\n  position: relative;\n}\n\n.hover-pop-image {\n  --size: 15rem;\n  height: var(--size);\n  width: var(--size);\n\n  padding: 2rem;\n  border-radius: 100%;\n  border: var(--border);\n\n  opacity: 0;\n  transition: opacity;\n  transition-duration: 0.5s;\n  background-color: white;\n\n  position: absolute;\n  left: 10rem;\n  bottom: 0;\n}\n\n.hoverable:hover .hover-pop-image {\n  opacity: 1;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9048,9 +9057,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
@@ -9100,9 +9113,13 @@ var options = {};
 
 options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_4___default());
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_2___default());
-options.insert = (style) =>
-                document.querySelector('#mirkusve-shadow-host').shadowRoot
-                .appendChild(style);
+options.insert = (style) => {
+                const shadowHost = document.querySelector(
+                  '#mirkusve-shadow-host'
+                );
+                if (shadowHost) shadowHost.shadowRoot.appendChild(style);
+                else document.head.appendChild(style);
+              };
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
