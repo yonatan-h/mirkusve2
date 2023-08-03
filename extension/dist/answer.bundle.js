@@ -8180,9 +8180,9 @@ function SubmitCard({
   const [isHidden, setIsHidden] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [hasAutoFilled, setHasAutoFilled] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [hasSubmitted, setHasSubmitted] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [custom_Error, setCustomError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
-  const isDisabled = custom_Error && custom_Error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.DisablingError;
   const [repoContent, setRepoContent] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     folderPaths: [],
     filePaths: []
@@ -8190,25 +8190,50 @@ function SubmitCard({
   const [data, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     submissions: '',
     minutes: '',
-    file: '',
     fileName: '',
     fileExtension: '',
-    folderPath: ''
+    folderPath: '',
+    //non user inputs
+    file: '',
+    questionName: ''
   });
-  const updateData = newData => {
-    if (isDisabled) return;
-    //Assuming this error is the one the user is trying to correct
-    //All unsolved errors will be reintroduced on submit
-    setCustomError(undefined);
-    setData({
-      ...data,
-      ...newData
-    });
+  const isDisabled = custom_Error && custom_Error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.DisablingError;
+  const validators = {
+    submissions(value) {
+      if (!value && value !== 0) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('submissions');
+    },
+    minutes(value) {
+      if (!value && value !== 0) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('minutes');
+    },
+    fileName(value) {
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('fileName');
+      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`file name ${value} can't have a '/'`);
+    },
+    fileExtension(value) {
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('fileExtension');
+      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`fileExtension ${value} can't have a '/'`);
+    },
+    folderPath(value) {
+      //assume bad path is prevented by FolderTree
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('folderPath');
+    },
+    questionName(value) {
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('quesionName');
+      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`questionName ${value} can't have a '/'`);
+    },
+    file(value) {
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('file');
+    }
   };
+  const updateData = newData => setData({
+    ...data,
+    ...newData
+  });
 
   //
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    setCustomError(undefined);
     const changeUrl = event => setUrl(event.destination.url);
     navigation.addEventListener('navigate', changeUrl);
     return () => navigation.removeEventListener('navigate', changeUrl);
@@ -8217,11 +8242,25 @@ function SubmitCard({
   //
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!hasAutoFilled) return;
+    for (const name in data) {
+      if (name === 'folderPath') continue;
+      try {
+        validators[name](data[name]); //validate
+      } catch (error) {
+        if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw name;
+      }
+    }
+  }, [data]);
+
+  //
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!inView) return;
     if (hasSubmitted) return;
     let collectedData = {};
     let collectedRepo = {};
-    const load = async () => {
+    const scrape = async () => {
       await (0,_wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
       await Promise.all([(0,_get_scraped_data__WEBPACK_IMPORTED_MODULE_9__["default"])().then(data => collectedData = data), (0,_fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__["default"])().then(content => collectedRepo = content)]);
       collectedData.fileName = (0,_determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__["default"])(collectedRepo.filePaths);
@@ -8233,8 +8272,10 @@ function SubmitCard({
       };
       setData(collectedData);
       setRepoContent(collectedRepo);
+      setHasAutoFilled(true);
+      setIsLoading(false);
     };
-    load().catch(error => {
+    scrape().catch(error => {
       if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw error;
     });
   }, [inView, url]);
@@ -8248,25 +8289,22 @@ function SubmitCard({
     updateData({
       [name]: value
     });
-    try {
-      errorIfIllegalInput(name, value);
-      setCustomError(undefined);
-    } catch (error) {
-      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError) setCustomError(error);else throw error;
-    }
   };
 
   //
 
   const onSubmit = async () => {
+    setIsLoading(true);
     try {
       for (const name in data) {
-        const value = data[name];
-        errorIfIllegalInput(name, value);
+        validators[name](data[name]); //validate
       }
+
       await (0,_submit_answer_js__WEBPACK_IMPORTED_MODULE_13__["default"])(data);
     } catch (error) {
       if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
   let cardClassName = ' submit-card ';
@@ -8303,16 +8341,6 @@ function SubmitCard({
   }, "Submit")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SubmitCard);
-function errorIfIllegalInput(name, value) {
-  if (value === 0) return;
-  if (!value && name === 'folderPath') {
-    throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`Please select a folder to upload your file to!`);
-  }
-  if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError(name);
-  if (name !== 'folderPath' && name !== 'file' && `${value}`.includes('/')) {
-    throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`please remove / from input ${name}`);
-  }
-}
 function copyWithEmptyStrings(object) {
   const copied = {};
   for (const key in object) copied[key] = '';
@@ -9301,15 +9329,15 @@ function Timer({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AppScriptError": () => (/* binding */ AppScriptError),
-/* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
-/* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
-/* harmony export */   "CustomError": () => (/* binding */ CustomError),
-/* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
-/* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
-/* harmony export */   "InputError": () => (/* binding */ InputError),
-/* harmony export */   "NetworkError": () => (/* binding */ NetworkError),
-/* harmony export */   "ToastError": () => (/* binding */ ToastError)
+/* harmony export */   AppScriptError: () => (/* binding */ AppScriptError),
+/* harmony export */   BadStatusError: () => (/* binding */ BadStatusError),
+/* harmony export */   BadUrlError: () => (/* binding */ BadUrlError),
+/* harmony export */   CustomError: () => (/* binding */ CustomError),
+/* harmony export */   DisablingError: () => (/* binding */ DisablingError),
+/* harmony export */   EmptyInputError: () => (/* binding */ EmptyInputError),
+/* harmony export */   InputError: () => (/* binding */ InputError),
+/* harmony export */   NetworkError: () => (/* binding */ NetworkError),
+/* harmony export */   ToastError: () => (/* binding */ ToastError)
 /* harmony export */ });
 class CustomError extends Error {
   constructor(descriptionAndSolution, errorAsString = '') {
@@ -9393,10 +9421,10 @@ class EmptyInputError extends InputError {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "calculateMinutes": () => (/* binding */ calculateMinutes),
-/* harmony export */   "forgetDuration": () => (/* binding */ forgetDuration),
-/* harmony export */   "loadDuration": () => (/* binding */ loadDuration),
-/* harmony export */   "storeDuration": () => (/* binding */ storeDuration)
+/* harmony export */   calculateMinutes: () => (/* binding */ calculateMinutes),
+/* harmony export */   forgetDuration: () => (/* binding */ forgetDuration),
+/* harmony export */   loadDuration: () => (/* binding */ loadDuration),
+/* harmony export */   storeDuration: () => (/* binding */ storeDuration)
 /* harmony export */ });
 async function getStorageObject() {
   const storageObject = await chrome.storage.local.get('durations');
@@ -9512,13 +9540,13 @@ function joinWithPath(path1, path2) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "clientId": () => (/* binding */ clientId),
-/* harmony export */   "codeForTokenUrl": () => (/* binding */ codeForTokenUrl),
-/* harmony export */   "getAnswerSubmitUrl": () => (/* binding */ getAnswerSubmitUrl),
-/* harmony export */   "getQuestionExistsUrl": () => (/* binding */ getQuestionExistsUrl),
-/* harmony export */   "githubAppId": () => (/* binding */ githubAppId),
-/* harmony export */   "githubAppLink": () => (/* binding */ githubAppLink),
-/* harmony export */   "groupFinderUrl": () => (/* binding */ groupFinderUrl)
+/* harmony export */   clientId: () => (/* binding */ clientId),
+/* harmony export */   codeForTokenUrl: () => (/* binding */ codeForTokenUrl),
+/* harmony export */   getAnswerSubmitUrl: () => (/* binding */ getAnswerSubmitUrl),
+/* harmony export */   getQuestionExistsUrl: () => (/* binding */ getQuestionExistsUrl),
+/* harmony export */   githubAppId: () => (/* binding */ githubAppId),
+/* harmony export */   githubAppLink: () => (/* binding */ githubAppLink),
+/* harmony export */   groupFinderUrl: () => (/* binding */ groupFinderUrl)
 /* harmony export */ });
 const clientId = 'Iv1.0c9196e6fcd3647a';
 const githubAppId = 356032; //the github apps
@@ -9608,16 +9636,16 @@ async function robustFetch(url, options) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "EDIT_MODE": () => (/* binding */ EDIT_MODE),
-/* harmony export */   "READ_MODE": () => (/* binding */ READ_MODE),
-/* harmony export */   "acceptedSubmissionExists": () => (/* binding */ acceptedSubmissionExists),
-/* harmony export */   "currentCodeIsAccepted": () => (/* binding */ currentCodeIsAccepted),
-/* harmony export */   "getCurrentCode": () => (/* binding */ getCurrentCode),
-/* harmony export */   "getCurrentFileExtension": () => (/* binding */ getCurrentFileExtension),
-/* harmony export */   "getQuestionName": () => (/* binding */ getQuestionName),
-/* harmony export */   "getSubmissionSpans": () => (/* binding */ getSubmissionSpans),
-/* harmony export */   "getViewMode": () => (/* binding */ getViewMode),
-/* harmony export */   "saysNoSubmissions": () => (/* binding */ saysNoSubmissions)
+/* harmony export */   EDIT_MODE: () => (/* binding */ EDIT_MODE),
+/* harmony export */   READ_MODE: () => (/* binding */ READ_MODE),
+/* harmony export */   acceptedSubmissionExists: () => (/* binding */ acceptedSubmissionExists),
+/* harmony export */   currentCodeIsAccepted: () => (/* binding */ currentCodeIsAccepted),
+/* harmony export */   getCurrentCode: () => (/* binding */ getCurrentCode),
+/* harmony export */   getCurrentFileExtension: () => (/* binding */ getCurrentFileExtension),
+/* harmony export */   getQuestionName: () => (/* binding */ getQuestionName),
+/* harmony export */   getSubmissionSpans: () => (/* binding */ getSubmissionSpans),
+/* harmony export */   getViewMode: () => (/* binding */ getViewMode),
+/* harmony export */   saysNoSubmissions: () => (/* binding */ saysNoSubmissions)
 /* harmony export */ });
 function getQuestionName(link) {
   //*/problems/*/*
@@ -9747,7 +9775,217 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.submit-card img {\n  display: inline;\n  opacity: 0.6;\n}\n.card-title {\n  font-size: var(--large-fs);\n  color: var(--dark-grey-color) !important;\n}\n\n.submit-card input {\n  height: var(--large-fs);\n  border-radius: var(--border-radius);\n  border: 1px solid lightgrey;\n  padding-left: 0.5rem;\n\n  width: 100%;\n  background: transparent;\n  color: var(--dark-grey-color);\n}\n\n.submit-card input:focus {\n  outline: 1px solid grey;\n}\n\n.submit-card {\n  /* size */\n  --drawer-button-width: 1.5rem;\n  --width: 30rem;\n  width: var(--width);\n  max-height: 80vh;\n\n  /* position */\n  position: fixed;\n  right: calc(var(--drawer-button-width) - var(--width));\n  top: 50%;\n  transform: translateY(-50%);\n\n  /* shape */\n  border: var(--border);\n  border-top-left-radius: 1rem;\n  border-bottom-left-radius: 1rem;\n  background-color: white;\n\n  /* to children  */\n  display: flex;\n  gap: 1rem;\n  padding: 1rem;\n  padding-left: 0;\n\n  transition: right 0.5s ease-in;\n}\n\n.card-exposed {\n  right: -2px;\n}\n\n.vertical-center {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.drawer-button {\n  width: var(--drawer-button-width);\n  background: none;\n  border: none;\n  opacity: 0.5;\n  padding: 0 4px;\n  cursor: pointer;\n}\n\n.labelled-input-container {\n  position: relative;\n}\n/* for labelled input */\n.label {\n  pointer-events: none;\n\n  position: absolute;\n  left: 50%;\n  transform: translateX(-50%) translateY(-50%);\n\n  font-size: var(--very-small-fs);\n  background-color: white;\n  color: var(--grey-color);\n}\n.vertical-spaced-flex {\n  display: flex;\n  flex-direction: column;\n  gap: 0.5rem;\n}\n\n.gap-1 {\n  gap: 1.5rem;\n}\n.spaced-flex {\n  display: flex;\n  gap: 0.5rem;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.folder-tree {\n  overflow: auto;\n\n  width: calc(var(--width) * 0.8);\n  border-top: 1px solid lightgrey;\n  border-bottom: 1px solid lightgrey;\n  padding: 0.5rem 0;\n\n  display: flex;\n  flex-direction: column;\n  gap: 0.25rem;\n}\n\n.folder {\n  display: flex;\n  align-items: center;\n  gap: 0.25rem;\n}\n\n.folder-label {\n  display: flex;\n  align-items: center;\n  padding: 0 0.25rem;\n\n  color: var(--dark-grey-color);\n  border: none;\n  border: 1px solid lightgrey;\n  border-radius: 0.2rem;\n\n  font-size: var(--medium-fs);\n  cursor: pointer;\n}\n.folder-label img {\n  width: var(--medium-fs);\n  height: var(--medium-fs);\n}\n\n.folder-label:hover {\n  border: 1px solid var(--secondary-color);\n}\n\n.less-opacity {\n  opacity: 0.6;\n}\n\n.selected-folder-label {\n  /* border: 1px solid var(--primary-color); */\n  background-color: var(--secondary-color);\n  color: black;\n}\n\n.folder-icon-button {\n  border-radius: 33%;\n  border: none;\n  background: none;\n\n  border: 1px solid lightgrey;\n  background: white;\n  cursor: pointer;\n\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.folder-icon-button img,\n#arumba {\n  padding: 0.15rem;\n  --size: var(--medium-fs);\n  width: var(--size) !important;\n  height: var(--size) !important;\n}\n\n.align-center {\n  align-items: center;\n}\n\n.appear-animattion {\n  animation: appear 0.5s;\n}\n\n@keyframes appear {\n  0% {\n    opacity: 0;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n/* misc  */\n.mw-2-inputs {\n  max-width: 20rem;\n}\n.submit-button-width {\n  width: 20rem;\n}\n.pad-right {\n  padding-right: 1rem;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `
+.submit-card img {
+  display: inline;
+  opacity: 0.6;
+}
+.card-title {
+  font-size: var(--large-fs);
+  color: var(--dark-grey-color) !important;
+}
+
+.submit-card input {
+  height: var(--large-fs);
+  border-radius: var(--border-radius);
+  border: 1px solid lightgrey;
+  padding-left: 0.5rem;
+
+  width: 100%;
+  background: transparent;
+  color: var(--dark-grey-color);
+}
+
+.submit-card input:focus {
+  outline: 1px solid grey;
+}
+
+.submit-card {
+  /* size */
+  --drawer-button-width: 1.5rem;
+  --width: 30rem;
+  width: var(--width);
+  max-height: 80vh;
+
+  /* position */
+  position: fixed;
+  right: calc(var(--drawer-button-width) - var(--width));
+  top: 50%;
+  transform: translateY(-50%);
+
+  /* shape */
+  border: var(--border);
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  background-color: white;
+
+  /* to children  */
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  padding-left: 0;
+
+  transition: right 0.5s ease-in;
+}
+
+.card-exposed {
+  right: -2px;
+}
+
+.vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.drawer-button {
+  width: var(--drawer-button-width);
+  background: none;
+  border: none;
+  opacity: 0.5;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.labelled-input-container {
+  position: relative;
+}
+/* for labelled input */
+.label {
+  pointer-events: none;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+
+  font-size: var(--very-small-fs);
+  background-color: white;
+  color: var(--grey-color);
+}
+.vertical-spaced-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gap-1 {
+  gap: 1.5rem;
+}
+.spaced-flex {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.folder-tree {
+  overflow: auto;
+
+  width: calc(var(--width) * 0.8);
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  padding: 0.5rem 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.folder {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.folder-label {
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+
+  color: var(--dark-grey-color);
+  border: none;
+  border: 1px solid lightgrey;
+  border-radius: 0.2rem;
+
+  font-size: var(--medium-fs);
+  cursor: pointer;
+}
+.folder-label img {
+  width: var(--medium-fs);
+  height: var(--medium-fs);
+}
+
+.folder-label:hover {
+  border: 1px solid var(--secondary-color);
+}
+
+.less-opacity {
+  opacity: 0.6;
+}
+
+.selected-folder-label {
+  /* border: 1px solid var(--primary-color); */
+  background-color: var(--secondary-color);
+  color: black;
+}
+
+.folder-icon-button {
+  border-radius: 33%;
+  border: none;
+  background: none;
+
+  border: 1px solid lightgrey;
+  background: white;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.folder-icon-button img,
+#arumba {
+  padding: 0.15rem;
+  --size: var(--medium-fs);
+  width: var(--size) !important;
+  height: var(--size) !important;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.appear-animattion {
+  animation: appear 0.5s;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* misc  */
+.mw-2-inputs {
+  max-width: 20rem;
+}
+.submit-button-width {
+  width: 20rem;
+}
+.pad-right {
+  padding-right: 1rem;
+}
+
+`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9774,7 +10012,135 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":host,\n:root {\n  all: initial; /*took blood, sweat, and tears*/\n  --error-color: brown;\n  --grey-color: rgb(87, 87, 87);\n  --dark-grey-color: rgb(68, 68, 68);\n  --border-radius: 5px;\n  --border: 2px solid black;\n  --primary-color: darkgreen;\n  --secondary-color: rgb(170, 251, 170);\n  --disabled-color: lightgrey;\n\n  --very-small-fs: 0.6rem;\n  --small-fs: 0.8rem;\n  --medium-fs: 1rem;\n  --large-fs: 1.5rem;\n  --very-large-fs: 3rem;\n\n  --font-family: sans-serif;\n  --glass-bg: rgba(255, 255, 255, 0.9);\n  font-size: var(--medium-fs);\n}\n:host *,\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--font-family);\n}\n\n.ff {\n  font-family: var(--font-family);\n}\n\n.error-color {\n  color: var(--error-color);\n  animation: error-fade-in 0.5s;\n}\n@keyframes error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.grey-color {\n  color: var(--grey-color);\n}\n\n.primary-color {\n  color: var(--primary-color);\n}\n\n.secondary-color {\n  color: var(--secondary-color);\n}\n\n.dark-grey-color {\n  color: var(--dark-grey-color);\n}\n\n.black-color {\n  color: black;\n}\n\n.small-fs {\n  font-size: var(--small-fs);\n}\n\n.medium-fs {\n  font-size: var(--medium-fs);\n}\n\n.large-fs {\n  font-size: var(--large-fs);\n}\n\n.very-large-fs {\n  font-size: var(--very-large-fs);\n}\n\n.primary-button {\n  background-color: var(--primary-color);\n  border: var(--border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.primary-button:hover {\n  cursor: pointer;\n}\n\n.secondary-button {\n  background-color: var(--secondary-color);\n  border: var(--border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.disabled-button {\n  pointer-events: none;\n  background-color: var(--disabled-color);\n  border: none;\n}\n\n.d-none {\n  display: none;\n}\n.d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.bg-red {\n  background-color: red;\n}\n.bg-blue {\n  background-color: blue;\n}\n.red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:host,
+:root {
+  all: initial; /*took blood, sweat, and tears*/
+  --error-color: brown;
+  --grey-color: rgb(87, 87, 87);
+  --dark-grey-color: rgb(68, 68, 68);
+  --border-radius: 5px;
+  --border: 2px solid black;
+  --primary-color: darkgreen;
+  --secondary-color: rgb(170, 251, 170);
+  --disabled-color: lightgrey;
+
+  --very-small-fs: 0.6rem;
+  --small-fs: 0.8rem;
+  --medium-fs: 1rem;
+  --large-fs: 1.5rem;
+  --very-large-fs: 3rem;
+
+  --font-family: sans-serif;
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  font-size: var(--medium-fs);
+}
+:host *,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+.ff {
+  font-family: var(--font-family);
+}
+
+.error-color {
+  color: var(--error-color);
+  animation: error-fade-in 0.5s;
+}
+@keyframes error-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+.grey-color {
+  color: var(--grey-color);
+}
+
+.primary-color {
+  color: var(--primary-color);
+}
+
+.secondary-color {
+  color: var(--secondary-color);
+}
+
+.dark-grey-color {
+  color: var(--dark-grey-color);
+}
+
+.black-color {
+  color: black;
+}
+
+.small-fs {
+  font-size: var(--small-fs);
+}
+
+.medium-fs {
+  font-size: var(--medium-fs);
+}
+
+.large-fs {
+  font-size: var(--large-fs);
+}
+
+.very-large-fs {
+  font-size: var(--very-large-fs);
+}
+
+.primary-button {
+  background-color: var(--primary-color);
+  border: var(--border);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius);
+}
+
+.primary-button:hover {
+  cursor: pointer;
+}
+
+.secondary-button {
+  background-color: var(--secondary-color);
+  border: var(--border);
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius);
+}
+
+.disabled-button {
+  pointer-events: none;
+  background-color: var(--disabled-color);
+  border: none;
+}
+
+.d-none {
+  display: none;
+}
+.d-flex {
+  display: flex;
+}
+
+/* for testing  */
+.bg-red {
+  background-color: red;
+}
+.bg-blue {
+  background-color: blue;
+}
+.red-color {
+  color: red;
+}
+.red {
+  color: green;
+}
+`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9801,7 +10167,103 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".timer-playing::before,\n.timer-paused::before {\n  content: '';\n  position: absolute;\n  border-radius: 100%;\n\n  --size: 2.5rem;\n  width: var(--size);\n  height: var(--size);\n\n  z-index: -1;\n}\n\n.timer-playing::before {\n  background-color: var(--secondary-color);\n  animation: resize-animation 0.5s linear infinite alternate;\n}\n@keyframes resize-animation {\n  0% {\n    opacity: 0.3;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n.timer-paused::before {\n  background-color: lightgrey;\n}\n\n.timer-playing,\n.timer-paused {\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.play-pause-button {\n  /* looks  */\n  --size: var(--medium-fs);\n  width: var(--size);\n  height: var(--size);\n  border-radius: 100%;\n}\n\n.play-pause-button > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n\n.play-pause-button:hover {\n  cursor: pointer;\n}\n\n\n\n.timer button {\n  border: none;\n  background: none;\n}\n\n.timer {\n  /* size  */\n  padding: 0.25rem 0.5rem;\n\n  /* self alignment */\n  position: fixed;\n  top: -2px;\n  left: 50%;\n  z-index: 1000;\n  transform: translateX(-50%);\n\n  /*content alignment*/\n  display: flex;\n  gap: 1rem;\n  align-items: center;\n\n  /* color */\n  background-color: white;\n  color: black;\n  font-size: var(--medium-fs);\n  font-family: var(--font-family);\n\n  /* border */\n  border: var(--border);\n  border-top: none;\n  --br: var(--border-radius);\n  border-bottom-left-radius: var(--br);\n  border-bottom-right-radius: var(--br);\n\n  /* for nice looking button */\n  overflow: hidden;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `.timer-playing::before,
+.timer-paused::before {
+  content: '';
+  position: absolute;
+  border-radius: 100%;
+
+  --size: 2.5rem;
+  width: var(--size);
+  height: var(--size);
+
+  z-index: -1;
+}
+
+.timer-playing::before {
+  background-color: var(--secondary-color);
+  animation: resize-animation 0.5s linear infinite alternate;
+}
+@keyframes resize-animation {
+  0% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.timer-paused::before {
+  background-color: lightgrey;
+}
+
+.timer-playing,
+.timer-paused {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-pause-button {
+  /* looks  */
+  --size: var(--medium-fs);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 100%;
+}
+
+.play-pause-button > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.play-pause-button:hover {
+  cursor: pointer;
+}
+
+
+
+.timer button {
+  border: none;
+  background: none;
+}
+
+.timer {
+  /* size  */
+  padding: 0.25rem 0.5rem;
+
+  /* self alignment */
+  position: fixed;
+  top: -2px;
+  left: 50%;
+  z-index: 1000;
+  transform: translateX(-50%);
+
+  /*content alignment*/
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  /* color */
+  background-color: white;
+  color: black;
+  font-size: var(--medium-fs);
+  font-family: var(--font-family);
+
+  /* border */
+  border: var(--border);
+  border-top: none;
+  --br: var(--border-radius);
+  border-bottom-left-radius: var(--br);
+  border-bottom-right-radius: var(--br);
+
+  /* for nice looking button */
+  overflow: hidden;
+}
+`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

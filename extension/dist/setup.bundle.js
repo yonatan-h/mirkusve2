@@ -8787,15 +8787,15 @@ function Welcome() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AppScriptError": () => (/* binding */ AppScriptError),
-/* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
-/* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
-/* harmony export */   "CustomError": () => (/* binding */ CustomError),
-/* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
-/* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
-/* harmony export */   "InputError": () => (/* binding */ InputError),
-/* harmony export */   "NetworkError": () => (/* binding */ NetworkError),
-/* harmony export */   "ToastError": () => (/* binding */ ToastError)
+/* harmony export */   AppScriptError: () => (/* binding */ AppScriptError),
+/* harmony export */   BadStatusError: () => (/* binding */ BadStatusError),
+/* harmony export */   BadUrlError: () => (/* binding */ BadUrlError),
+/* harmony export */   CustomError: () => (/* binding */ CustomError),
+/* harmony export */   DisablingError: () => (/* binding */ DisablingError),
+/* harmony export */   EmptyInputError: () => (/* binding */ EmptyInputError),
+/* harmony export */   InputError: () => (/* binding */ InputError),
+/* harmony export */   NetworkError: () => (/* binding */ NetworkError),
+/* harmony export */   ToastError: () => (/* binding */ ToastError)
 /* harmony export */ });
 class CustomError extends Error {
   constructor(descriptionAndSolution, errorAsString = '') {
@@ -8907,13 +8907,13 @@ function removeExcessSlash(url) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "clientId": () => (/* binding */ clientId),
-/* harmony export */   "codeForTokenUrl": () => (/* binding */ codeForTokenUrl),
-/* harmony export */   "getAnswerSubmitUrl": () => (/* binding */ getAnswerSubmitUrl),
-/* harmony export */   "getQuestionExistsUrl": () => (/* binding */ getQuestionExistsUrl),
-/* harmony export */   "githubAppId": () => (/* binding */ githubAppId),
-/* harmony export */   "githubAppLink": () => (/* binding */ githubAppLink),
-/* harmony export */   "groupFinderUrl": () => (/* binding */ groupFinderUrl)
+/* harmony export */   clientId: () => (/* binding */ clientId),
+/* harmony export */   codeForTokenUrl: () => (/* binding */ codeForTokenUrl),
+/* harmony export */   getAnswerSubmitUrl: () => (/* binding */ getAnswerSubmitUrl),
+/* harmony export */   getQuestionExistsUrl: () => (/* binding */ getQuestionExistsUrl),
+/* harmony export */   githubAppId: () => (/* binding */ githubAppId),
+/* harmony export */   githubAppLink: () => (/* binding */ githubAppLink),
+/* harmony export */   groupFinderUrl: () => (/* binding */ groupFinderUrl)
 /* harmony export */ });
 const clientId = 'Iv1.0c9196e6fcd3647a';
 const githubAppId = 356032; //the github apps
@@ -8988,7 +8988,135 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":host,\n:root {\n  all: initial; /*took blood, sweat, and tears*/\n  --error-color: brown;\n  --grey-color: rgb(87, 87, 87);\n  --dark-grey-color: rgb(68, 68, 68);\n  --border-radius: 5px;\n  --border: 2px solid black;\n  --primary-color: darkgreen;\n  --secondary-color: rgb(170, 251, 170);\n  --disabled-color: lightgrey;\n\n  --very-small-fs: 0.6rem;\n  --small-fs: 0.8rem;\n  --medium-fs: 1rem;\n  --large-fs: 1.5rem;\n  --very-large-fs: 3rem;\n\n  --font-family: sans-serif;\n  --glass-bg: rgba(255, 255, 255, 0.9);\n  font-size: var(--medium-fs);\n}\n:host *,\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  font-family: var(--font-family);\n}\n\n.ff {\n  font-family: var(--font-family);\n}\n\n.error-color {\n  color: var(--error-color);\n  animation: error-fade-in 0.5s;\n}\n@keyframes error-fade-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 100;\n  }\n}\n\n.grey-color {\n  color: var(--grey-color);\n}\n\n.primary-color {\n  color: var(--primary-color);\n}\n\n.secondary-color {\n  color: var(--secondary-color);\n}\n\n.dark-grey-color {\n  color: var(--dark-grey-color);\n}\n\n.black-color {\n  color: black;\n}\n\n.small-fs {\n  font-size: var(--small-fs);\n}\n\n.medium-fs {\n  font-size: var(--medium-fs);\n}\n\n.large-fs {\n  font-size: var(--large-fs);\n}\n\n.very-large-fs {\n  font-size: var(--very-large-fs);\n}\n\n.primary-button {\n  background-color: var(--primary-color);\n  border: var(--border);\n  color: white;\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.primary-button:hover {\n  cursor: pointer;\n}\n\n.secondary-button {\n  background-color: var(--secondary-color);\n  border: var(--border);\n  padding: 0.5rem 1.5rem;\n  border-radius: var(--border-radius);\n}\n\n.disabled-button {\n  pointer-events: none;\n  background-color: var(--disabled-color);\n  border: none;\n}\n\n.d-none {\n  display: none;\n}\n.d-flex {\n  display: flex;\n}\n\n/* for testing  */\n.bg-red {\n  background-color: red;\n}\n.bg-blue {\n  background-color: blue;\n}\n.red-color {\n  color: red;\n}\n.red {\n  color: green;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:host,
+:root {
+  all: initial; /*took blood, sweat, and tears*/
+  --error-color: brown;
+  --grey-color: rgb(87, 87, 87);
+  --dark-grey-color: rgb(68, 68, 68);
+  --border-radius: 5px;
+  --border: 2px solid black;
+  --primary-color: darkgreen;
+  --secondary-color: rgb(170, 251, 170);
+  --disabled-color: lightgrey;
+
+  --very-small-fs: 0.6rem;
+  --small-fs: 0.8rem;
+  --medium-fs: 1rem;
+  --large-fs: 1.5rem;
+  --very-large-fs: 3rem;
+
+  --font-family: sans-serif;
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  font-size: var(--medium-fs);
+}
+:host *,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+.ff {
+  font-family: var(--font-family);
+}
+
+.error-color {
+  color: var(--error-color);
+  animation: error-fade-in 0.5s;
+}
+@keyframes error-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+.grey-color {
+  color: var(--grey-color);
+}
+
+.primary-color {
+  color: var(--primary-color);
+}
+
+.secondary-color {
+  color: var(--secondary-color);
+}
+
+.dark-grey-color {
+  color: var(--dark-grey-color);
+}
+
+.black-color {
+  color: black;
+}
+
+.small-fs {
+  font-size: var(--small-fs);
+}
+
+.medium-fs {
+  font-size: var(--medium-fs);
+}
+
+.large-fs {
+  font-size: var(--large-fs);
+}
+
+.very-large-fs {
+  font-size: var(--very-large-fs);
+}
+
+.primary-button {
+  background-color: var(--primary-color);
+  border: var(--border);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius);
+}
+
+.primary-button:hover {
+  cursor: pointer;
+}
+
+.secondary-button {
+  background-color: var(--secondary-color);
+  border: var(--border);
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius);
+}
+
+.disabled-button {
+  pointer-events: none;
+  background-color: var(--disabled-color);
+  border: none;
+}
+
+.d-none {
+  display: none;
+}
+.d-flex {
+  display: flex;
+}
+
+/* for testing  */
+.bg-red {
+  background-color: red;
+}
+.bg-blue {
+  background-color: blue;
+}
+.red-color {
+  color: red;
+}
+.red {
+  color: green;
+}
+`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9014,7 +9142,155 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\n  padding-left: 2rem;\n  min-height: 100vh;\n  background-color: var(--secondary-color);\n  font-size: 1rem;\n}\n#root {\n  min-height: 100vh;\n}\n\n.split {\n  display: flex;\n}\n\n.container {\n  padding: 1rem;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.m-top {\n  margin-top: 5rem;\n}\n\n.m-small-top {\n  margin-top: 1rem;\n}\n\n.w-100 {\n  width: 100%;\n}\n.welcome-width {\n  max-width: 500px;\n}\n\n.bold {\n  font-weight: bold;\n}\n\n.vh-100 {\n  min-height: 100vh;\n}\n\n.wbg {\n  background-color: white;\n}\n\n.bbg {\n  background-color: blue;\n}\n\n.rbg {\n  background-color: red;\n}\n\n.flex-1 {\n  flex: 1;\n}\n\n.flex-2 {\n  flex: 2;\n}\n\n.flex-3 {\n  flex: 3;\n}\n\ninput {\n  padding: 0.8rem;\n  border-radius: var(--border-radius);\n  border: 1px solid var(--grey-color);\n}\n\n.align-end {\n  display: flex;\n  justify-content: end;\n}\n\n.smooth-left {\n  border-top-left-radius: 5rem;\n  border-bottom-left-radius: 5rem;\n  border: var(--border);\n  border-right: none;\n}\n\n.error-box {\n  max-width: 500px;\n}\n\n.image-text-grid {\n  padding: 1rem;\n  display: grid;\n\n  grid-template-columns: auto 1fr;\n\n  row-gap: 2rem;\n  column-gap: 1rem;\n\n  align-items: center;\n}\n\nimg {\n  width: 100%;\n  height: 100%;\n  object-fit: contain;\n}\n\n.circular-container {\n  --size: 5rem;\n\n  width: var(--size);\n  height: var(--size);\n  border-radius: 40%;\n  background-color: rgba(255, 255, 255, 0.8);\n}\n\n.hover-appetizer {\n  font-weight: bold;\n  border-bottom: 2px dashed black;\n}\n\n.hoverable {\n  position: relative;\n}\n\n.hover-pop-image {\n  --size: 15rem;\n  height: var(--size);\n  width: var(--size);\n\n  padding: 2rem;\n  border-radius: 100%;\n  border: var(--border);\n\n  opacity: 0;\n  transition: opacity;\n  transition-duration: 0.5s;\n  background-color: white;\n\n  position: absolute;\n  left: 10rem;\n  bottom: 0;\n}\n\n.hoverable:hover .hover-pop-image {\n  opacity: 1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `body {
+  padding-left: 2rem;
+  min-height: 100vh;
+  background-color: var(--secondary-color);
+  font-size: 1rem;
+}
+#root {
+  min-height: 100vh;
+}
+
+.split {
+  display: flex;
+}
+
+.container {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.m-top {
+  margin-top: 5rem;
+}
+
+.m-small-top {
+  margin-top: 1rem;
+}
+
+.w-100 {
+  width: 100%;
+}
+.welcome-width {
+  max-width: 500px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.vh-100 {
+  min-height: 100vh;
+}
+
+.wbg {
+  background-color: white;
+}
+
+.bbg {
+  background-color: blue;
+}
+
+.rbg {
+  background-color: red;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+input {
+  padding: 0.8rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--grey-color);
+}
+
+.align-end {
+  display: flex;
+  justify-content: end;
+}
+
+.smooth-left {
+  border-top-left-radius: 5rem;
+  border-bottom-left-radius: 5rem;
+  border: var(--border);
+  border-right: none;
+}
+
+.error-box {
+  max-width: 500px;
+}
+
+.image-text-grid {
+  padding: 1rem;
+  display: grid;
+
+  grid-template-columns: auto 1fr;
+
+  row-gap: 2rem;
+  column-gap: 1rem;
+
+  align-items: center;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.circular-container {
+  --size: 5rem;
+
+  width: var(--size);
+  height: var(--size);
+  border-radius: 40%;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hover-appetizer {
+  font-weight: bold;
+  border-bottom: 2px dashed black;
+}
+
+.hoverable {
+  position: relative;
+}
+
+.hover-pop-image {
+  --size: 15rem;
+  height: var(--size);
+  width: var(--size);
+
+  padding: 2rem;
+  border-radius: 100%;
+  border: var(--border);
+
+  opacity: 0;
+  transition: opacity;
+  transition-duration: 0.5s;
+  background-color: white;
+
+  position: absolute;
+  left: 10rem;
+  bottom: 0;
+}
+
+.hoverable:hover .hover-pop-image {
+  opacity: 1;
+}
+`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

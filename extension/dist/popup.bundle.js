@@ -150,7 +150,60 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n\tbox-sizing: border-box;\n\tfont-family: monospace;\n\tfont-size: 1rem;\n}\n\nbody {\n\tmin-width: 500px;\n}\n\nh1 {\n\tborder-bottom: 5px solid rgb(248, 159, 27);\n\ttext-align: center;\n}\n\n#setup-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: darkgreen;\n\tpadding: 5px;\n\tcolor: white;\n}\n\n#setup-button:hover {\n\ttransform: scale(1.05);\n}\n\n.hidden {\n\tdisplay: none;\n}\n\nbutton {\n\tbox-shadow: 2px 2px black;\n\tpadding: 5px;\n\tborder-radius: 2.5px;\n}\n\n#options-button {\n\tbackground: none;\n\tborder: none;\n\tbackground: lightgrey;\n}\n\n#reset-button {\n\tbackground: none;\n\tborder: none;\n\tcolor: white;\n\tbackground-color: rgb(188, 50, 0);\n}\n\n.options {\n\tpadding: 1rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `* {
+	box-sizing: border-box;
+	font-family: monospace;
+	font-size: 1rem;
+}
+
+body {
+	min-width: 500px;
+}
+
+h1 {
+	border-bottom: 5px solid rgb(248, 159, 27);
+	text-align: center;
+}
+
+#setup-button {
+	background: none;
+	border: none;
+	background: darkgreen;
+	padding: 5px;
+	color: white;
+}
+
+#setup-button:hover {
+	transform: scale(1.05);
+}
+
+.hidden {
+	display: none;
+}
+
+button {
+	box-shadow: 2px 2px black;
+	padding: 5px;
+	border-radius: 2.5px;
+}
+
+#options-button {
+	background: none;
+	border: none;
+	background: lightgrey;
+}
+
+#reset-button {
+	background: none;
+	border: none;
+	color: white;
+	background-color: rgb(188, 50, 0);
+}
+
+.options {
+	padding: 1rem;
+}
+`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

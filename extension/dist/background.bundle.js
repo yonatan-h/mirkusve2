@@ -10,8 +10,8 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getRedirectedUrl": () => (/* binding */ getRedirectedUrl),
-/* harmony export */   "openSetupTab": () => (/* binding */ openSetupTab)
+/* harmony export */   getRedirectedUrl: () => (/* binding */ getRedirectedUrl),
+/* harmony export */   openSetupTab: () => (/* binding */ openSetupTab)
 /* harmony export */ });
 /* harmony import */ var _utils_keys_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/keys.js */ "./src/utils/keys.js");
 /* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/custom-errors.js */ "./src/utils/custom-errors.js");
@@ -111,15 +111,15 @@ function matchesQuestionPage(url) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AppScriptError": () => (/* binding */ AppScriptError),
-/* harmony export */   "BadStatusError": () => (/* binding */ BadStatusError),
-/* harmony export */   "BadUrlError": () => (/* binding */ BadUrlError),
-/* harmony export */   "CustomError": () => (/* binding */ CustomError),
-/* harmony export */   "DisablingError": () => (/* binding */ DisablingError),
-/* harmony export */   "EmptyInputError": () => (/* binding */ EmptyInputError),
-/* harmony export */   "InputError": () => (/* binding */ InputError),
-/* harmony export */   "NetworkError": () => (/* binding */ NetworkError),
-/* harmony export */   "ToastError": () => (/* binding */ ToastError)
+/* harmony export */   AppScriptError: () => (/* binding */ AppScriptError),
+/* harmony export */   BadStatusError: () => (/* binding */ BadStatusError),
+/* harmony export */   BadUrlError: () => (/* binding */ BadUrlError),
+/* harmony export */   CustomError: () => (/* binding */ CustomError),
+/* harmony export */   DisablingError: () => (/* binding */ DisablingError),
+/* harmony export */   EmptyInputError: () => (/* binding */ EmptyInputError),
+/* harmony export */   InputError: () => (/* binding */ InputError),
+/* harmony export */   NetworkError: () => (/* binding */ NetworkError),
+/* harmony export */   ToastError: () => (/* binding */ ToastError)
 /* harmony export */ });
 class CustomError extends Error {
   constructor(descriptionAndSolution, errorAsString = '') {
@@ -202,13 +202,13 @@ class EmptyInputError extends InputError {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "clientId": () => (/* binding */ clientId),
-/* harmony export */   "codeForTokenUrl": () => (/* binding */ codeForTokenUrl),
-/* harmony export */   "getAnswerSubmitUrl": () => (/* binding */ getAnswerSubmitUrl),
-/* harmony export */   "getQuestionExistsUrl": () => (/* binding */ getQuestionExistsUrl),
-/* harmony export */   "githubAppId": () => (/* binding */ githubAppId),
-/* harmony export */   "githubAppLink": () => (/* binding */ githubAppLink),
-/* harmony export */   "groupFinderUrl": () => (/* binding */ groupFinderUrl)
+/* harmony export */   clientId: () => (/* binding */ clientId),
+/* harmony export */   codeForTokenUrl: () => (/* binding */ codeForTokenUrl),
+/* harmony export */   getAnswerSubmitUrl: () => (/* binding */ getAnswerSubmitUrl),
+/* harmony export */   getQuestionExistsUrl: () => (/* binding */ getQuestionExistsUrl),
+/* harmony export */   githubAppId: () => (/* binding */ githubAppId),
+/* harmony export */   githubAppLink: () => (/* binding */ githubAppLink),
+/* harmony export */   groupFinderUrl: () => (/* binding */ groupFinderUrl)
 /* harmony export */ });
 const clientId = 'Iv1.0c9196e6fcd3647a';
 const githubAppId = 356032; //the github apps

@@ -35,9 +35,9 @@ function SubmitCard({ inView }) {
   const [isHidden, setIsHidden] = useState(false);
   const [url, setUrl] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasAutoFilled, setHasAutoFilled] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [custom_Error, setCustomError] = useState(undefined);
-  const isDisabled = custom_Error && custom_Error instanceof DisablingError;
   const [repoContent, setRepoContent] = useState({
     folderPaths: [],
     filePaths: [],
@@ -45,27 +45,79 @@ function SubmitCard({ inView }) {
   const [data, setData] = useState({
     submissions: '',
     minutes: '',
-    file: '',
     fileName: '',
     fileExtension: '',
     folderPath: '',
+
+    //non user inputs
+    file: '',
+    questionName: '',
   });
 
-  const updateData = (newData) => {
-    if (isDisabled) return;
-    //Assuming this error is the one the user is trying to correct
-    //All unsolved errors will be reintroduced on submit
-    setCustomError(undefined);
-    setData({ ...data, ...newData });
+  const isDisabled = custom_Error && custom_Error instanceof DisablingError;
+
+  const validators = {
+    submissions(value) {
+      if (!value && value !== 0) throw new EmptyInputError('submissions');
+    },
+    minutes(value) {
+      if (!value && value !== 0) throw new EmptyInputError('minutes');
+    },
+
+    fileName(value) {
+      if (!value) throw new EmptyInputError('fileName');
+      if (value.includes('/'))
+        throw new InputError(`file name ${value} can't have a '/'`);
+    },
+
+    fileExtension(value) {
+      if (!value) throw new EmptyInputError('fileExtension');
+      if (value.includes('/'))
+        throw new InputError(`fileExtension ${value} can't have a '/'`);
+    },
+
+    folderPath(value) {
+      //assume bad path is prevented by FolderTree
+      if (!value) throw new EmptyInputError('folderPath');
+    },
+
+    questionName(value) {
+      if (!value) throw new EmptyInputError('quesionName');
+      if (value.includes('/'))
+        throw new InputError(`questionName ${value} can't have a '/'`);
+    },
+
+    file(value) {
+      if (!value) throw new EmptyInputError('file');
+    },
   };
+
+  const updateData = (newData) => setData({ ...data, ...newData });
 
   //
 
   useEffect(() => {
+    setCustomError(undefined);
     const changeUrl = (event) => setUrl(event.destination.url);
     navigation.addEventListener('navigate', changeUrl);
     return () => navigation.removeEventListener('navigate', changeUrl);
   }, []);
+
+  //
+
+  useEffect(() => {
+    if (!hasAutoFilled) return;
+
+    for (const name in data) {
+      if (name === 'folderPath') continue;
+      try {
+        validators[name](data[name]); //validate
+      } catch (error) {
+        if (error instanceof CustomError) setCustomError(error);
+        else throw name;
+      }
+    }
+  }, [data]);
 
   //
 
@@ -76,7 +128,7 @@ function SubmitCard({ inView }) {
     let collectedData = {};
     let collectedRepo = {};
 
-    const load = async () => {
+    const scrape = async () => {
       await waitToLoad();
       await Promise.all([
         getScrapedData().then((data) => (collectedData = data)),
@@ -87,11 +139,14 @@ function SubmitCard({ inView }) {
 
       //To not loose the keys, used to validate all inputs later
       collectedData = { ...copyWithEmptyStrings(data), ...collectedData };
+
       setData(collectedData);
       setRepoContent(collectedRepo);
+      setHasAutoFilled(true);
+      setIsLoading(false);
     };
 
-    load().catch((error) => {
+    scrape().catch((error) => {
       if (error instanceof CustomError) setCustomError(error);
       else throw error;
     });
@@ -104,27 +159,22 @@ function SubmitCard({ inView }) {
     const name = target.name;
     const value = target.value ?? target.innerText;
     updateData({ [name]: value });
-    try {
-      errorIfIllegalInput(name, value);
-      setCustomError(undefined);
-    } catch (error) {
-      if (error instanceof InputError) setCustomError(error);
-      else throw error;
-    }
   };
 
   //
 
   const onSubmit = async () => {
+    setIsLoading(true);
     try {
       for (const name in data) {
-        const value = data[name];
-        errorIfIllegalInput(name, value);
+        validators[name](data[name]); //validate
       }
       await submitAnswer(data);
     } catch (error) {
       if (error instanceof CustomError) setCustomError(error);
       else throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -170,19 +220,6 @@ function SubmitCard({ inView }) {
 }
 
 export default SubmitCard;
-
-function errorIfIllegalInput(name, value) {
-  if (value === 0) return;
-
-  if (!value && name === 'folderPath') {
-    throw new InputError(`Please select a folder to upload your file to!`);
-  }
-  if (!value) throw new EmptyInputError(name);
-
-  if (name !== 'folderPath' && name !== 'file' && `${value}`.includes('/')) {
-    throw new InputError(`please remove / from input ${name}`);
-  }
-}
 
 function copyWithEmptyStrings(object) {
   const copied = {};
