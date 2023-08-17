@@ -8187,15 +8187,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/mapUrl.js */ "./src/utils/mapUrl.js");
 /* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/custom-errors.js */ "./src/utils/custom-errors.js");
 /* harmony import */ var _utils_join_path_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/join-path.js */ "./src/utils/join-path.js");
+/* harmony import */ var _IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IconButton.jsx */ "./src/answer-submit/components/IconButton.jsx");
+
 
 
 
 
 const folderIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/folder.svg');
-const addIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/add.svg');
-const deleteIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/delete.svg');
-const doneIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/done.svg');
-const cancelIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/cancel.svg');
 function Folder({
   folderPath,
   onSelect,
@@ -8259,21 +8257,16 @@ function Folder({
     },
     className: labelClassName
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: folderIcon,
-    className: "mediuicon"
-  }), folderName), isNew ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    src: folderIcon
+  }), folderName), isNew ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
     onClick: () => onDelete(),
-    className: "folder-icon-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: deleteIcon,
+    iconName: "delete",
     alt: "delete folder"
-  })) : null, inNewFolderMode ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }) : null, inNewFolderMode ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
     onClick: () => setNewFolderName(''),
-    className: "folder-icon-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: addIcon,
+    iconName: "add",
     alt: "add new folder"
-  }))), inNewFolderMode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })), inNewFolderMode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       marginLeft: `${indents + 1}rem`
     },
@@ -8282,20 +8275,20 @@ function Folder({
     type: "text",
     onChange: onChange,
     value: newFolderName,
-    className: "flex-1"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "folder-icon-button",
-    onClick: () => onSave()
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: doneIcon,
+    className: "flex-1",
+    placeholder: "Name of New Folder"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: () => onSave(),
+    iconName: "done",
     alt: "save this new folder"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "folder-icon-button",
-    onClick: () => setNewFolderName(undefined)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: cancelIcon,
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: () => {
+      setNewFolderName(undefined);
+      setCustomError(undefined);
+    },
+    iconName: "cancel",
     alt: "cancel creating new folder"
-  }))) : null);
+  })) : null);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Folder);
 function errorIfPathProblem({
@@ -8426,6 +8419,39 @@ function removeFolderWithChildren(removedPath, paths) {
   const remaining = paths.filter(path => path.startsWith(removedPath));
   return remaining;
 }
+
+/***/ }),
+
+/***/ "./src/answer-submit/components/IconButton.jsx":
+/*!*****************************************************!*\
+  !*** ./src/answer-submit/components/IconButton.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/mapUrl.js */ "./src/utils/mapUrl.js");
+
+
+function IconButton({
+  onClick,
+  iconName,
+  alt = 'button'
+}) {
+  const path = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])(`/media/icons/${iconName}.svg`);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "folder-icon-button",
+    onClick: onClick
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: path,
+    alt: alt
+  }));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IconButton);
 
 /***/ }),
 
@@ -8623,8 +8649,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `
-.submit-card img {
+___CSS_LOADER_EXPORT___.push([module.id, `.submit-card img {
   display: inline;
   opacity: 0.6;
 }
@@ -8674,6 +8699,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, `
   padding-left: 0;
 
   transition: right 0.5s ease-in;
+}
+
+.card-loading-animation {
+  pointer-events: none;
+  background-image: linear-gradient(
+    to right,
+    white,
+    var(--secondary-color),
+    white
+  );
+  background-size: 200% 100%;
+  animation: card-loading-animation 2s infinite;
+}
+
+@keyframes card-loading-animation {
+  0% {
+    background-position-x: 0%;
+  }
+  40% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
 }
 
 .card-exposed {
@@ -8822,6 +8871,39 @@ ___CSS_LOADER_EXPORT___.push([module.id, `
   }
 }
 
+.file-view-container {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 10;
+}
+
+.file-view {
+  border: border;
+  border-radius: var(--border-radius);
+
+  background-color: white;
+  font-family: monospace;
+  padding: 0.5rem;
+}
+
+.file-view pre {
+  padding: 1rem;
+  width: 80vw;
+  max-height: 90vh;
+  overflow: auto;
+}
+
 /* misc  */
 .mw-2-inputs {
   max-width: 20rem;
@@ -8832,7 +8914,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `
 .pad-right {
   padding-right: 1rem;
 }
-
 `, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);

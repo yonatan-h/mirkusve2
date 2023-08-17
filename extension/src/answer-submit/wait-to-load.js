@@ -10,7 +10,7 @@ import {
 
 async function waitToLoad() {
   const maxTime = 10000;
-  const intervalTime = 500;
+  const intervalTime = 800; 
 
   //ASSUMPTION: if answer code has loaded, every thing else that's needed from the page is loaded
   return new Promise((resolve, reject) => {
@@ -36,6 +36,8 @@ function isLoaded() {
   const mode = getViewMode();
   const submissionSpans = getSubmissionSpans();
   const codeLoaded = getCurrentCode() !== undefined;
+
+  // console.log('loading...', getCurrentCode(), getCurrentCode()===undefined);
 
   if (mode === READ_MODE) {
     //There MUST be a submission for READ_MODE

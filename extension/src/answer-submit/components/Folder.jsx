@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import mapUrl from '../../utils/mapUrl.js';
-import { InputError } from '../../utils/custom-errors.js';
-import joinWithPath from '../../utils/join-path.js';
+import React, { useState, useEffect } from 'react'
+import mapUrl from '../../utils/mapUrl.js'
+import { InputError } from '../../utils/custom-errors.js'
+import joinWithPath from '../../utils/join-path.js'
+import IconButton from './IconButton.jsx'
 
-const folderIcon = mapUrl('/media/icons/folder.svg');
-const addIcon = mapUrl('/media/icons/add.svg');
-const deleteIcon = mapUrl('/media/icons/delete.svg');
-const doneIcon = mapUrl('/media/icons/done.svg');
-const cancelIcon = mapUrl('/media/icons/cancel.svg');
+const folderIcon = mapUrl('/media/icons/folder.svg')
 
 function Folder({
   folderPath,
@@ -24,42 +21,42 @@ function Folder({
   setCustomError = () => {},
 }) {
   //new folder
-  const [newFolderName, setNewFolderName] = useState(undefined);
-  const inNewFolderMode = newFolderName !== undefined;
+  const [newFolderName, setNewFolderName] = useState(undefined)
+  const inNewFolderMode = newFolderName !== undefined
 
   const onChange = (event) => {
-    const name = event.target.value;
-    setNewFolderName(name);
+    const name = event.target.value
+    setNewFolderName(name)
     try {
-      errorIfPathProblem({ newFolderName: name, folderPath, isUnique });
-      setCustomError(undefined);
+      errorIfPathProblem({ newFolderName: name, folderPath, isUnique })
+      setCustomError(undefined)
     } catch (error) {
-      if (error instanceof InputError) setCustomError(error);
-      else throw error;
+      if (error instanceof InputError) setCustomError(error)
+      else throw error
     }
-  };
+  }
 
   const onSave = () => {
     try {
-      errorIfPathProblem({ newFolderName, folderPath, isUnique });
-      onNewFolder(newFolderName);
-      setNewFolderName(undefined);
+      errorIfPathProblem({ newFolderName, folderPath, isUnique })
+      onNewFolder(newFolderName)
+      setNewFolderName(undefined)
     } catch (error) {
-      if (error instanceof InputError) setCustomError(error);
-      else throw error;
+      if (error instanceof InputError) setCustomError(error)
+      else throw error
     }
-  };
+  }
 
   //normal folder
-  const isRoot = folderPath === '/';
-  const nodes = folderPath.split('/');
-  const folderName = isRoot ? 'root' : nodes[nodes.length - 1];
-  const indents = isRoot ? 0 : nodes.length - 1;
+  const isRoot = folderPath === '/'
+  const nodes = folderPath.split('/')
+  const folderName = isRoot ? 'root' : nodes[nodes.length - 1]
+  const indents = isRoot ? 0 : nodes.length - 1
 
   //dont forget ' thespaces '
-  let labelClassName = ' folder-label spaced-flex ';
-  if (isSelected) labelClassName += ' selected-folder-label ';
-  if (isNew && !isOnSelectedPath) labelClassName += ' less-opacity ';
+  let labelClassName = ' folder-label spaced-flex '
+  if (isSelected) labelClassName += ' selected-folder-label '
+  if (isNew && !isOnSelectedPath) labelClassName += ' less-opacity '
 
   return (
     <>
@@ -69,23 +66,24 @@ function Folder({
           style={{ marginLeft: `${indents}rem` }}
           className={labelClassName}
         >
-          <img src={folderIcon} className="mediuicon" />
+          <img src={folderIcon} />
           {folderName}
         </button>
 
         {isNew ? (
-          <button onClick={() => onDelete()} className="folder-icon-button">
-            <img src={deleteIcon} alt="delete folder" />
-          </button>
+          <IconButton
+            onClick={() => onDelete()}
+            iconName="delete"
+            alt="delete folder"
+          />
         ) : null}
 
         {inNewFolderMode ? null : (
-          <button
+          <IconButton
             onClick={() => setNewFolderName('')}
-            className="folder-icon-button"
-          >
-            <img src={addIcon} alt="add new folder" />
-          </button>
+            iconName="add"
+            alt="add new folder"
+          />
         )}
       </div>
 
@@ -99,55 +97,60 @@ function Folder({
             onChange={onChange}
             value={newFolderName}
             className="flex-1"
+            placeholder="Name of New Folder"
           />
 
-          <button className="folder-icon-button" onClick={() => onSave()}>
-            <img src={doneIcon} alt="save this new folder" />
-          </button>
+          <IconButton
+            onClick={() => onSave()}
+            iconName="done"
+            alt="save this new folder"
+          />
 
-          <button
-            className="folder-icon-button"
-            onClick={() => setNewFolderName(undefined)}
-          >
-            <img src={cancelIcon} alt="cancel creating new folder" />
-          </button>
+          <IconButton
+            onClick={() => {
+              setNewFolderName(undefined)
+              setCustomError(undefined)
+            }}
+            iconName="cancel"
+            alt="cancel creating new folder"
+          />
         </div>
       ) : null}
     </>
-  );
+  )
 }
 
-export default Folder;
+export default Folder
 
 function errorIfPathProblem({ newFolderName, isUnique, folderPath }) {
   if (!newFolderName) {
-    throw new InputError(`Folder name is empty! It should'nt be empty`);
+    throw new InputError(`Folder name is empty! It should'nt be empty`)
   }
 
-  const newFolderPath = joinWithPath(folderPath, newFolderName);
+  const newFolderPath = joinWithPath(folderPath, newFolderName)
   if (!isUnique(newFolderName)) {
     throw new InputError(
       `There is another folder with path '${newFolderPath}'. You can't have identical folders.`
-    );
+    )
   }
 
   if (newFolderName.includes('.')) {
     throw new InputError(
       `There is a '.' in the name of the folder'${newFolderName}'. Only create folders, not files.`
-    );
+    )
   }
 
   if (newFolderName.includes('/')) {
     throw new InputError(
       `There is slash '/' in '${newFolderName}', Please Remove it.`
-    );
+    )
   }
 
   try {
-    const url = new URL('https://abebe.com/' + newFolderName);
+    const url = new URL('https://abebe.com/' + newFolderName)
   } catch (error) {
     throw new InputError(
       `The folder '${newFolderName}' is not url safe somehow. Please modify it.`
-    );
+    )
   }
 }

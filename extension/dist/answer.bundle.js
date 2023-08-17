@@ -8138,16 +8138,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/FolderTree.jsx */ "./src/answer-submit/components/FolderTree.jsx");
 /* harmony import */ var _components_CreateNewFolder_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CreateNewFolder.jsx */ "./src/answer-submit/components/CreateNewFolder.jsx");
 /* harmony import */ var _components_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/LabelledInput.jsx */ "./src/answer-submit/components/LabelledInput.jsx");
-/* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/mapUrl.js */ "./src/utils/mapUrl.js");
-/* harmony import */ var _components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/CustomErrorView.jsx */ "./src/answer-submit/components/CustomErrorView.jsx");
-/* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
-/* harmony import */ var _wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./wait-to-load.js */ "./src/answer-submit/wait-to-load.js");
-/* harmony import */ var _get_scraped_data__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./get-scraped-data */ "./src/answer-submit/get-scraped-data.js");
-/* harmony import */ var _fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./fetch-repo.js */ "./src/answer-submit/fetch-repo.js");
-/* harmony import */ var _determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./determine-file-name.js */ "./src/answer-submit/determine-file-name.js");
-/* harmony import */ var _utils_web_scrape__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/web-scrape */ "./src/utils/web-scrape.js");
-/* harmony import */ var _submit_answer_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./submit-answer.js */ "./src/answer-submit/submit-answer.js");
-/* harmony import */ var _components_InputsBlock_jsx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/InputsBlock.jsx */ "./src/answer-submit/components/InputsBlock.jsx");
+/* harmony import */ var _components_FileView_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/FileView.jsx */ "./src/answer-submit/components/FileView.jsx");
+/* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/mapUrl.js */ "./src/utils/mapUrl.js");
+/* harmony import */ var _components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CustomErrorView.jsx */ "./src/answer-submit/components/CustomErrorView.jsx");
+/* harmony import */ var _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/custom-errors */ "./src/utils/custom-errors.js");
+/* harmony import */ var _wait_to_load_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./wait-to-load.js */ "./src/answer-submit/wait-to-load.js");
+/* harmony import */ var _get_scraped_data__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./get-scraped-data */ "./src/answer-submit/get-scraped-data.js");
+/* harmony import */ var _fetch_repo_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./fetch-repo.js */ "./src/answer-submit/fetch-repo.js");
+/* harmony import */ var _determine_file_name_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./determine-file-name.js */ "./src/answer-submit/determine-file-name.js");
+/* harmony import */ var _utils_web_scrape__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/web-scrape */ "./src/utils/web-scrape.js");
+/* harmony import */ var _submit_answer_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./submit-answer.js */ "./src/answer-submit/submit-answer.js");
+/* harmony import */ var _components_InputsBlock_jsx__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/InputsBlock.jsx */ "./src/answer-submit/components/InputsBlock.jsx");
+/* harmony import */ var _utils_duration__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../utils/duration */ "./src/utils/duration.js");
 // 0||undefined is undefined
 //but 0??undefined is 0
 
@@ -8166,18 +8168,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const cancelIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/cancel.svg');
-const folderIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/folder.svg');
-const leftIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/left.svg');
-const rightIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/right.svg');
-const saveIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/save.svg');
-const sendIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/send.svg');
-const timeIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/time.svg');
-const tryIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_5__["default"])('/media/icons/try.svg');
+
+
+const cancelIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/cancel.svg');
+const folderIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/folder.svg');
+const leftIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/left.svg');
+const rightIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/right.svg');
+const saveIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/save.svg');
+const sendIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/send.svg');
+const timeIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/time.svg');
+const tryIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_6__["default"])('/media/icons/try.svg');
 function SubmitCard({
   inView
 }) {
   const [isHidden, setIsHidden] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [fileVisible, setFileVisible] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined);
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [hasAutoFilled, setHasAutoFilled] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -8197,32 +8202,32 @@ function SubmitCard({
     file: '',
     questionName: ''
   });
-  const isDisabled = custom_Error && custom_Error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.DisablingError;
+  const isDisabled = custom_Error && custom_Error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.DisablingError;
   const validators = {
     submissions(value) {
-      if (!value && value !== 0) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('submissions');
+      if (!value && value !== 0) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.EmptyInputError('submissions');
     },
     minutes(value) {
-      if (!value && value !== 0) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('minutes');
+      if (!value && value !== 0) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.EmptyInputError('minutes');
     },
     fileName(value) {
-      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('fileName');
-      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`file name ${value} can't have a '/'`);
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.EmptyInputError('fileName');
+      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.InputError(`file name ${value} can't have a '/'`);
     },
     fileExtension(value) {
-      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('fileExtension');
-      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`fileExtension ${value} can't have a '/'`);
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.EmptyInputError('fileExtension');
+      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.InputError(`fileExtension ${value} can't have a '/'`);
     },
     folderPath(value) {
       //assume bad path is prevented by FolderTree
-      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('folderPath');
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.EmptyInputError('folderPath');
     },
     questionName(value) {
-      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('quesionName');
-      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.InputError(`questionName ${value} can't have a '/'`);
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.EmptyInputError('quesionName');
+      if (value.includes('/')) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.InputError(`questionName ${value} can't have a '/'`);
     },
     file(value) {
-      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.EmptyInputError('file');
+      if (!value) throw new _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.EmptyInputError('file');
     }
   };
   const updateData = newData => setData({
@@ -8233,7 +8238,6 @@ function SubmitCard({
   //
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    setCustomError(undefined);
     const changeUrl = event => setUrl(event.destination.url);
     navigation.addEventListener('navigate', changeUrl);
     return () => navigation.removeEventListener('navigate', changeUrl);
@@ -8243,15 +8247,16 @@ function SubmitCard({
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!hasAutoFilled) return;
+    setCustomError(undefined);
     for (const name in data) {
       if (name === 'folderPath') continue;
       try {
         validators[name](data[name]); //validate
       } catch (error) {
-        if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw name;
+        if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.CustomError) setCustomError(error);else throw name;
       }
     }
-  }, [data]);
+  }, [data, url]);
 
   //
 
@@ -8261,9 +8266,9 @@ function SubmitCard({
     let collectedData = {};
     let collectedRepo = {};
     const scrape = async () => {
-      await (0,_wait_to_load_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
-      await Promise.all([(0,_get_scraped_data__WEBPACK_IMPORTED_MODULE_9__["default"])().then(data => collectedData = data), (0,_fetch_repo_js__WEBPACK_IMPORTED_MODULE_10__["default"])().then(content => collectedRepo = content)]);
-      collectedData.fileName = (0,_determine_file_name_js__WEBPACK_IMPORTED_MODULE_11__["default"])(collectedRepo.filePaths);
+      await (0,_wait_to_load_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
+      await Promise.all([(0,_get_scraped_data__WEBPACK_IMPORTED_MODULE_10__["default"])().then(data => collectedData = data), (0,_fetch_repo_js__WEBPACK_IMPORTED_MODULE_11__["default"])().then(content => collectedRepo = content)]);
+      collectedData.fileName = (0,_determine_file_name_js__WEBPACK_IMPORTED_MODULE_12__["default"])(collectedRepo.filePaths);
 
       //To not loose the keys, used to validate all inputs later
       collectedData = {
@@ -8276,7 +8281,7 @@ function SubmitCard({
       setIsLoading(false);
     };
     scrape().catch(error => {
-      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw error;
+      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.CustomError) setCustomError(error);else throw error;
     });
   }, [inView, url]);
 
@@ -8300,9 +8305,11 @@ function SubmitCard({
         validators[name](data[name]); //validate
       }
 
-      await (0,_submit_answer_js__WEBPACK_IMPORTED_MODULE_13__["default"])(data);
+      await (0,_submit_answer_js__WEBPACK_IMPORTED_MODULE_14__["default"])(data);
+      setHasSubmitted(true);
+      (0,_utils_duration__WEBPACK_IMPORTED_MODULE_16__.storeDuration)((0,_utils_web_scrape__WEBPACK_IMPORTED_MODULE_13__.getQuestionName)(url), 0);
     } catch (error) {
-      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_7__.CustomError) setCustomError(error);else throw error;
+      if (error instanceof _utils_custom_errors__WEBPACK_IMPORTED_MODULE_8__.CustomError) setCustomError(error);else throw error;
     } finally {
       setIsLoading(false);
     }
@@ -8310,7 +8317,8 @@ function SubmitCard({
   let cardClassName = ' submit-card ';
   if (!isHidden) cardClassName += ' card-exposed ';
   if (isDisabled) cardClassName += ' card-disabled ';
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  if (isLoading) cardClassName += ' card-loading-animation ';
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: cardClassName
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "vertical-center"
@@ -8323,12 +8331,13 @@ function SubmitCard({
     className: "flex-1 vertical-spaced-flex gap-1"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
     className: "card-title"
-  }, "Submit Via Mirkusve"), custom_Error ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, "Submit Via Mirkusve"), custom_Error ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_CustomErrorView_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
     custom_Error: custom_Error,
     key: Math.random()
-  }) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_InputsBlock_jsx__WEBPACK_IMPORTED_MODULE_14__["default"], {
+  }) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_InputsBlock_jsx__WEBPACK_IMPORTED_MODULE_15__["default"], {
     data: data,
-    onInputChange: onInputChange
+    onInputChange: onInputChange,
+    setFileVisible: setFileVisible
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FolderTree_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
     folderPaths: repoContent.folderPaths,
     folderPath: data.folderPath,
@@ -8338,7 +8347,10 @@ function SubmitCard({
     type: "submit",
     className: "primary-button submit-button-width",
     onClick: () => onSubmit()
-  }, "Submit")));
+  }, "Submit"))), fileVisible ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_FileView_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    file: data.file,
+    exitView: () => setFileVisible(false)
+  }) : null);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SubmitCard);
 function copyWithEmptyStrings(object) {
@@ -8438,6 +8450,46 @@ function CustomErrorView({
 
 /***/ }),
 
+/***/ "./src/answer-submit/components/FileView.jsx":
+/*!***************************************************!*\
+  !*** ./src/answer-submit/components/FileView.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/mapUrl.js */ "./src/utils/mapUrl.js");
+/* harmony import */ var _IconButton_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IconButton.jsx */ "./src/answer-submit/components/IconButton.jsx");
+
+
+
+function FileView({
+  file,
+  exitView
+}) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "file-view-container vertical-spaced-flex"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "file-view vertical-spa"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "spaced-flex"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "flex-1"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onClick: () => exitView(),
+    iconName: "cancel",
+    alt: "save this new folder"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("pre", null, file)));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FileView);
+
+/***/ }),
+
 /***/ "./src/answer-submit/components/Folder.jsx":
 /*!*************************************************!*\
   !*** ./src/answer-submit/components/Folder.jsx ***!
@@ -8454,15 +8506,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/mapUrl.js */ "./src/utils/mapUrl.js");
 /* harmony import */ var _utils_custom_errors_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/custom-errors.js */ "./src/utils/custom-errors.js");
 /* harmony import */ var _utils_join_path_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/join-path.js */ "./src/utils/join-path.js");
+/* harmony import */ var _IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IconButton.jsx */ "./src/answer-submit/components/IconButton.jsx");
+
 
 
 
 
 const folderIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/folder.svg');
-const addIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/add.svg');
-const deleteIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/delete.svg');
-const doneIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/done.svg');
-const cancelIcon = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])('/media/icons/cancel.svg');
 function Folder({
   folderPath,
   onSelect,
@@ -8526,21 +8576,16 @@ function Folder({
     },
     className: labelClassName
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: folderIcon,
-    className: "mediuicon"
-  }), folderName), isNew ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    src: folderIcon
+  }), folderName), isNew ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
     onClick: () => onDelete(),
-    className: "folder-icon-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: deleteIcon,
+    iconName: "delete",
     alt: "delete folder"
-  })) : null, inNewFolderMode ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }) : null, inNewFolderMode ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
     onClick: () => setNewFolderName(''),
-    className: "folder-icon-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: addIcon,
+    iconName: "add",
     alt: "add new folder"
-  }))), inNewFolderMode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })), inNewFolderMode ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
       marginLeft: `${indents + 1}rem`
     },
@@ -8549,20 +8594,20 @@ function Folder({
     type: "text",
     onChange: onChange,
     value: newFolderName,
-    className: "flex-1"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "folder-icon-button",
-    onClick: () => onSave()
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: doneIcon,
+    className: "flex-1",
+    placeholder: "Name of New Folder"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: () => onSave(),
+    iconName: "done",
     alt: "save this new folder"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    className: "folder-icon-button",
-    onClick: () => setNewFolderName(undefined)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: cancelIcon,
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    onClick: () => {
+      setNewFolderName(undefined);
+      setCustomError(undefined);
+    },
+    iconName: "cancel",
     alt: "cancel creating new folder"
-  }))) : null);
+  })) : null);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Folder);
 function errorIfPathProblem({
@@ -8697,6 +8742,40 @@ function removeFolderWithChildren(removedPath, paths) {
 
 /***/ }),
 
+/***/ "./src/answer-submit/components/IconButton.jsx":
+/*!*****************************************************!*\
+  !*** ./src/answer-submit/components/IconButton.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/mapUrl.js */ "./src/utils/mapUrl.js");
+
+
+function IconButton({
+  onClick,
+  iconName,
+  alt = 'button'
+}) {
+  const path = (0,_utils_mapUrl_js__WEBPACK_IMPORTED_MODULE_1__["default"])(`/media/icons/${iconName}.svg`);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "folder-icon-button",
+    onClick: onClick
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: path,
+    alt: alt
+  }));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IconButton);
+
+/***/ }),
+
 /***/ "./src/answer-submit/components/InputsBlock.jsx":
 /*!******************************************************!*\
   !*** ./src/answer-submit/components/InputsBlock.jsx ***!
@@ -8711,11 +8790,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LabelledInput.jsx */ "./src/answer-submit/components/LabelledInput.jsx");
+/* harmony import */ var _FileView_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FileView.jsx */ "./src/answer-submit/components/FileView.jsx");
+/* harmony import */ var _IconButton_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./IconButton.jsx */ "./src/answer-submit/components/IconButton.jsx");
+
+
 
 
 function InputsBlock({
   data,
-  onInputChange
+  onInputChange,
+  setFileVisible
 }) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "vertical-spaced-flex"
@@ -8746,7 +8830,11 @@ function InputsBlock({
     className: "flex-1"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "spaced-flex mw-2-inputs"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_IconButton_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    iconName: 'eye',
+    alt: "view file",
+    onClick: () => setFileVisible(true)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LabelledInput_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
     input: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
       type: "text",
       name: "fileName",
@@ -9097,7 +9185,7 @@ __webpack_require__.r(__webpack_exports__);
 
 async function waitToLoad() {
   const maxTime = 10000;
-  const intervalTime = 500;
+  const intervalTime = 800;
 
   //ASSUMPTION: if answer code has loaded, every thing else that's needed from the page is loaded
   return new Promise((resolve, reject) => {
@@ -9118,6 +9206,9 @@ function isLoaded() {
   const mode = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getViewMode)();
   const submissionSpans = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getSubmissionSpans)();
   const codeLoaded = (0,_utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.getCurrentCode)() !== undefined;
+
+  // console.log('loading...', getCurrentCode(), getCurrentCode()===undefined);
+
   if (mode === _utils_web_scrape_js__WEBPACK_IMPORTED_MODULE_1__.READ_MODE) {
     //There MUST be a submission for READ_MODE
     if (codeLoaded && submissionSpans.length) return true;
@@ -9680,8 +9771,8 @@ function getViewMode() {
 }
 function getCurrentCode() {
   if (getViewMode() === EDIT_MODE) {
-    const editor = document.querySelector('div.view-lines');
-    return editor?.textContent;
+    const editor = document.querySelector('div.view-line')?.parentElement;
+    return editor?.innerText;
   } else {
     const codeReader = document.querySelector('pre code');
     return codeReader?.textContent;
@@ -9775,8 +9866,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `
-.submit-card img {
+___CSS_LOADER_EXPORT___.push([module.id, `.submit-card img {
   display: inline;
   opacity: 0.6;
 }
@@ -9826,6 +9916,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, `
   padding-left: 0;
 
   transition: right 0.5s ease-in;
+}
+
+.card-loading-animation {
+  pointer-events: none;
+  background-image: linear-gradient(
+    to right,
+    white,
+    var(--secondary-color),
+    white
+  );
+  background-size: 200% 100%;
+  animation: card-loading-animation 2s infinite;
+}
+
+@keyframes card-loading-animation {
+  0% {
+    background-position-x: 0%;
+  }
+  40% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
 }
 
 .card-exposed {
@@ -9974,6 +10088,39 @@ ___CSS_LOADER_EXPORT___.push([module.id, `
   }
 }
 
+.file-view-container {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 10;
+}
+
+.file-view {
+  border: border;
+  border-radius: var(--border-radius);
+
+  background-color: white;
+  font-family: monospace;
+  padding: 0.5rem;
+}
+
+.file-view pre {
+  padding: 1rem;
+  width: 80vw;
+  max-height: 90vh;
+  overflow: auto;
+}
+
 /* misc  */
 .mw-2-inputs {
   max-width: 20rem;
@@ -9984,7 +10131,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `
 .pad-right {
   padding-right: 1rem;
 }
-
 `, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);

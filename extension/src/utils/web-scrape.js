@@ -1,48 +1,48 @@
 function getQuestionName(link) {
   //*/problems/*/*
-  const match = /.*\/problems\/([^\/]+)\/.*/.exec(link);
+  const match = /.*\/problems\/([^\/]+)\/.*/.exec(link)
   if (!match) {
-    throw new Error(`Question name could not be extracted from link (${link})`);
+    throw new Error(`Question name could not be extracted from link (${link})`)
   }
-  return match[1];
+  return match[1]
 }
 
 //Ways of viewing submitted leetcode answers
 
 // eg) When first time submitting, code shown is still editable. In .../submissions/
-const EDIT_MODE = 'edit-mode';
+const EDIT_MODE = 'edit-mode'
 //eg) When visiting old submissions, code shown is not editable. In .../submissions/.../
-const READ_MODE = 'read-mode';
+const READ_MODE = 'read-mode'
 
 function getSubmissionSpans() {
-  const acceptedSelector = 'div.cursor-pointer span.text-green-s';
-  const nonAcceptedSelector = 'div.cursor-pointer span.text-red-s';
+  const acceptedSelector = 'div.cursor-pointer span.text-green-s'
+  const nonAcceptedSelector = 'div.cursor-pointer span.text-red-s'
 
   const submissionSpans = document.querySelectorAll(
     `${acceptedSelector}, ${nonAcceptedSelector}`
-  );
+  )
 
-  return submissionSpans;
+  return submissionSpans
 }
 
 function getViewMode() {
-  const url = window.location.href;
+  const url = window.location.href
   if (url.match(/submissions\/$/)) {
-    return EDIT_MODE;
+    return EDIT_MODE
   } else if (url.match(/submissions\/[^\/]+\//)) {
-    return READ_MODE;
+    return READ_MODE
   } else {
-    throw Error('the url is niether */submissions/* nor */submissions/');
+    throw Error('the url is niether */submissions/* nor */submissions/')
   }
 }
 
 function getCurrentCode() {
   if (getViewMode() === EDIT_MODE) {
-    const editor = document.querySelector('div.view-lines');
-    return editor?.textContent;
+    const editor = document.querySelector('div.view-line')?.parentElement
+    return editor?.innerText
   } else {
-    const codeReader = document.querySelector('pre code');
-    return codeReader?.textContent;
+    const codeReader = document.querySelector('pre code')
+    return codeReader?.textContent
   }
 }
 
@@ -67,7 +67,7 @@ function getCurrentFileExtension() {
     erlang: 'erl',
     elixir: 'exs',
     dart: 'dart',
-  };
+  }
 
   const readModeMap = {
     'language-python': 'py',
@@ -75,48 +75,47 @@ function getCurrentFileExtension() {
     'language-cpp': 'cpp',
     'language-java': 'java',
     'language-dart': 'dart',
-  };
+  }
 
   if (getViewMode() === EDIT_MODE) {
-    const key = document.querySelector('div[data-mode-id]').dataset.modeId;
-    return editModeMap[key] || 'txt';
+    const key = document.querySelector('div[data-mode-id]').dataset.modeId
+    return editModeMap[key] || 'txt'
   } else {
-    const key = document.querySelector('pre code').className;
-    return readModeMap[key] || 'txt';
+    const key = document.querySelector('pre code').className
+    return readModeMap[key] || 'txt'
   }
 }
 
 function currentCodeIsAccepted() {
   if (getViewMode() === EDIT_MODE) {
-    const spans = getSubmissionSpans();
-    if (!spans.length) return false;
-    return spans[0].className.match(/green/) !== null;
+    const spans = getSubmissionSpans()
+    if (!spans.length) return false
+    return spans[0].className.match(/green/) !== null
   } else {
-    const chart = document.querySelector('rect.highcharts-background');
-    return chart != null;
+    const chart = document.querySelector('rect.highcharts-background')
+    return chart != null
   }
 }
 
 function acceptedSubmissionExists() {
   for (const span of getSubmissionSpans()) {
     if (span.className.match(/green/)) {
-      return true;
+      return true
     }
   }
-  return false;
+  return false
 }
 
 function saysNoSubmissions() {
-  const nullImageExists =
-    document.querySelector('img[alt="数据为空"]') !== null;
-  if (nullImageExists) return true;
+  const nullImageExists = document.querySelector('img[alt="数据为空"]') !== null
+  if (nullImageExists) return true
 
-  const noDataCandidateDivs = document.querySelectorAll('div.text-label-3');
+  const noDataCandidateDivs = document.querySelectorAll('div.text-label-3')
   for (const div of noDataCandidateDivs) {
-    if (div.textContent.toLowerCase() === 'no data') return true;
+    if (div.textContent.toLowerCase() === 'no data') return true
   }
 
-  return false;
+  return false
 }
 
 export {
@@ -130,4 +129,4 @@ export {
   currentCodeIsAccepted,
   acceptedSubmissionExists,
   saysNoSubmissions,
-};
+}

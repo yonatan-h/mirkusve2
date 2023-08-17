@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import LabelledInput from './LabelledInput.jsx';
+import React, { useState, useEffect } from 'react'
+import LabelledInput from './LabelledInput.jsx'
+import FileView from './FileView.jsx'
+import IconButton from './IconButton.jsx'
 
-function InputsBlock({ data, onInputChange }) {
+function InputsBlock({ data, onInputChange, setFileVisible }) {
+
   return (
     <div className="vertical-spaced-flex">
       {/* Should've been a form, but buttons were type=submit by default  */}
@@ -37,6 +40,13 @@ function InputsBlock({ data, onInputChange }) {
         />
       </div>
       <div className="spaced-flex mw-2-inputs">
+        <IconButton
+        iconName={'eye'}
+        alt='view file'
+        onClick={()=>setFileVisible(true)}
+        
+        />
+        
         <LabelledInput
           input={
             <input
@@ -65,7 +75,7 @@ function InputsBlock({ data, onInputChange }) {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default InputsBlock;
+export default InputsBlock

@@ -1,4 +1,3 @@
-
 .submit-card img {
   display: inline;
   opacity: 0.6;
@@ -49,6 +48,30 @@
   padding-left: 0;
 
   transition: right 0.5s ease-in;
+}
+
+.card-loading-animation {
+  pointer-events: none;
+  background-image: linear-gradient(
+    to right,
+    white,
+    var(--secondary-color),
+    white
+  );
+  background-size: 200% 100%;
+  animation: card-loading-animation 2s infinite;
+}
+
+@keyframes card-loading-animation {
+  0% {
+    background-position-x: 0%;
+  }
+  40% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
 }
 
 .card-exposed {
@@ -197,6 +220,39 @@
   }
 }
 
+.file-view-container {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 10;
+}
+
+.file-view {
+  border: border;
+  border-radius: var(--border-radius);
+
+  background-color: white;
+  font-family: monospace;
+  padding: 0.5rem;
+}
+
+.file-view pre {
+  padding: 1rem;
+  width: 80vw;
+  max-height: 90vh;
+  overflow: auto;
+}
+
 /* misc  */
 .mw-2-inputs {
   max-width: 20rem;
@@ -207,4 +263,3 @@
 .pad-right {
   padding-right: 1rem;
 }
-
